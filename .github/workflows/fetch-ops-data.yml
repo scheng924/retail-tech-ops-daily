@@ -157,10 +157,19 @@ jobs:
           print(f"data.json written — open: {currently_open}, P1: {p1}, P2: {p2}, on-call: {current_user['name']}")
           EOF
 
+      - name: Verify data.json was written
+        run: |
+          if [ ! -f data.json ]; then
+            echo "ERROR: data.json was not created by the Python script"
+            exit 1
+          fi
+          echo "data.json size: $(wc -c < data.json) bytes"
+          cat data.json | python3 -c "import sys,json; d=json.load(sys.stdin); print('open:', d['jira']['currently_open'], 'p1:', d['jira']['p1'])"
+
       - name: Commit data.json
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git diff --cached --quiet || git commit -m "chore: refresh ops data $(date -u +%H:%M)"
-          git push
+          git add -f data.json
+          git status
+          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
