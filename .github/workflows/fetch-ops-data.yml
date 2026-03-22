@@ -44,7 +44,7 @@ jobs:
           }
 
           def jira_search(jql):
-            url = f"{JIRA_BASE}/rest/api/3/search"
+            url = f"{JIRA_BASE}/rest/api/3/search/jql"
             payload = json.dumps({"jql": jql, "maxResults": 0, "fields": ["id"]}).encode()
             req = urllib.request.Request(url, data=payload, headers={**jira_headers, 'Content-Type': 'application/json'}, method='POST')
             with urllib.request.urlopen(req) as r:
