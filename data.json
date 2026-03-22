@@ -1,0 +1,81 @@
+{
+  "fetched_at": "2026-03-22T05:56:38Z",
+  "jira": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "trend": [
+      {
+        "date": "16-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "17-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "18-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "19-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "20-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "21-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "22-Mar",
+        "is_today": true,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      }
+    ]
+  },
+  "pagerduty": {
+    "current_oncall": {
+      "name": "Unknown",
+      "initials": "UN",
+      "level": "L1 Primary",
+      "since": "2026-03-22T00:00:00Z"
+    },
+    "escalation": {
+      "name": "Unknown",
+      "initials": "UN",
+      "level": "L2 Escalation"
+    },
+    "week_schedule": []
+  }
+}
