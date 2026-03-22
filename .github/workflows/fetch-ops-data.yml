@@ -20,13 +20,11 @@ jobs:
 
       - name: Fetch Jira + PagerDuty data
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}         # e.g. https://arcteryx.atlassian.net
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_JSM_PROJECT: ${{ secrets.JIRA_JSM_PROJECT }}   # e.g. RTECH
-          JIRA_SW_PROJECT: ${{ secrets.JIRA_SW_PROJECT }}     # e.g. RTDEV
           PD_API_TOKEN: ${{ secrets.PD_API_TOKEN }}
-          PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}       # PagerDuty schedule UUID
+          PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}
         run: |
           python3 - <<'EOF'
           import json, os, urllib.request, urllib.parse, base64, datetime
@@ -34,14 +32,11 @@ jobs:
           JIRA_BASE   = os.environ['JIRA_BASE_URL']
           JIRA_EMAIL  = os.environ['JIRA_EMAIL']
           JIRA_TOKEN  = os.environ['JIRA_API_TOKEN']
-          JSM_PROJ    = 'RTS'  # hardcoded project key
-          SW_PROJ     = os.environ['JIRA_SW_PROJECT']
           PD_TOKEN    = os.environ['PD_API_TOKEN']
           PD_SCHED    = os.environ['PD_SCHEDULE_ID']
 
           now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
 
-          # ── Jira helpers ──────────────────────────────────────────────────────
           jira_creds = base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()
           jira_headers = {
             'Authorization': f'Basic {jira_creds}',
@@ -49,24 +44,21 @@ jobs:
           }
 
           def jira_search(jql):
-            # POST to search endpoint — more reliable across Atlassian Cloud instances
             url = f"{JIRA_BASE}/rest/api/3/search"
             payload = json.dumps({"jql": jql, "maxResults": 0, "fields": ["id"]}).encode()
             req = urllib.request.Request(url, data=payload, headers={**jira_headers, 'Content-Type': 'application/json'}, method='POST')
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read())['total']
 
-          # ── Jira metrics ──────────────────────────────────────────────────────
           ago_24h = (now - datetime.timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M:%SZ')
-          currently_open  = jira_search(f'project = {JSM_PROJ} AND status != Done')
-          p1              = jira_search(f'project = RTS AND priority in (Blocker, ASAP) AND status != Done')
-          p2              = jira_search(f'project = RTS AND priority = High AND status != Done')
-          open_problems   = jira_search(f'project = {JSM_PROJ} AND issuetype = Problem AND status != Done')
-          opened_24h      = jira_search(f'project = {JSM_PROJ} AND created >= "{ago_24h}"')
-          closed_24h      = jira_search(f'project = {JSM_PROJ} AND resolutiondate >= "{ago_24h}"')
-          on_call_tickets = jira_search(f'project = {JSM_PROJ} AND status != Done AND labels = on-call')
+          currently_open  = jira_search('project = RTS AND status != Done')
+          p1              = jira_search('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
+          p2              = jira_search('project = RTS AND priority = High AND status != Done')
+          open_problems   = jira_search('project = RTS AND issuetype = Problem AND status != Done')
+          opened_24h      = jira_search(f'project = RTS AND created >= "{ago_24h}"')
+          closed_24h      = jira_search(f'project = RTS AND resolutiondate >= "{ago_24h}"')
+          on_call_tickets = jira_search('project = RTS AND status != Done AND labels = on-call')
 
-          # ── 7-day trend ───────────────────────────────────────────────────────
           trend = []
           for i in range(6, -1, -1):
             day_start = (now - datetime.timedelta(days=i)).replace(hour=0,minute=0,second=0)
@@ -77,13 +69,12 @@ jobs:
             trend.append({
               'date': label,
               'is_today': i == 0,
-              'currently_open': jira_search(f'project = {JSM_PROJ} AND status != Done AND created <= "{de}"'),
-              'opened': jira_search(f'project = {JSM_PROJ} AND created >= "{ds}" AND created <= "{de}"'),
-              'closed': jira_search(f'project = {JSM_PROJ} AND resolutiondate >= "{ds}" AND resolutiondate <= "{de}"'),
-              'on_call': jira_search(f'project = {JSM_PROJ} AND labels = on-call AND created >= "{ds}" AND created <= "{de}"'),
+              'currently_open': jira_search(f'project = RTS AND status != Done AND created <= "{de}"'),
+              'opened': jira_search(f'project = RTS AND created >= "{ds}" AND created <= "{de}"'),
+              'closed': jira_search(f'project = RTS AND resolutiondate >= "{ds}" AND resolutiondate <= "{de}"'),
+              'on_call': jira_search(f'project = RTS AND labels = on-call AND created >= "{ds}" AND created <= "{de}"'),
             })
 
-          # ── PagerDuty ─────────────────────────────────────────────────────────
           pd_headers = {
             'Authorization': f'Token token={PD_TOKEN}',
             'Content-Type': 'application/json',
@@ -134,7 +125,6 @@ jobs:
               'open_problems': open_problems,
               'trend': trend
             },
-            
             'pagerduty': {
               'current_oncall': {
                 'name': current_user['name'],
@@ -154,22 +144,12 @@ jobs:
           with open('data.json', 'w') as f:
             json.dump(output, f, indent=2)
 
-          print(f"data.json written — open: {currently_open}, P1: {p1}, P2: {p2}, on-call: {current_user['name']}")
+          print(f"data.json written - open: {currently_open}, P1: {p1}, P2: {p2}")
           EOF
-
-      - name: Verify data.json was written
-        run: |
-          if [ ! -f data.json ]; then
-            echo "ERROR: data.json was not created by the Python script"
-            exit 1
-          fi
-          echo "data.json size: $(wc -c < data.json) bytes"
-          cat data.json | python3 -c "import sys,json; d=json.load(sys.stdin); print('open:', d['jira']['currently_open'], 'p1:', d['jira']['p1'])"
 
       - name: Commit data.json
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data.json
-          git status
-          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
+          git diff --cached --quiet && echo "No changes" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
