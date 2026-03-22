@@ -5,6 +5,9 @@ on:
     - cron: '*/15 * * * *'   # every 15 minutes
   workflow_dispatch:          # allow manual trigger
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -36,7 +39,7 @@ jobs:
           PD_TOKEN    = os.environ['PD_API_TOKEN']
           PD_SCHED    = os.environ['PD_SCHEDULE_ID']
 
-          now = datetime.datetime.utcnow()
+          now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
 
           # ── Jira helpers ──────────────────────────────────────────────────────
           jira_creds = base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()
@@ -46,9 +49,10 @@ jobs:
           }
 
           def jira_search(jql):
-            encoded = urllib.parse.quote(jql)
-            url = f"{JIRA_BASE}/rest/api/3/search?jql={encoded}&maxResults=0"
-            req = urllib.request.Request(url, headers=jira_headers)
+            # POST to search endpoint — more reliable across Atlassian Cloud instances
+            url = f"{JIRA_BASE}/rest/api/3/search"
+            payload = json.dumps({"jql": jql, "maxResults": 0, "fields": ["id"]}).encode()
+            req = urllib.request.Request(url, data=payload, headers={**jira_headers, 'Content-Type': 'application/json'}, method='POST')
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read())['total']
 
