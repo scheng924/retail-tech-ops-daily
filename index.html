@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Tech Ops · Daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f3ef;
+  --surface: #ffffff;
+  --surface2: #eeede7;
+  --border: #dddcd4;
+  --text-primary: #1a1917;
+  --text-secondary: #6b6960;
+  --text-muted: #a09e96;
+  --green: #2a7a42;
+  --green-bg: #e6f4ec;
+  --green-dot: #34a85a;
+  --amber: #b87008;
+  --amber-bg: #fef3d8;
+  --amber-dot: #e8920a;
+  --red: #b83224;
+  --red-bg: #fdecea;
+  --red-dot: #e03e2e;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Syne', sans-serif;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f0e;
+    --surface: #1a1a18;
+    --surface2: #222220;
+    --border: #2c2c29;
+    --text-primary: #eeede7;
+    --text-secondary: #908e86;
+    --text-muted: #504e48;
+    --green: #4ade80;
+    --green-bg: #0a2018;
+    --green-dot: #34a85a;
+    --amber: #fbbf24;
+    --amber-bg: #211800;
+    --amber-dot: #e8920a;
+    --red: #f87171;
+    --red-bg: #200a0a;
+    --red-dot: #e03e2e;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 20px 24px 48px;
+  font-size: 13px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.wordmark {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+.wordmark span { color: var(--text-muted); font-weight: 400; }
+.date-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+.header-right { display: flex; align-items: center; gap: 12px; }
+.refresh-info {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.refresh-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-dot);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.refresh-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.refresh-btn:hover { background: var(--surface2); color: var(--text-primary); }
+
+/* GRID LAYOUT */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 14px;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.card-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.card-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.card-body { padding: 14px 16px; }
+
+/* SPAN HELPERS */
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+/* INCIDENT METRICS */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.metric-cell {
+  background: var(--surface);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.metric-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.metric-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.metric-value.alert { color: var(--red); }
+.metric-value.warn { color: var(--amber); }
+
+/* TREND TABLE */
+.trend-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.trend-table th {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 400;
+  text-align: right;
+  padding: 0 6px 6px;
+  white-space: nowrap;
+}
+.trend-table th:first-child { text-align: left; }
+.trend-table td {
+  text-align: right;
+  padding: 5px 6px;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+.trend-table td:first-child {
+  text-align: left;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.trend-table tr.today td {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.trend-table tr.today td:first-child::after {
+  content: ' ←';
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* SPARKLINE */
+.spark-row { display: flex; align-items: center; gap: 8px; }
+.spark-label { font-size: 10px; color: var(--text-muted); width: 80px; flex-shrink: 0; }
+.spark { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
+.spark-bar {
+  width: 14px;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background 0.2s;
+  cursor: default;
+}
+.spark-bar.today { background: var(--text-primary); opacity: 0.7; }
+.spark-value { font-size: 11px; color: var(--text-primary); font-weight: 500; margin-left: 4px; }
+
+/* RAG STATUS */
+.rag-list { display: flex; flex-direction: column; gap: 0; }
+.rag-row {
+  display: grid;
+  grid-template-columns: 130px 90px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.rag-row:last-child { border-bottom: none; }
+.rag-system {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.rag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  border: none;
+  font-family: var(--mono);
+}
+.rag-pill.green { background: var(--green-bg); color: var(--green); }
+.rag-pill.amber { background: var(--amber-bg); color: var(--amber); }
+.rag-pill.red { background: var(--red-bg); color: var(--red); }
+.rag-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.rag-pill.green .dot { background: var(--green-dot); }
+.rag-pill.amber .dot { background: var(--amber-dot); }
+.rag-pill.red .dot { background: var(--red-dot); }
+.rag-note-input {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--border);
+  color: var(--text-secondary);
+  width: 100%;
+  padding: 2px 4px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.rag-note-input:focus { border-color: var(--text-muted); color: var(--text-primary); }
+.rag-note-input::placeholder { color: var(--text-muted); }
+.rag-timestamp {
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* ON-CALL */
+.oncall-primary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.oncall-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.oncall-info { flex: 1; }
+.oncall-name { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.oncall-level {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.oncall-active-badge {
+  background: var(--green-bg);
+  color: var(--green);
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.week-schedule { display: flex; flex-direction: column; gap: 4px; }
+.week-schedule-title { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+.week-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: background 0.1s;
+}
+.week-row.is-today { background: var(--surface2); }
+.week-day { font-size: 11px; color: var(--text-muted); width: 28px; flex-shrink: 0; }
+.week-day.today { color: var(--text-primary); font-weight: 500; }
+.week-person { font-size: 12px; color: var(--text-primary); flex: 1; }
+.week-level { font-size: 10px; color: var(--text-muted); }
+
+/* ORDER MESSAGES */
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.order-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.order-label { font-size: 10px; color: var(--text-muted); }
+.order-value { font-size: 26px; font-weight: 300; color: var(--text-primary); line-height: 1; }
+.order-delta {
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.delta-up { color: var(--red); }
+.delta-down { color: var(--green); }
+.delta-neutral { color: var(--text-muted); }
+
+/* LOADING STATE */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 11px;
+  gap: 8px;
+}
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--text-muted);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* FOOTER */
+.footer {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  width: 340px;
+  box-shadow: var(--shadow-md);
+}
+.modal-title { font-family: var(--sans); font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+.modal-system { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.rag-options { display: flex; gap: 8px; margin-bottom: 16px; }
+.rag-opt-btn {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s;
+}
+.rag-opt-btn.green { background: var(--green-bg); color: var(--green); }
+.rag-opt-btn.amber { background: var(--amber-bg); color: var(--amber); }
+.rag-opt-btn.red { background: var(--red-bg); color: var(--red); }
+.rag-opt-btn.selected.green { border-color: var(--green); }
+.rag-opt-btn.selected.amber { border-color: var(--amber); }
+.rag-opt-btn.selected.red { border-color: var(--red); }
+.modal-note-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
+.modal-note {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  color: var(--text-primary);
+  resize: none;
+  height: 64px;
+  outline: none;
+  margin-bottom: 4px;
+}
+.modal-note:focus { border-color: var(--text-muted); }
+.modal-updater-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
+.modal-updater {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  color: var(--text-primary);
+  outline: none;
+  margin-bottom: 16px;
+}
+.modal-updater:focus { border-color: var(--text-muted); }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.btn-cancel {
+  font-family: var(--mono); font-size: 11px;
+  background: none; border: 1px solid var(--border);
+  color: var(--text-secondary); padding: 7px 16px;
+  border-radius: 4px; cursor: pointer;
+}
+.btn-save {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--text-primary); border: 1px solid var(--text-primary);
+  color: var(--bg); padding: 7px 16px;
+  border-radius: 4px; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="wordmark">RETAIL TECH OPS <span>/ DAILY</span></div>
+    <div class="date-badge" id="headerDate">—</div>
+  </div>
+  <div class="header-right">
+    <div class="refresh-info">
+      <div class="refresh-dot"></div>
+      <span id="lastRefresh">Loading…</span>
+    </div>
+    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- INCIDENT METRICS + TREND (spans 2 cols) -->
+  <div class="card span-2">
+    <div class="card-header">
+      <div class="card-title">Incident Management · JSM</div>
+      <div class="card-meta" id="jiraMeta">via Jira Service Management</div>
+    </div>
+    <div class="card-body">
+      <div class="metrics-grid" id="metricsGrid">
+        <div class="loading"><div class="spinner"></div> Loading Jira…</div>
+      </div>
+      <div id="trendSection"></div>
+    </div>
+  </div>
+
+  <!-- ON-CALL -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">On-Call · PagerDuty</div>
+      <div class="card-meta">Single rotation</div>
+    </div>
+    <div class="card-body" id="oncallBody">
+      <div class="loading"><div class="spinner"></div> Loading PagerDuty…</div>
+    </div>
+  </div>
+
+  <!-- RAG STATUS (spans 2 cols) -->
+  <div class="card span-2">
+    <div class="card-header">
+      <div class="card-title">Systems Status</div>
+      <div class="card-meta">Manual · click to update</div>
+    </div>
+    <div class="card-body" style="padding: 8px 16px;">
+      <div class="rag-list" id="ragList"></div>
+    </div>
+  </div>
+
+  <!-- ORDER MESSAGES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Order Messages</div>
+      <div class="card-meta" id="orderMeta">JSM · last 24h</div>
+    </div>
+    <div class="card-body" id="orderBody">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>Retail Technology Operations · Arc'teryx</span>
+  <span id="footerRefresh">Data refreshes every 15 min via GitHub Actions</span>
+</div>
+
+<!-- RAG MODAL -->
+<div class="modal-overlay" id="ragModal">
+  <div class="modal">
+    <div class="modal-title">Update System Status</div>
+    <div class="modal-system" id="modalSystemName">—</div>
+    <div class="rag-options">
+      <button class="rag-opt-btn green" onclick="selectRag('green')">● Healthy</button>
+      <button class="rag-opt-btn amber" onclick="selectRag('amber')">● Degraded</button>
+      <button class="rag-opt-btn red" onclick="selectRag('red')">● Outage</button>
+    </div>
+    <div class="modal-note-label">Notes</div>
+    <textarea class="modal-note" id="modalNote" placeholder="e.g. 3 stores impacted in EMEA, monitoring…"></textarea>
+    <div class="modal-updater-label">Updated by</div>
+    <input class="modal-updater" id="modalUpdater" placeholder="Your name" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveRag()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-title">Update Order Messages</div>
+    <div class="modal-system" id="orderModalLabel">—</div>
+    <div class="modal-note-label">Count</div>
+    <input class="modal-updater" id="orderModalValue" type="number" min="0" placeholder="e.g. 2530" style="margin-bottom:10px"/>
+    <div class="modal-updater-label">Updated by</div>
+    <input class="modal-updater" id="orderModalUpdater" placeholder="Your name" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeOrderModal()">Cancel</button>
+      <button class="btn-save" onclick="saveOrderField()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+// In production these come from data.json written by GitHub Actions.
+// For demo, we use realistic mock data.
+const USE_MOCK = false; // set false when data.json is available
+const DATA_URL = './data.json';
+
+// ─── SYSTEMS ──────────────────────────────────────────────────────────────────
+const SYSTEMS = ['Digital Displays','Store Music','Network','Traffic System','Adyen Devices','VoIP','POS'];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let ragState = JSON.parse(localStorage.getItem('ragState') || '{}');
+let orderState = JSON.parse(localStorage.getItem('orderState') || '{"open":null,"opened_24h":null,"closed_24h":null,"updatedBy":"","updatedAt":null}');
+let modalTarget = null;
+let modalRagSelected = null;
+let orderModalKey = null;
+
+// ─── MOCK DATA ────────────────────────────────────────────────────────────────
+function getMockData() {
+  const days = ['15-Mar','16-Mar','17-Mar','18-Mar','19-Mar','20-Mar','21-Mar'];
+  return {
+    fetched_at: new Date().toISOString(),
+    jira: {
+      currently_open: 213,
+      p1: 0,
+      p2: 2,
+      open_problems: 10,
+      trend: days.map((d, i) => ({
+        date: d,
+        is_today: i === days.length - 1,
+        opened: [21,56,39,31,47,29,18][i],
+        closed: [13,77,54,27,31,22,14][i],
+        on_call: [0,4,0,0,0,0,0][i],
+        currently_open: [218,215,212,212,213,211,213][i],
+      }))
+    },
+    order_messages: null,  // manual — loaded from localStorage
+
+    pagerduty: {
+      current_oncall: { name: 'Wayne Chen', initials: 'WC', level: 'L1 Primary', since: '2025-03-21T08:00:00Z' },
+      escalation: { name: 'JR Santos', initials: 'JR', level: 'L2 Escalation' },
+      week_schedule: [
+        { day: 'Sat', date: '15', name: 'Erica Park', level: 'L1' },
+        { day: 'Sun', date: '16', name: 'Wayne Chen', level: 'L1' },
+        { day: 'Mon', date: '17', name: 'JR Santos', level: 'L1' },
+        { day: 'Tue', date: '18', name: 'Erica Park', level: 'L1' },
+        { day: 'Wed', date: '19', name: 'Wayne Chen', level: 'L1' },
+        { day: 'Thu', date: '20', name: 'JR Santos', level: 'L1' },
+        { day: 'Fri', date: '21', name: 'Wayne Chen', level: 'L1', is_today: true },
+      ]
+    }
+  };
+}
+
+// ─── LOAD ─────────────────────────────────────────────────────────────────────
+async function loadData() {
+  let data;
+  if (USE_MOCK) {
+    data = getMockData();
+  } else {
+    try {
+      const res = await fetch(DATA_URL + '?t=' + Date.now());
+      data = await res.json();
+    } catch(e) {
+      data = getMockData();
+    }
+  }
+  renderAll(data);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderAll(data) {
+  updateHeader(data.fetched_at);
+  renderMetrics(data.jira);
+  renderTrend(data.jira.trend);
+  renderOrderMessages();
+  renderOncall(data.pagerduty);
+  renderRag();
+}
+
+function updateHeader(fetched_at) {
+  const now = new Date();
+  document.getElementById('headerDate').textContent =
+    now.toLocaleDateString('en-CA', { weekday:'long', year:'numeric', month:'short', day:'numeric' });
+  const ft = new Date(fetched_at);
+  document.getElementById('lastRefresh').textContent =
+    'Last synced ' + ft.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' });
+}
+
+function renderMetrics(jira) {
+  const today = jira.trend[jira.trend.length - 1];
+  const cells = [
+    { label: 'Open Tickets', value: jira.currently_open, cls: '' },
+    { label: 'P1 · Blocker / ASAP', value: jira.p1, cls: jira.p1 > 0 ? 'alert' : '' },
+    { label: 'P2 · High', value: jira.p2, cls: jira.p2 > 0 ? 'warn' : '' },
+    { label: 'Open Problems', value: jira.open_problems, cls: jira.open_problems > 15 ? 'warn' : '' },
+    { label: 'On-Call Tickets', value: today.on_call, cls: today.on_call > 0 ? 'warn' : '' },
+  ];
+  document.getElementById('metricsGrid').innerHTML = cells.map(c => `
+    <div class="metric-cell">
+      <div class="metric-label">${c.label}</div>
+      <div class="metric-value ${c.cls}">${c.value}</div>
+    </div>
+  `).join('');
+}
+
+function renderTrend(trend) {
+  const maxOpen = Math.max(...trend.map(d => d.currently_open));
+  const rows = trend.map(d => `
+    <tr class="${d.is_today ? 'today' : ''}">
+      <td>${d.date}</td>
+      <td>${d.currently_open}</td>
+      <td>${d.opened}</td>
+      <td>${d.closed}</td>
+      <td>${d.on_call}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('trendSection').innerHTML = `
+    <table class="trend-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Open</th>
+          <th>Opened</th>
+          <th>Closed</th>
+          <th>On-Call</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderOrderMessages() {
+  const om = orderState;
+
+  function editableNum(key, label) {
+    const val = om[key] !== null ? om[key].toLocaleString() : '—';
+    return `
+      <div class="order-card" onclick="openOrderModal('${key}', '${label}')" style="cursor:pointer">
+        <div class="order-label">${label} <span style="color:var(--text-muted);font-size:9px">✎</span></div>
+        <div class="order-value">${val}</div>
+      </div>
+    `;
+  }
+
+  const ts = om.updatedAt
+    ? new Date(om.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
+      (om.updatedBy ? ' · ' + om.updatedBy : '')
+    : 'Not yet updated';
+
+  document.getElementById('orderBody').innerHTML = `
+    <div class="order-grid">
+      ${editableNum('open', 'Total Open')}
+      ${editableNum('opened_24h', 'Opened 24h')}
+      ${editableNum('closed_24h', 'Closed 24h')}
+    </div>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:8px;text-align:right">${ts}</div>
+  `;
+  document.getElementById('orderMeta').textContent = 'Manual · click to update';
+}
+
+function renderOncall(pd) {
+  const oc = pd.current_oncall;
+  const esc = pd.escalation;
+  const scheduleRows = pd.week_schedule.map(d => `
+    <div class="week-row ${d.is_today ? 'is-today' : ''}">
+      <div class="week-day ${d.is_today ? 'today' : ''}">${d.day}</div>
+      <div class="week-person">${d.name}</div>
+      <div class="week-level">${d.level}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('oncallBody').innerHTML = `
+    <div class="oncall-primary">
+      <div class="oncall-avatar">${oc.initials}</div>
+      <div class="oncall-info">
+        <div class="oncall-name">${oc.name}</div>
+        <div class="oncall-level">
+          ${oc.level}
+          <span class="oncall-active-badge">● Active</span>
+        </div>
+        <div class="oncall-level" style="margin-top:4px">↑ ${esc.name} · ${esc.level}</div>
+      </div>
+    </div>
+    <div class="week-schedule">
+      <div class="week-schedule-title">This Week</div>
+      ${scheduleRows}
+    </div>
+  `;
+}
+
+function renderRag() {
+  document.getElementById('ragList').innerHTML = SYSTEMS.map(sys => {
+    const s = ragState[sys] || { status: 'green', note: '', updatedBy: '', updatedAt: null };
+    const ts = s.updatedAt
+      ? new Date(s.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
+        (s.updatedBy ? ' · ' + s.updatedBy : '')
+      : 'Not yet updated';
+
+    const labels = { green: 'Healthy', amber: 'Degraded', red: 'Outage' };
+    return `
+      <div class="rag-row" onclick="openModal('${sys}')">
+        <div class="rag-system">${sys}</div>
+        <button class="rag-pill ${s.status}">
+          <span class="dot"></span>${labels[s.status] || 'Healthy'}
+        </button>
+        <div style="overflow:hidden">
+          <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+            ${s.note || '<span style="color:var(--text-muted)">No notes</span>'}
+          </div>
+        </div>
+        <div class="rag-timestamp">${ts}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(sys) {
+  modalTarget = sys;
+  const s = ragState[sys] || { status: 'green', note: '', updatedBy: '' };
+  modalRagSelected = s.status || 'green';
+  document.getElementById('modalSystemName').textContent = sys;
+  document.getElementById('modalNote').value = s.note || '';
+  document.getElementById('modalUpdater').value = s.updatedBy || '';
+  updateModalButtons();
+  document.getElementById('ragModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('ragModal').classList.remove('open');
+  modalTarget = null;
+}
+
+function selectRag(val) {
+  modalRagSelected = val;
+  updateModalButtons();
+}
+
+function updateModalButtons() {
+  ['green','amber','red'].forEach(c => {
+    const btn = document.querySelector(`.rag-opt-btn.${c}`);
+    btn.classList.toggle('selected', c === modalRagSelected);
+  });
+}
+
+function saveRag() {
+  if (!modalTarget) return;
+  ragState[modalTarget] = {
+    status: modalRagSelected,
+    note: document.getElementById('modalNote').value.trim(),
+    updatedBy: document.getElementById('modalUpdater').value.trim(),
+    updatedAt: new Date().toISOString()
+  };
+  localStorage.setItem('ragState', JSON.stringify(ragState));
+  closeModal();
+  renderRag();
+}
+
+// Close modal on overlay click
+document.getElementById('ragModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─── ORDER MODAL ──────────────────────────────────────────────────────────────
+function openOrderModal(key, label) {
+  orderModalKey = key;
+  document.getElementById('orderModalLabel').textContent = label;
+  document.getElementById('orderModalValue').value = orderState[key] !== null ? orderState[key] : '';
+  document.getElementById('orderModalUpdater').value = orderState.updatedBy || '';
+  document.getElementById('orderModal').classList.add('open');
+}
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('open');
+  orderModalKey = null;
+}
+function saveOrderField() {
+  if (!orderModalKey) return;
+  const val = document.getElementById('orderModalValue').value;
+  orderState[orderModalKey] = val !== '' ? parseInt(val, 10) : null;
+  orderState.updatedBy = document.getElementById('orderModalUpdater').value.trim();
+  orderState.updatedAt = new Date().toISOString();
+  localStorage.setItem('orderState', JSON.stringify(orderState));
+  closeOrderModal();
+  renderOrderMessages();
+}
+document.getElementById('orderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeOrderModal();
+});
+
+// ─── AUTO-REFRESH ─────────────────────────────────────────────────────────────
+loadData();
+setInterval(loadData, 15 * 60 * 1000); // 15 min
+</script>
+</body>
+</html>
