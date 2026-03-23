@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retail Tech Ops · Daily</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f4f3ef;
@@ -24,8 +22,8 @@
   --red: #b83224;
   --red-bg: #fdecea;
   --red-dot: #e03e2e;
-  --mono: 'DM Mono', monospace;
-  --sans: 'Syne', sans-serif;
+  --mono: 'Helvetica Neue', HelveticaNeue, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+  --sans: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
   --shadow: 0 1px 3px rgba(0,0,0,0.07);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
 }
@@ -514,7 +512,9 @@ body {
 body.force-light{--bg:#f4f3ef !important;--surface:#fff !important;--surface2:#eeede7 !important;--border:#dddcd4 !important;--text-primary:#1a1917 !important;--text-secondary:#6b6960 !important;--text-muted:#a09e96 !important;--green:#2a7a42 !important;--green-bg:#e6f4ec !important;--green-dot:#34a85a !important;--amber:#b87008 !important;--amber-bg:#fef3d8 !important;--amber-dot:#e8920a !important;--red:#b83224 !important;--red-bg:#fdecea !important;--red-dot:#e03e2e !important;--shadow:0 1px 3px rgba(0,0,0,.07) !important;--shadow-md:0 4px 16px rgba(0,0,0,.09) !important;}
 body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c29;--text-primary:#eeede7;--text-secondary:#908e86;--text-muted:#504e48;--green:#4ade80;--green-bg:#0a2018;--green-dot:#34a85a;--amber:#fbbf24;--amber-bg:#211800;--amber-dot:#e8920a;--red:#f87171;--red-bg:#200a0a;--red-dot:#e03e2e;--shadow:0 1px 3px rgba(0,0,0,.4);--shadow-md:0 4px 16px rgba(0,0,0,.5);}
 #themeBtn{font-size:13px;padding:4px 9px;}
+#trendChart{border-radius:4px;}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -528,7 +528,7 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
       <div class="refresh-dot"></div>
       <span id="lastRefresh">Loading…</span>
     </div>
-    <button class="refresh-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">Light</button>
+    <button class="refresh-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">System Theme</button>
     <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
   </div>
 </div>
@@ -546,6 +546,7 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
         <div class="loading"><div class="spinner"></div> Loading Jira…</div>
       </div>
       <div id="trendSection"></div>
+      <canvas id="trendChart" style="width:100%;height:140px;margin-top:14px;display:none;"></canvas>
     </div>
   </div>
 
@@ -564,11 +565,19 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
   <div class="card span-2">
     <div class="card-header">
       <div class="card-title">Systems Status</div>
-      <div class="card-meta">Manual · click to update</div>
+      <div style="display:flex;align-items:center;gap:8px;"><div class="card-meta">Manual · click to update</div><button class="refresh-btn" onclick="toggleRagHistory()" id="ragHistoryBtn" style="font-size:10px;padding:2px 8px;">History</button></div>
     </div>
     <div class="card-body" style="padding: 8px 16px;">
       <div class="rag-list" id="ragList"></div>
     </div>
+      <div id="ragHistoryPanel" style="display:none;padding:8px 0 4px;">
+        <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Status History</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+          <input type="date" id="ragHistoryDate" class="modal-updater" style="width:140px;margin-bottom:0;" oninput="loadRagHistoryDate()">
+          <div id="ragHistoryStatus" style="font-size:11px;color:var(--text-muted);"></div>
+        </div>
+        <div id="ragHistoryContent"></div>
+      </div>
   </div>
 
   <!-- ORDER MESSAGES -->
@@ -631,8 +640,127 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
 // In production these come from data.json written by GitHub Actions.
 // For demo, we use realistic mock data.
 // THEME
-function toggleTheme(){var b=document.body,btn=document.getElementById('themeBtn'),cur=localStorage.getItem('theme')||'auto',dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(cur==='auto'){if(dark){b.classList.add('force-light');localStorage.setItem('theme','light');btn.textContent='Dark';}else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent=dark?'Light':'Dark';}}
-function applyTheme(){var theme=localStorage.getItem('theme')||'auto',btn=document.getElementById('themeBtn'),dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(theme==='light'){document.body.classList.add('force-light');btn.textContent='Dark';}else if(theme==='dark'){document.body.classList.add('force-dark');btn.textContent='Light';}else{btn.textContent=dark?'Light':'Dark';}}
+function toggleTheme(){var b=document.body,btn=document.getElementById('themeBtn'),cur=localStorage.getItem('theme')||'auto',dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(cur==='auto'){if(dark){b.classList.add('force-light');localStorage.setItem('theme','light');btn.textContent='Dark Mode';}else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent='System Theme';}}
+function applyTheme(){var theme=localStorage.getItem('theme')||'auto',btn=document.getElementById('themeBtn'),dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(theme==='light'){document.body.classList.add('force-light');btn.textContent='Dark Mode';}else if(theme==='dark'){document.body.classList.add('force-dark');btn.textContent='Light Mode';}else{btn.textContent='System Theme';}}
+
+// CHART
+let trendChartInstance = null;
+function renderChart(trend) {
+  const canvas = document.getElementById('trendChart');
+  if (!canvas || typeof Chart === 'undefined') return;
+  canvas.style.display = 'block';
+  const labels = trend.map(d => d.date);
+  const isDark = document.body.classList.contains('force-dark') || (!document.body.classList.contains('force-light') && window.matchMedia('(prefers-color-scheme:dark)').matches);
+  const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const txt = isDark ? '#504e48' : '#a09e96';
+  if (trendChartInstance) trendChartInstance.destroy();
+  trendChartInstance = new Chart(canvas, {
+    data: {
+      labels,
+      datasets: [
+        { type: 'bar', label: 'Opened', data: trend.map(d=>d.opened), backgroundColor: isDark?'rgba(251,191,36,0.5)':'rgba(184,112,8,0.4)', borderRadius: 2, yAxisID: 'y2' },
+        { type: 'bar', label: 'Closed', data: trend.map(d=>d.closed), backgroundColor: isDark?'rgba(74,222,128,0.5)':'rgba(42,122,66,0.4)', borderRadius: 2, yAxisID: 'y2' },
+        { type: 'line', label: 'Open', data: trend.map(d=>d.currently_open), borderColor: isDark?'#f87171':'#b83224', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'y1' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { labels: { color: txt, font: { size: 10, family: 'Helvetica Neue, Helvetica, Arial, sans-serif' }, boxWidth: 10, padding: 10 } } },
+      scales: {
+        x: { grid: { color: grid }, ticks: { color: txt, font: { size: 10 } } },
+        y1: { position: 'left', grid: { color: grid }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Open', color: txt, font: { size: 9 } } },
+        y2: { position: 'right', grid: { drawOnChartArea: false }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Daily', color: txt, font: { size: 9 } } },
+      }
+    }
+  });
+}
+
+
+// RAG HISTORY
+const GITHUB_REPO = 'scheng924/retail-tech-ops-daily';
+const RAG_HISTORY_FILE = 'rag-history.json';
+
+function toggleRagHistory() {
+  const panel = document.getElementById('ragHistoryPanel');
+  const btn = document.getElementById('ragHistoryBtn');
+  const open = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  btn.textContent = open ? 'Close' : 'History';
+  if (open) {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('ragHistoryDate').value = today;
+    loadRagHistoryDate();
+  }
+}
+
+async function loadRagHistoryDate() {
+  const date = document.getElementById('ragHistoryDate').value;
+  const status = document.getElementById('ragHistoryStatus');
+  const content = document.getElementById('ragHistoryContent');
+  if (!date) return;
+  status.textContent = 'Loading...';
+  try {
+    const resp = await fetch('https://raw.githubusercontent.com/' + GITHUB_REPO + '/main/' + RAG_HISTORY_FILE + '?t=' + Date.now());
+    if (!resp.ok) { status.textContent = 'No history yet'; content.innerHTML = ''; return; }
+    const all = await resp.json();
+    // Find entries for this date
+    const entries = (all[date] || []).slice().reverse();
+    if (!entries.length) { status.textContent = 'No entries for this date'; content.innerHTML = ''; return; }
+    status.textContent = entries.length + ' snapshot' + (entries.length > 1 ? 's' : '');
+    const labels = { green: 'Healthy', amber: 'Degraded', red: 'Outage' };
+    content.innerHTML = entries.map(snap => `
+      <div style="margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">${snap.time}${snap.savedBy ? ' · ' + snap.savedBy : ''}</div>
+        ${snap.systems.map(s => `
+          <div style="display:grid;grid-template-columns:120px 80px 1fr;gap:6px;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px;">
+            <span style="color:var(--text-primary);font-weight:500;">${s.system}</span>
+            <span class="rag-pill ${s.status}" style="font-size:9px;padding:2px 8px;">${labels[s.status]||s.status}</span>
+            <span style="color:var(--text-secondary);">${s.note||''}</span>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+  } catch(e) { status.textContent = 'Error loading history'; }
+}
+
+async function saveRagSnapshot(ragState, savedBy) {
+  const pat = localStorage.getItem('github_pat');
+  if (!pat) {
+    const p = prompt('Enter GitHub PAT to save RAG history (stored locally only):');
+    if (!p) return;
+    localStorage.setItem('github_pat', p);
+  }
+  const token = localStorage.getItem('github_pat');
+  const date = new Date().toISOString().split('T')[0];
+  const time = new Date().toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' });
+  const snap = {
+    time,
+    savedBy,
+    systems: Object.entries(ragState).map(([system, s]) => ({ system, status: s.status, note: s.note || '' }))
+  };
+  try {
+    // Get current file
+    const getResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + RAG_HISTORY_FILE, {
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }
+    });
+    let all = {}, sha = null;
+    if (getResp.ok) { const d = await getResp.json(); sha = d.sha; const s=atob(d.content.replace(/\n/g,'')); const b=new Uint8Array(s.length); for(let i=0;i<s.length;i++) b[i]=s.charCodeAt(i); all = JSON.parse(new TextDecoder('utf-8').decode(b)); }
+    if (!all[date]) all[date] = [];
+    all[date].push(snap);
+    const str = JSON.stringify(all, null, 2);
+    const outBytes = new TextEncoder().encode(str);
+    let bin = ''; for(let i=0;i<outBytes.length;i++) bin += String.fromCharCode(outBytes[i]);
+    const body = { message: 'chore: rag snapshot ' + date + ' ' + time, content: btoa(bin) };
+    if (sha) body.sha = sha;
+    const putResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + RAG_HISTORY_FILE, {
+      method: 'PUT', headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!putResp.ok) { const e = await putResp.json(); if(e.message && e.message.includes('Bad credentials')) { localStorage.removeItem('github_pat'); alert('PAT invalid, please try again.'); } }
+  } catch(e) { console.error('RAG history save error', e); }
+}
+
 const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
 
@@ -747,6 +875,7 @@ function renderTrend(trend) {
     </tr>
   `).join('');
 
+  renderChart(trend);
   document.getElementById('trendSection').innerHTML = `
     <table class="trend-table">
       <thead>
@@ -886,6 +1015,7 @@ function saveRag() {
     updatedAt: new Date().toISOString()
   };
   localStorage.setItem('ragState', JSON.stringify(ragState));
+  saveRagSnapshot(ragState, document.getElementById('modalUpdater').value.trim());
   closeModal();
   renderRag();
 }
