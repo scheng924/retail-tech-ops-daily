@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retail Tech Ops · Daily</title>
+<title>Retail Tech Ops Â· Daily</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -227,7 +227,7 @@ body {
   font-weight: 500;
 }
 .trend-table tr.today td:first-child::after {
-  content: ' ←';
+  content: ' â';
   color: var(--text-muted);
   font-weight: 300;
 }
@@ -510,6 +510,22 @@ body {
   color: var(--bg); padding: 7px 16px;
   border-radius: 4px; cursor: pointer;
 }
+/* THEME OVERRIDE */
+body.force-light {
+  --bg:#f4f3ef;--surface:#ffffff;--surface2:#eeede7;--border:#dddcd4;
+  --text-primary:#1a1917;--text-secondary:#6b6960;--text-muted:#a09e96;
+  --green:#2a7a42;--green-bg:#e6f4ec;--green-dot:#34a85a;
+  --amber:#b87008;--amber-bg:#fef3d8;--amber-dot:#e8920a;
+  --red:#b83224;--red-bg:#fdecea;--red-dot:#e03e2e;
+}
+body.force-dark {
+  --bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c29;
+  --text-primary:#eeede7;--text-secondary:#908e86;--text-muted:#504e48;
+  --green:#4ade80;--green-bg:#0a2018;--green-dot:#34a85a;
+  --amber:#fbbf24;--amber-bg:#211800;--amber-dot:#e8920a;
+  --red:#f87171;--red-bg:#200a0a;--red-dot:#e03e2e;
+}
+#themeToggle { font-size: 14px; padding: 4px 10px; }
 </style>
 </head>
 <body>
@@ -517,14 +533,14 @@ body {
 <div class="header">
   <div class="header-left">
     <div class="wordmark">RETAIL TECH OPS <span>/ DAILY</span></div>
-    <div class="date-badge" id="headerDate">—</div>
+    <div class="date-badge" id="headerDate">â</div>
   </div>
   <div class="header-right">
     <div class="refresh-info">
       <div class="refresh-dot"></div>
-      <span id="lastRefresh">Loading…</span>
+      <span id="lastRefresh">Loadingâ¦</span>
     </div>
-    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    <button class="refresh-btn" onclick="loadData()">â» Refresh</button>
   </div>
 </div>
 
@@ -533,12 +549,12 @@ body {
   <!-- INCIDENT METRICS + TREND (spans 2 cols) -->
   <div class="card span-2">
     <div class="card-header">
-      <div class="card-title">Incident Management · JSM</div>
+      <div class="card-title">Incident Management Â· JSM</div>
       <div class="card-meta" id="jiraMeta">via Jira Service Management</div>
     </div>
     <div class="card-body">
       <div class="metrics-grid" id="metricsGrid">
-        <div class="loading"><div class="spinner"></div> Loading Jira…</div>
+        <div class="loading"><div class="spinner"></div> Loading Jiraâ¦</div>
       </div>
       <div id="trendSection"></div>
     </div>
@@ -547,11 +563,11 @@ body {
   <!-- ON-CALL -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title">On-Call · PagerDuty</div>
+      <div class="card-title">On-Call Â· PagerDuty</div>
       <div class="card-meta">Single rotation</div>
     </div>
     <div class="card-body" id="oncallBody">
-      <div class="loading"><div class="spinner"></div> Loading PagerDuty…</div>
+      <div class="loading"><div class="spinner"></div> Loading PagerDutyâ¦</div>
     </div>
   </div>
 
@@ -559,7 +575,7 @@ body {
   <div class="card span-2">
     <div class="card-header">
       <div class="card-title">Systems Status</div>
-      <div class="card-meta">Manual · click to update</div>
+      <div class="card-meta">Manual Â· click to update</div>
     </div>
     <div class="card-body" style="padding: 8px 16px;">
       <div class="rag-list" id="ragList"></div>
@@ -570,7 +586,7 @@ body {
   <div class="card">
     <div class="card-header">
       <div class="card-title">Order Messages</div>
-      <div class="card-meta" id="orderMeta">JSM · last 24h</div>
+      <div class="card-meta" id="orderMeta">JSM Â· last 24h</div>
     </div>
     <div class="card-body" id="orderBody">
       <div class="loading"><div class="spinner"></div></div>
@@ -580,7 +596,7 @@ body {
 </div>
 
 <div class="footer">
-  <span>Retail Technology Operations · Arc'teryx</span>
+  <span>Retail Technology Operations Â· Arc'teryx</span>
   <span id="footerRefresh">Data refreshes every 15 min via GitHub Actions</span>
 </div>
 
@@ -588,14 +604,14 @@ body {
 <div class="modal-overlay" id="ragModal">
   <div class="modal">
     <div class="modal-title">Update System Status</div>
-    <div class="modal-system" id="modalSystemName">—</div>
+    <div class="modal-system" id="modalSystemName">â</div>
     <div class="rag-options">
-      <button class="rag-opt-btn green" onclick="selectRag('green')">● Healthy</button>
-      <button class="rag-opt-btn amber" onclick="selectRag('amber')">● Degraded</button>
-      <button class="rag-opt-btn red" onclick="selectRag('red')">● Outage</button>
+      <button class="rag-opt-btn green" onclick="selectRag('green')">â Healthy</button>
+      <button class="rag-opt-btn amber" onclick="selectRag('amber')">â Degraded</button>
+      <button class="rag-opt-btn red" onclick="selectRag('red')">â Outage</button>
     </div>
     <div class="modal-note-label">Notes</div>
-    <textarea class="modal-note" id="modalNote" placeholder="e.g. 3 stores impacted in EMEA, monitoring…"></textarea>
+    <textarea class="modal-note" id="modalNote" placeholder="e.g. 3 stores impacted in EMEA, monitoringâ¦"></textarea>
     <div class="modal-updater-label">Updated by</div>
     <input class="modal-updater" id="modalUpdater" placeholder="Your name" />
     <div class="modal-actions">
@@ -609,7 +625,7 @@ body {
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
     <div class="modal-title">Update Order Messages</div>
-    <div class="modal-system" id="orderModalLabel">—</div>
+    <div class="modal-system" id="orderModalLabel">â</div>
     <div class="modal-note-label">Count</div>
     <input class="modal-updater" id="orderModalValue" type="number" min="0" placeholder="e.g. 2530" style="margin-bottom:10px"/>
     <div class="modal-updater-label">Updated by</div>
@@ -622,23 +638,52 @@ body {
 </div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
+// âââ CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // In production these come from data.json written by GitHub Actions.
 // For demo, we use realistic mock data.
+// THEME TOGGLE
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById('themeToggle');
+  const current = localStorage.getItem('theme') || 'auto';
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (current === 'auto') {
+    if (sysDark) {
+      body.classList.add('force-light'); localStorage.setItem('theme','light'); btn.textContent='☽';
+    } else {
+      body.classList.add('force-dark'); localStorage.setItem('theme','dark'); btn.textContent='☀︎';
+    }
+  } else if (current === 'light') {
+    body.classList.remove('force-light'); body.classList.add('force-dark');
+    localStorage.setItem('theme','dark'); btn.textContent='☀︎';
+  } else {
+    body.classList.remove('force-dark','force-light');
+    localStorage.setItem('theme','auto');
+    btn.textContent = sysDark ? '☽' : '☀︎';
+  }
+}
+function applyStoredTheme() {
+  const theme = localStorage.getItem('theme') || 'auto';
+  const btn = document.getElementById('themeToggle');
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (theme === 'light') { document.body.classList.add('force-light'); btn.textContent='☽'; }
+  else if (theme === 'dark') { document.body.classList.add('force-dark'); btn.textContent='☀︎'; }
+  else { btn.textContent = sysDark ? '☽' : '☀︎'; }
+}
 const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
 
-// ─── SYSTEMS ──────────────────────────────────────────────────────────────────
+// âââ SYSTEMS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const SYSTEMS = ['Digital Displays','Store Music','Network','Traffic System','Adyen Devices','VoIP','POS'];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
+// âââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let ragState = JSON.parse(localStorage.getItem('ragState') || '{}');
 let orderState = JSON.parse(localStorage.getItem('orderState') || '{"open":null,"opened_24h":null,"closed_24h":null,"updatedBy":"","updatedAt":null}');
 let modalTarget = null;
 let modalRagSelected = null;
 let orderModalKey = null;
 
-// ─── MOCK DATA ────────────────────────────────────────────────────────────────
+// âââ MOCK DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getMockData() {
   const days = ['15-Mar','16-Mar','17-Mar','18-Mar','19-Mar','20-Mar','21-Mar'];
   return {
@@ -657,7 +702,7 @@ function getMockData() {
         currently_open: [218,215,212,212,213,211,213][i],
       }))
     },
-    order_messages: null,  // manual — loaded from localStorage
+    order_messages: null,  // manual â loaded from localStorage
 
     pagerduty: {
       current_oncall: { name: 'Wayne Chen', initials: 'WC', level: 'L1 Primary', since: '2025-03-21T08:00:00Z' },
@@ -675,7 +720,7 @@ function getMockData() {
   };
 }
 
-// ─── LOAD ─────────────────────────────────────────────────────────────────────
+// âââ LOAD âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function loadData() {
   let data;
   if (USE_MOCK) {
@@ -691,7 +736,7 @@ async function loadData() {
   renderAll(data);
 }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
+// âââ RENDER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderAll(data) {
   updateHeader(data.fetched_at);
   renderMetrics(data.jira);
@@ -714,8 +759,8 @@ function renderMetrics(jira) {
   const today = jira.trend[jira.trend.length - 1];
   const cells = [
     { label: 'Open Tickets', value: jira.currently_open, cls: '' },
-    { label: 'P1 · Blocker / ASAP', value: jira.p1, cls: jira.p1 > 0 ? 'alert' : '' },
-    { label: 'P2 · High', value: jira.p2, cls: jira.p2 > 0 ? 'warn' : '' },
+    { label: 'P1 Â· Blocker / ASAP', value: jira.p1, cls: jira.p1 > 0 ? 'alert' : '' },
+    { label: 'P2 Â· High', value: jira.p2, cls: jira.p2 > 0 ? 'warn' : '' },
     { label: 'Open Problems', value: jira.open_problems, cls: jira.open_problems > 15 ? 'warn' : '' },
     { label: 'On-Call Tickets', value: today.on_call, cls: today.on_call > 0 ? 'warn' : '' },
   ];
@@ -759,10 +804,10 @@ function renderOrderMessages() {
   const om = orderState;
 
   function editableNum(key, label) {
-    const val = om[key] !== null ? om[key].toLocaleString() : '—';
+    const val = om[key] !== null ? om[key].toLocaleString() : 'â';
     return `
       <div class="order-card" onclick="openOrderModal('${key}', '${label}')" style="cursor:pointer">
-        <div class="order-label">${label} <span style="color:var(--text-muted);font-size:9px">✎</span></div>
+        <div class="order-label">${label} <span style="color:var(--text-muted);font-size:9px">â</span></div>
         <div class="order-value">${val}</div>
       </div>
     `;
@@ -770,7 +815,7 @@ function renderOrderMessages() {
 
   const ts = om.updatedAt
     ? new Date(om.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
-      (om.updatedBy ? ' · ' + om.updatedBy : '')
+      (om.updatedBy ? ' Â· ' + om.updatedBy : '')
     : 'Not yet updated';
 
   document.getElementById('orderBody').innerHTML = `
@@ -781,7 +826,7 @@ function renderOrderMessages() {
     </div>
     <div style="font-size:10px;color:var(--text-muted);margin-top:8px;text-align:right">${ts}</div>
   `;
-  document.getElementById('orderMeta').textContent = 'Manual · click to update';
+  document.getElementById('orderMeta').textContent = 'Manual Â· click to update';
 }
 
 function renderOncall(pd) {
@@ -802,9 +847,9 @@ function renderOncall(pd) {
         <div class="oncall-name">${oc.name}</div>
         <div class="oncall-level">
           ${oc.level}
-          <span class="oncall-active-badge">● Active</span>
+          <span class="oncall-active-badge">â Active</span>
         </div>
-        <div class="oncall-level" style="margin-top:4px">↑ ${esc.name} · ${esc.level}</div>
+        <div class="oncall-level" style="margin-top:4px">â ${esc.name} Â· ${esc.level}</div>
       </div>
     </div>
     <div class="week-schedule">
@@ -819,7 +864,7 @@ function renderRag() {
     const s = ragState[sys] || { status: 'green', note: '', updatedBy: '', updatedAt: null };
     const ts = s.updatedAt
       ? new Date(s.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
-        (s.updatedBy ? ' · ' + s.updatedBy : '')
+        (s.updatedBy ? ' Â· ' + s.updatedBy : '')
       : 'Not yet updated';
 
     const labels = { green: 'Healthy', amber: 'Degraded', red: 'Outage' };
@@ -840,7 +885,7 @@ function renderRag() {
   }).join('');
 }
 
-// ─── MODAL ────────────────────────────────────────────────────────────────────
+// âââ MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openModal(sys) {
   modalTarget = sys;
   const s = ragState[sys] || { status: 'green', note: '', updatedBy: '' };
@@ -887,7 +932,7 @@ document.getElementById('ragModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ─── ORDER MODAL ──────────────────────────────────────────────────────────────
+// âââ ORDER MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openOrderModal(key, label) {
   orderModalKey = key;
   document.getElementById('orderModalLabel').textContent = label;
@@ -913,7 +958,8 @@ document.getElementById('orderModal').addEventListener('click', function(e) {
   if (e.target === this) closeOrderModal();
 });
 
-// ─── AUTO-REFRESH ─────────────────────────────────────────────────────────────
+// âââ AUTO-REFRESH âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+applyStoredTheme();
 loadData();
 setInterval(loadData, 15 * 60 * 1000); // 15 min
 </script>
