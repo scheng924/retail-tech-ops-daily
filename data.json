@@ -1,10 +1,13 @@
 {
-  "fetched_at": "2026-03-23T05:57:24Z",
+  "fetched_at": "2026-03-23T06:13:41Z",
   "jira": {
     "currently_open": 350,
     "p1": 6,
     "p2": 18,
     "open_problems": 10,
+    "opened_24h": 0,
+    "closed_24h": 0,
+    "on_call_tickets": 0,
     "trend": [
       {
         "date": "17-Mar",
@@ -71,16 +74,26 @@
       "level": "L1 Primary",
       "since": "2026-03-23T00:00:00Z"
     },
-    "escalation": {
-      "name": "Eslampour, Arvand",
-      "initials": "EA",
-      "level": "L2 Escalation"
-    },
+    "escalation": null,
     "week_schedule": [
       {
         "day": "Mon",
         "date": "16",
         "name": "Eslampour, Arvand",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "23",
+        "name": "Olowu, Tolani",
+        "level": "L1",
+        "is_today": true
+      },
+      {
+        "day": "Mon",
+        "date": "30",
+        "name": "Patoc, Jr",
         "level": "L1",
         "is_today": false
       }
