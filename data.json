@@ -1,10 +1,10 @@
 {
-  "fetched_at": "2026-03-23T03:43:53Z",
+  "fetched_at": "2026-03-23T04:35:03Z",
   "jira": {
-    "currently_open": 0,
-    "p1": 0,
-    "p2": 0,
-    "open_problems": 0,
+    "currently_open": 350,
+    "p1": 6,
+    "p2": 18,
+    "open_problems": 10,
     "trend": [
       {
         "date": "17-Mar",
@@ -66,16 +66,24 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Unknown",
-      "initials": "UN",
+      "name": "Eslampour, Arvand",
+      "initials": "EA",
       "level": "L1 Primary",
       "since": "2026-03-23T00:00:00Z"
     },
     "escalation": {
-      "name": "Unknown",
-      "initials": "UN",
+      "name": "Eslampour, Arvand",
+      "initials": "EA",
       "level": "L2 Escalation"
     },
-    "week_schedule": []
+    "week_schedule": [
+      {
+        "day": "Mon",
+        "date": "16",
+        "name": "Eslampour, Arvand",
+        "level": "L1",
+        "is_today": false
+      }
+    ]
   }
 }
