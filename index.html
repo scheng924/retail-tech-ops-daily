@@ -297,20 +297,6 @@ body{font-family:'Helvetica Neue',HelveticaNeue,Helvetica,Arial,sans-serif;font-
 
 <script>
 
-// ── THEME ──────────────────────────────────────────────────────────────────
-const _THEMES=['System Theme','Light Mode','Dark Mode'];
-let _ti=0;
-function applyTheme(){
-  var t=localStorage.getItem('theme')||'auto';
-  var btn=document.getElementById('themeBtn');
-  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  document.body.classList.remove('force-light','force-dark');
-  if(t==='light'){document.body.classList.add('force-light');_ti=1;if(btn)btn.textContent='Light Mode';}
-  else if(t==='dark'){document.body.classList.add('force-dark');_ti=2;if(btn)btn.textContent='Dark Mode';}
-  else{_ti=0;if(btn)btn.textContent='System Theme';if(sysDark)document.body.classList.add('force-dark');}
-}
-function toggleTheme(){_ti=(_ti+1)%3;localStorage.setItem('theme',['auto','light','dark'][_ti]);applyTheme();}
-function applyStoredTheme(){applyTheme();}
 
 // ── DATE PICKER ─────────────────────────────────────────────────────────────
 function toggleDatePicker(){
@@ -446,6 +432,28 @@ async function saveRagSnapshot(ragState, savedBy) {
     if (!putResp.ok) { const e = await putResp.json(); if(e.message && e.message.includes('Bad credentials')) { localStorage.removeItem('github_pat'); alert('PAT invalid, please try again.'); } }
   } catch(e) { console.error('RAG history save error', e); }
 }
+
+
+// THEME
+const _THEMES=['System Theme','Light Mode','Dark Mode'];
+let _ti=(['auto','light','dark'].indexOf(localStorage.getItem('theme')||'auto'));
+if(_ti<0)_ti=0;
+
+function applyTheme(){
+  var t=['auto','light','dark'][_ti];
+  var btn=document.getElementById('themeBtn');
+  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  document.body.classList.remove('force-light','force-dark');
+  if(t==='light'){document.body.classList.add('force-light');if(btn)btn.textContent='Light Mode';}
+  else if(t==='dark'){document.body.classList.add('force-dark');if(btn)btn.textContent='Dark Mode';}
+  else{if(btn)btn.textContent='System Theme';if(sysDark)document.body.classList.add('force-dark');}
+}
+function toggleTheme(){
+  _ti=(_ti+1)%3;
+  localStorage.setItem('theme',['auto','light','dark'][_ti]);
+  applyTheme();
+}
+function applyStoredTheme(){applyTheme();}
 
 const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
@@ -627,7 +635,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        ${esc ? `<div class="oncall-level" style="margin-top:4px">↑ ${(esc||{}).name||""} · ${(esc||{}).level||""}</div>` : ''}
+        ${esc ? (esc ? `<div class="oncall-level" style="margin-top:4px">↑ ${(esc||{}).name||""} · ${(esc||{}).level||""}</div>` : "") : ''}
       </div>
     </div>
     <div class="week-schedule">
