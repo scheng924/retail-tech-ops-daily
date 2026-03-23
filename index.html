@@ -296,22 +296,9 @@ body{font-family:'Helvetica Neue',HelveticaNeue,Helvetica,Arial,sans-serif;font-
 </div>
 
 <script>
-const _THEMES=['System Theme','Light Mode','Dark Mode'];
-let _ti=0;
-(function(){var t=localStorage.getItem('theme')||'auto';_ti=t==='light'?1:t==='dark'?2:0;})();
-function applyTheme(){
-  var labels=['System Theme','Light Mode','Dark Mode'];
-  var t=['auto','light','dark'][_ti];
-  var btn=document.getElementById('themeBtn');
-  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  document.body.classList.remove('force-light','force-dark');
-  if(t==='light')document.body.classList.add('force-light');
-  else if(t==='dark')document.body.classList.add('force-dark');
-  else if(sysDark)document.body.classList.add('force-dark');
-  if(btn)btn.textContent=labels[_ti];
-}
-function toggleTheme(){_ti=(_ti+1)%3;localStorage.setItem('theme',['auto','light','dark'][_ti]);applyTheme();}
-function applyStoredTheme(){applyTheme();}
+
+
+
 function toggleDatePicker(){var p=document.getElementById('dpPanel');var c=document.getElementById('dateCaret');var o=!p.classList.contains('open');p.classList.toggle('open',o);if(c)c.textContent=o?'▴':'▾';}
 
 
@@ -328,7 +315,6 @@ function toggleDatePicker(){
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 // In production these come from data.json written by GitHub Actions.
 // For demo, we use realistic mock data.
-// THEME
 else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent='System Theme';}}
 
 
@@ -417,8 +403,31 @@ async function saveRagSnapshot(ragState, savedBy) {
 }
 
 
-// THEME
 
+// THEME ─────────────────────────────────────────────────────────────────────
+const _THEMES=['System Theme','Light Mode','Dark Mode'];
+let _ti=(function(){var t=localStorage.getItem('theme')||'auto';return t==='light'?1:t==='dark'?2:0;})();
+function applyTheme(){
+  var labels=['System Theme','Light Mode','Dark Mode'];
+  var keys=['auto','light','dark'];
+  var btn=document.getElementById('themeBtn');
+  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  document.body.classList.remove('force-light','force-dark');
+  if(keys[_ti]==='light')document.body.classList.add('force-light');
+  else if(keys[_ti]==='dark')document.body.classList.add('force-dark');
+  else if(sysDark)document.body.classList.add('force-dark');
+  if(btn)btn.textContent=labels[_ti];
+}
+function toggleTheme(){_ti=(_ti+1)%3;localStorage.setItem('theme',['auto','light','dark'][_ti]);applyTheme();}
+function applyStoredTheme(){applyTheme();}
+function toggleDatePicker(){
+  var p=document.getElementById('dpPanel');
+  var c=document.getElementById('dateCaret');
+  var o=!p.classList.contains('open');
+  p.classList.toggle('open',o);
+  if(c)c.textContent=o?'▴':'▾';
+}
+// ─────────────────────────────────────────────────────────────────────────────
 const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
 
