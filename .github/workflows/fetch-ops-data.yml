@@ -27,15 +27,16 @@ jobs:
           PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}
         run: |
           python3 - <<'EOF'
-          import json, os, urllib.request, urllib.parse, base64, datetime
+          import json, os, urllib.request, base64, datetime
 
-          JIRA_BASE   = os.environ['JIRA_BASE_URL']
-          JIRA_EMAIL  = os.environ['JIRA_EMAIL']
-          JIRA_TOKEN  = os.environ['JIRA_API_TOKEN']
-          PD_TOKEN    = os.environ['PD_API_TOKEN']
-          PD_SCHED    = os.environ['PD_SCHEDULE_ID']
+          JIRA_BASE  = os.environ['JIRA_BASE_URL']
+          JIRA_EMAIL = os.environ['JIRA_EMAIL']
+          JIRA_TOKEN = os.environ['JIRA_API_TOKEN']
+          PD_TOKEN   = os.environ['PD_API_TOKEN']
+          PD_SCHED   = os.environ['PD_SCHEDULE_ID']
 
-          now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+          now     = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+          today   = now.strftime('%Y-%m-%d')
 
           jira_creds = base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()
           jira_headers = {
@@ -51,14 +52,14 @@ jobs:
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read()).get('count', 0)
 
-          ago_24h = (now - datetime.timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M:%SZ')
-          currently_open  = jira_count('project = RTS AND status != Done')
-          p1              = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
-          p2              = jira_count('project = RTS AND priority = High AND status != Done')
-          open_problems   = jira_count('project = RTS AND issuetype = Problem AND status != Done')
-          opened_24h      = jira_count(f'project = RTS AND created >= "{ago_24h}"')
-          closed_24h      = jira_count(f'project = RTS AND resolutiondate >= "{ago_24h}"')
-          on_call_tickets = jira_count('project = RTS AND status != Done AND labels = on-call')
+          ago_24h        = (now - datetime.timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M:%SZ')
+          currently_open = jira_count('project = RTS AND status != Done')
+          p1             = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
+          p2             = jira_count('project = RTS AND priority = High AND status != Done')
+          open_problems  = jira_count('project = RTS AND issuetype = Problem AND status != Done')
+          opened_24h     = jira_count(f'project = RTS AND created >= "{ago_24h}"')
+          closed_24h     = jira_count(f'project = RTS AND resolutiondate >= "{ago_24h}"')
+          on_call_tickets= jira_count('project = RTS AND status != Done AND labels = on-call')
 
           trend = []
           for i in range(6, -1, -1):
@@ -87,29 +88,35 @@ jobs:
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read())
 
-          oncall_resp = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=1')
-          oncalls = oncall_resp.get('oncalls', [])
+          # Current on-call (L1 primary)
+          oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=1')
+          oncalls      = oncall_resp.get('oncalls', [])
           current_user = oncalls[0]['user'] if oncalls else {'name': 'Unknown'}
 
-          esc_resp = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=2')
-          esc_oncalls = esc_resp.get('oncalls', [])
-          esc_user = esc_oncalls[0]['user'] if esc_oncalls else {'name': 'Unknown'}
+          # L2 escalation — only include if different person
+          esc_resp   = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=2')
+          esc_oncalls= esc_resp.get('oncalls', [])
+          esc_user   = esc_oncalls[0]['user'] if esc_oncalls else None
+          # Suppress L2 if same person as L1
+          if esc_user and esc_user.get('name') == current_user.get('name'):
+            esc_user = None
 
+          # 2-week schedule window
           week_start = now.strftime('%Y-%m-%dT00:00:00Z')
-          week_end   = (now + datetime.timedelta(days=6)).strftime('%Y-%m-%dT23:59:59Z')
+          week_end   = (now + datetime.timedelta(days=13)).strftime('%Y-%m-%dT23:59:59Z')
           week_sched = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&since={week_start}&until={week_end}&include[]=users')
           week_schedule = []
-          days_added = set()
+          dates_added = set()
           for entry in week_sched.get('oncalls', []):
-            start = datetime.datetime.strptime(entry['start'][:10], '%Y-%m-%d')
-            day_str = start.strftime('%a')
-            if day_str not in days_added:
-              days_added.add(day_str)
+            start    = datetime.datetime.strptime(entry['start'][:10], '%Y-%m-%d')
+            date_str = entry['start'][:10]
+            if date_str not in dates_added:
+              dates_added.add(date_str)
               week_schedule.append({
-                'day': day_str,
-                'date': start.strftime('%-d'),
-                'name': entry['user']['name'],
-                'level': 'L1',
+                'day':      start.strftime('%a'),
+                'date':     start.strftime('%-d'),
+                'name':     entry['user']['name'],
+                'level':    'L1',
                 'is_today': start.date() == now.date()
               })
 
@@ -117,40 +124,73 @@ jobs:
             parts = name.split()
             return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else name[:2].upper()
 
+          oc_block = {
+            'name':     current_user['name'],
+            'initials': initials(current_user['name']),
+            'level':    'L1 Primary',
+            'since':    now.strftime('%Y-%m-%dT00:00:00Z')
+          }
+          esc_block = {
+            'name':     esc_user['name'],
+            'initials': initials(esc_user['name']),
+            'level':    'L2 Escalation'
+          } if esc_user else None
+
           output = {
             'fetched_at': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
             'jira': {
-              'currently_open': currently_open,
-              'p1': p1,
-              'p2': p2,
-              'open_problems': open_problems,
-              'trend': trend
+              'currently_open':  currently_open,
+              'p1':              p1,
+              'p2':              p2,
+              'open_problems':   open_problems,
+              'opened_24h':      opened_24h,
+              'closed_24h':      closed_24h,
+              'on_call_tickets': on_call_tickets,
+              'trend':           trend
             },
             'pagerduty': {
-              'current_oncall': {
-                'name': current_user['name'],
-                'initials': initials(current_user['name']),
-                'level': 'L1 Primary',
-                'since': now.strftime('%Y-%m-%dT00:00:00Z')
-              },
-              'escalation': {
-                'name': esc_user['name'],
-                'initials': initials(esc_user['name']),
-                'level': 'L2 Escalation'
-              },
-              'week_schedule': week_schedule
+              'current_oncall': oc_block,
+              'escalation':     esc_block,
+              'week_schedule':  week_schedule
             }
           }
 
           with open('data.json', 'w') as f:
             json.dump(output, f, indent=2)
 
-          print(f"data.json written - open: {currently_open}, P1: {p1}, P2: {p2}")
+          # ── DAILY HISTORY SNAPSHOT ──────────────────────────────────────────
+          # Append today's snapshot to history.json only if today's key missing
+          history_file = 'history.json'
+          try:
+            with open(history_file, 'r') as f:
+              history = json.load(f)
+          except (FileNotFoundError, json.JSONDecodeError):
+            history = {}
+
+          if today not in history:
+            history[today] = {
+              'currently_open':  currently_open,
+              'p1':              p1,
+              'p2':              p2,
+              'open_problems':   open_problems,
+              'opened':          opened_24h,
+              'closed':          closed_24h,
+              'on_call_tickets': on_call_tickets,
+              'oncall_name':     current_user['name'],
+              'snapshot_time':   now.strftime('%H:%M UTC')
+            }
+            with open(history_file, 'w') as f:
+              json.dump(history, f, indent=2)
+            print(f"history.json: added snapshot for {today}")
+          else:
+            print(f"history.json: {today} already exists, skipping")
+
+          print(f"data.json written - open:{currently_open} P1:{p1} P2:{p2}")
           EOF
 
-      - name: Commit data.json
+      - name: Commit data files
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data.json
+          git add -f data.json history.json
           git diff --cached --quiet && echo "No changes" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
