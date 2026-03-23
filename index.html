@@ -296,6 +296,24 @@ body{font-family:'Helvetica Neue',HelveticaNeue,Helvetica,Arial,sans-serif;font-
 </div>
 
 <script>
+const _THEMES=['System Theme','Light Mode','Dark Mode'];
+let _ti=0;
+(function(){var t=localStorage.getItem('theme')||'auto';_ti=t==='light'?1:t==='dark'?2:0;})();
+function applyTheme(){
+  var labels=['System Theme','Light Mode','Dark Mode'];
+  var t=['auto','light','dark'][_ti];
+  var btn=document.getElementById('themeBtn');
+  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  document.body.classList.remove('force-light','force-dark');
+  if(t==='light')document.body.classList.add('force-light');
+  else if(t==='dark')document.body.classList.add('force-dark');
+  else if(sysDark)document.body.classList.add('force-dark');
+  if(btn)btn.textContent=labels[_ti];
+}
+function toggleTheme(){_ti=(_ti+1)%3;localStorage.setItem('theme',['auto','light','dark'][_ti]);applyTheme();}
+function applyStoredTheme(){applyTheme();}
+function toggleDatePicker(){var p=document.getElementById('dpPanel');var c=document.getElementById('dateCaret');var o=!p.classList.contains('open');p.classList.toggle('open',o);if(c)c.textContent=o?'▴':'▾';}
+
 
 
 // ── DATE PICKER ─────────────────────────────────────────────────────────────
@@ -311,42 +329,7 @@ function toggleDatePicker(){
 // In production these come from data.json written by GitHub Actions.
 // For demo, we use realistic mock data.
 // THEME
-function toggleTheme(){var b=document.body,btn=document.getElementById('themeBtn'),cur=localStorage.getItem('theme')||'auto',dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(cur==='auto'){if(dark){b.classList.add('force-light');localStorage.setItem('theme','light');btn.textContent='Dark Mode';}else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent='System Theme';}}
-function applyTheme(){var theme=localStorage.getItem('theme')||'auto',btn=document.getElementById('themeBtn'),dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(theme==='light'){document.body.classList.add('force-light');btn.textContent='Dark Mode';}else if(theme==='dark'){document.body.classList.add('force-dark');btn.textContent='Light Mode';}else{btn.textContent='System Theme';}}
-
-// CHART
-let trendChartInstance = null;
-function renderChart(trend) {
-  const canvas = document.getElementById('trendChart');
-  if (!canvas || typeof Chart === 'undefined') return;
-  canvas.style.display = 'block';
-  document.getElementById('chartContainer').style.display = 'block';
-  const labels = trend.map(d => d.date);
-  const isDark = document.body.classList.contains('force-dark') || (!document.body.classList.contains('force-light') && window.matchMedia('(prefers-color-scheme:dark)').matches);
-  const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-  const txt = isDark ? '#504e48' : '#a09e96';
-  if (trendChartInstance) trendChartInstance.destroy();
-  trendChartInstance = new Chart(canvas, {
-    data: {
-      labels,
-      datasets: [
-        { type: 'bar', label: 'Opened', data: trend.map(d=>d.opened), backgroundColor: isDark?'rgba(251,191,36,0.5)':'rgba(184,112,8,0.4)', borderRadius: 2, yAxisID: 'y2' },
-        { type: 'bar', label: 'Closed', data: trend.map(d=>d.closed), backgroundColor: isDark?'rgba(74,222,128,0.5)':'rgba(42,122,66,0.4)', borderRadius: 2, yAxisID: 'y2' },
-        { type: 'line', label: 'Open', data: trend.map(d=>d.currently_open), borderColor: isDark?'#f87171':'#b83224', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'y1' },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: { legend: { labels: { color: txt, font: { size: 10, family: 'Helvetica Neue, Helvetica, Arial, sans-serif' }, boxWidth: 10, padding: 10 } } },
-      scales: {
-        x: { grid: { color: grid }, ticks: { color: txt, font: { size: 10 } } },
-        y1: { position: 'left', grid: { color: grid }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Open', color: txt, font: { size: 9 } } },
-        y2: { position: 'right', grid: { drawOnChartArea: false }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Daily', color: txt, font: { size: 9 } } },
-      }
-    }
-  });
-}
+else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent='System Theme';}}
 
 
 // RAG HISTORY
@@ -435,25 +418,6 @@ async function saveRagSnapshot(ragState, savedBy) {
 
 
 // THEME
-const _THEMES=['System Theme','Light Mode','Dark Mode'];
-let _ti=(['auto','light','dark'].indexOf(localStorage.getItem('theme')||'auto'));
-if(_ti<0)_ti=0;
-
-function applyTheme(){
-  var t=['auto','light','dark'][_ti];
-  var btn=document.getElementById('themeBtn');
-  var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  document.body.classList.remove('force-light','force-dark');
-  if(t==='light'){document.body.classList.add('force-light');if(btn)btn.textContent='Light Mode';}
-  else if(t==='dark'){document.body.classList.add('force-dark');if(btn)btn.textContent='Dark Mode';}
-  else{if(btn)btn.textContent='System Theme';if(sysDark)document.body.classList.add('force-dark');}
-}
-function toggleTheme(){
-  _ti=(_ti+1)%3;
-  localStorage.setItem('theme',['auto','light','dark'][_ti]);
-  applyTheme();
-}
-function applyStoredTheme(){applyTheme();}
 
 const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
@@ -635,7 +599,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        ${esc ? (esc ? `<div class="oncall-level" style="margin-top:4px">↑ ${(esc||{}).name||""} · ${(esc||{}).level||""}</div>` : "") : ''}
+        ${esc ? (esc ? (esc?`<div class="oncall-level" style="margin-top:4px">↑ ${(esc||{}).name||""} · ${(esc||{}).level||""}</div>`:"") : "") : ''}
       </div>
     </div>
     <div class="week-schedule">
