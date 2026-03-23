@@ -2,8 +2,8 @@ name: Fetch Ops Data
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # every 15 minutes
-  workflow_dispatch:          # allow manual trigger
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -40,31 +40,25 @@ jobs:
           jira_creds = base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()
           jira_headers = {
             'Authorization': f'Basic {jira_creds}',
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
           }
 
-          def jira_search(jql):
-            params = urllib.parse.urlencode({'jql': jql, 'maxResults': '1', 'fields': 'id'})
-            url = f"{JIRA_BASE}/rest/api/3/search/jql?{params}"
-            req = urllib.request.Request(url, headers=jira_headers)
-            try:
-              with urllib.request.urlopen(req) as r:
-                data = json.loads(r.read())
-                return data.get('total', 0)
-            except urllib.error.HTTPError as e:
-              body = e.read().decode()
-              print(f"Jira 400 on JQL: {jql}")
-              print(f"Response: {body}")
-              raise
+          def jira_count(jql):
+            url = f"{JIRA_BASE}/rest/api/3/search/approximate-count"
+            payload = json.dumps({"jql": jql}).encode()
+            req = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
+            with urllib.request.urlopen(req) as r:
+              return json.loads(r.read()).get('count', 0)
 
           ago_24h = (now - datetime.timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M:%SZ')
-          currently_open  = jira_search('project = RTS AND status != Done')
-          p1              = jira_search('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
-          p2              = jira_search('project = RTS AND priority = High AND status != Done')
-          open_problems   = jira_search('project = RTS AND issuetype = Problem AND status != Done')
-          opened_24h      = jira_search(f'project = RTS AND created >= "{ago_24h}"')
-          closed_24h      = jira_search(f'project = RTS AND resolutiondate >= "{ago_24h}"')
-          on_call_tickets = jira_search('project = RTS AND status != Done AND labels = on-call')
+          currently_open  = jira_count('project = RTS AND status != Done')
+          p1              = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
+          p2              = jira_count('project = RTS AND priority = High AND status != Done')
+          open_problems   = jira_count('project = RTS AND issuetype = Problem AND status != Done')
+          opened_24h      = jira_count(f'project = RTS AND created >= "{ago_24h}"')
+          closed_24h      = jira_count(f'project = RTS AND resolutiondate >= "{ago_24h}"')
+          on_call_tickets = jira_count('project = RTS AND status != Done AND labels = on-call')
 
           trend = []
           for i in range(6, -1, -1):
@@ -76,10 +70,10 @@ jobs:
             trend.append({
               'date': label,
               'is_today': i == 0,
-              'currently_open': jira_search(f'project = RTS AND status != Done AND created <= "{de}"'),
-              'opened': jira_search(f'project = RTS AND created >= "{ds}" AND created <= "{de}"'),
-              'closed': jira_search(f'project = RTS AND resolutiondate >= "{ds}" AND resolutiondate <= "{de}"'),
-              'on_call': jira_search(f'project = RTS AND labels = on-call AND created >= "{ds}" AND created <= "{de}"'),
+              'currently_open': jira_count(f'project = RTS AND status != Done AND created <= "{de}"'),
+              'opened': jira_count(f'project = RTS AND created >= "{ds}" AND created <= "{de}"'),
+              'closed': jira_count(f'project = RTS AND resolutiondate >= "{ds}" AND resolutiondate <= "{de}"'),
+              'on_call': jira_count(f'project = RTS AND labels = on-call AND created >= "{ds}" AND created <= "{de}"'),
             })
 
           pd_headers = {
