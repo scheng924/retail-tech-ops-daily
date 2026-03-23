@@ -91,7 +91,8 @@ body{font-family:'Helvetica Neue',HelveticaNeue,Helvetica,Arial,sans-serif;font-
 .trend-table tr.today td:first-child::after{content:' ←';opacity:.22;font-weight:300;}
 
 /* CHART */
-#trendChart{width:100%;height:100px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:none;}
+.chart-container{width:100%;height:120px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:none;position:relative;}
+#trendChart{display:block;width:100%;height:100%;}
 
 /* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;padding:22px;color:var(--text-muted);font-size:10px;gap:7px;}
@@ -206,7 +207,7 @@ body{font-family:'Helvetica Neue',HelveticaNeue,Helvetica,Arial,sans-serif;font-
     </div>
     <div class="card-body">
       <div id="trendSection"></div>
-      <canvas id="trendChart"></canvas>
+      <div class="chart-container" id="chartContainer"><canvas id="trendChart"></canvas></div>
     </div>
   </div>
 
@@ -333,6 +334,7 @@ function renderChart(trend) {
   const canvas = document.getElementById('trendChart');
   if (!canvas || typeof Chart === 'undefined') return;
   canvas.style.display = 'block';
+  document.getElementById('chartContainer').style.display = 'block';
   const labels = trend.map(d => d.date);
   const isDark = document.body.classList.contains('force-dark') || (!document.body.classList.contains('force-light') && window.matchMedia('(prefers-color-scheme:dark)').matches);
   const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
