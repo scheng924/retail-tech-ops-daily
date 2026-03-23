@@ -1,7 +1,7 @@
 {
-  "fetched_at": "2026-03-23T14:39:27Z",
+  "fetched_at": "2026-03-23T15:07:34Z",
   "jira": {
-    "currently_open": 345,
+    "currently_open": 344,
     "p1": 7,
     "p2": 21,
     "open_problems": 10,
@@ -69,8 +69,8 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Eslampour, Arvand",
-      "initials": "EA",
+      "name": "Olowu, Tolani",
+      "initials": "OT",
       "level": "L1 Primary",
       "since": "2026-03-23T00:00:00Z"
     },
