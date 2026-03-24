@@ -648,7 +648,7 @@ let trendChartInstance = null;
 function renderChart(trend) {
   const canvas = document.getElementById('trendChart');
   if (!canvas || typeof Chart === 'undefined') return;
-  canvas.style.display = 'block';
+  canvas.style.display = 'block'; canvas.style.height = '120px'; canvas.parentElement.style.height = '120px'; canvas.parentElement.style.overflow = 'hidden';
   const labels = trend.map(d => d.date);
   const isDark = document.body.classList.contains('force-dark') || (!document.body.classList.contains('force-light') && window.matchMedia('(prefers-color-scheme:dark)').matches);
   const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
