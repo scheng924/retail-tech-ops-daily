@@ -7,9 +7,9 @@
 <style>
 :root {
   --bg: #f4f3ef;
-  --surface: #ffffff;
+  --surface: #ffffff
   --surface2: #eeede7;
-  --border: #dddcd4;
+  --border: #dddcd4; 
   --text-primary: #1a1917;
   --text-secondary: #6b6960;
   --text-muted: #a09e96;
@@ -941,7 +941,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        <div class="oncall-level" style="margin-top:4px">↑ ${esc.name} · ${esc.level}</div>
+        <div class="oncall-level" style="margin-top:4px">↑ ${(esc&&esc.name||"")} · ${(esc&&esc.level||"")}</div>
       </div>
     </div>
     <div class="week-schedule">
