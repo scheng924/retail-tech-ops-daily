@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-03-23T23:45:12Z",
+  "fetched_at": "2026-03-24T00:24:17Z",
   "jira": {
     "currently_open": 319,
     "p1": 3,
@@ -9,14 +9,6 @@
     "closed_24h": 0,
     "on_call_tickets": 0,
     "trend": [
-      {
-        "date": "17-Mar",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "18-Mar",
         "is_today": false,
@@ -59,6 +51,14 @@
       },
       {
         "date": "23-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "24-Mar",
         "is_today": true,
         "currently_open": 0,
         "opened": 0,
@@ -72,28 +72,28 @@
       "name": "Olowu, Tolani",
       "initials": "OT",
       "level": "L1 Primary",
-      "since": "2026-03-23T00:00:00Z"
+      "since": "2026-03-24T00:00:00Z"
     },
     "escalation": null,
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "16",
-        "name": "Eslampour, Arvand",
+        "date": "23",
+        "name": "Olowu, Tolani",
         "level": "L1",
         "is_today": false
       },
       {
         "day": "Mon",
-        "date": "23",
-        "name": "Olowu, Tolani",
+        "date": "30",
+        "name": "Patoc, Jr",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
-        "date": "30",
-        "name": "Patoc, Jr",
+        "date": "6",
+        "name": "Manders, Sam",
         "level": "L1",
         "is_today": false
       }
