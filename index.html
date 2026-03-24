@@ -924,9 +924,9 @@ function renderOrderMessages() {
 function renderOncall(pd) {
   const oc = pd.current_oncall;
   const esc = pd.escalation;
-  const scheduleRows = pd.week_schedule.map(d => `
+  const scheduleRows = pd.week_schedule.map((d,i) => `
     <div class="week-row ${d.is_today ? 'is-today' : ''}">
-      <div class="week-day ${d.is_today ? 'today' : ''}">${d.day}</div>
+      <div class="week-day ${d.is_today ? 'today' : ''}">${['Now','Next','After'][i]||d.day}</div>
       <div class="week-person">${d.name}</div>
       <div class="week-level">${d.level}</div>
     </div>
@@ -945,7 +945,7 @@ function renderOncall(pd) {
       </div>
     </div>
     <div class="week-schedule">
-      <div class="week-schedule-title">This Week</div>
+      <div class="week-schedule-title">ROTATION</div>
       ${scheduleRows}
     </div>
   `;
