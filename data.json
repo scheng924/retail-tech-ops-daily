@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-03-25T22:17:53Z",
+  "fetched_at": "2026-03-25T22:45:29Z",
   "jira": {
-    "currently_open": 325,
+    "currently_open": 328,
     "p1": 0,
-    "p2": 11,
+    "p2": 12,
     "open_problems": 10,
     "opened_24h": 0,
     "closed_24h": 0,
