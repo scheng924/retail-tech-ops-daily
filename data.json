@@ -1,22 +1,14 @@
 {
-  "fetched_at": "2026-03-27T23:56:09Z",
+  "fetched_at": "2026-03-28T00:39:01Z",
   "jira": {
-    "currently_open": 364,
-    "p1": 1,
-    "p2": 19,
+    "currently_open": 359,
+    "p1": 0,
+    "p2": 18,
     "open_problems": 11,
     "opened_24h": 0,
     "closed_24h": 0,
     "on_call_tickets": 0,
     "trend": [
-      {
-        "date": "21-Mar",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "22-Mar",
         "is_today": false,
@@ -59,6 +51,14 @@
       },
       {
         "date": "27-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "28-Mar",
         "is_today": true,
         "currently_open": 0,
         "opened": 0,
@@ -72,7 +72,7 @@
       "name": "Olowu, Tolani",
       "initials": "OT",
       "level": "L1 Primary",
-      "since": "2026-03-27T00:00:00Z"
+      "since": "2026-03-28T00:00:00Z"
     },
     "escalation": null,
     "week_schedule": [
