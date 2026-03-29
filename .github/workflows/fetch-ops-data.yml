@@ -62,7 +62,7 @@ jobs:
           # Fixed daily window: 07:00 yesterday -> 07:00 today (Vancouver PST = UTC-7)
           # Consistent for all viewers regardless of when they check the dashboard.
           # 07:00 PST = 14:00 UTC
-          today_7am = now.replace(hour=14, minute=0, second=0, microsecond=0)
+          today_7am = now.replace(hour=7, minute=0, second=0, microsecond=0)
           if now < today_7am:
             today_7am = today_7am - datetime.timedelta(days=1)
           yest_7am     = today_7am - datetime.timedelta(days=1)
