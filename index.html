@@ -766,7 +766,7 @@ const USE_MOCK = false; // set false when data.json is available
 const DATA_URL = './data.json';
 
 // ─── SYSTEMS ──────────────────────────────────────────────────────────────────
-const SYSTEMS = ['Digital Displays','Store Music','Network','Traffic System','Adyen Devices','VoIP','POS'];
+const SYSTEMS = ['Digital Displays','Music','Network','Traffic Counters','Payment Devices','VoIP','POS'];
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 let ragState = JSON.parse(localStorage.getItem('ragState') || '{}');
@@ -928,7 +928,7 @@ function renderOncall(pd) {
   const esc = pd.escalation;
   const scheduleRows = pd.week_schedule.map((d,i) => `
     <div class="week-row ${d.is_today ? 'is-today' : ''}">
-      <div class="week-day ${d.is_today ? 'today' : ''}">${d.day} ${d.date}</div>
+      <div class="week-day ${d.is_today ? 'today' : ''}">${(function(){if(d.start_date){var p=d.start_date.split('-');var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1];return m+' '+parseInt(p[2]);}return d.day+' '+d.date;}())}</div>
       <div class="week-person">${d.name}</div>
       <div class="week-level">${d.level}</div>
     </div>
