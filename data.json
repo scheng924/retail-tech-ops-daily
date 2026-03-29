@@ -1,13 +1,10 @@
 {
-  "fetched_at": "2026-03-29T06:35:06Z",
+  "fetched_at": "2026-03-29T06:37:05Z",
   "jira": {
     "currently_open": 382,
     "p1": 5,
     "p2": 20,
     "open_problems": 11,
-    "opened_24h": 0,
-    "closed_24h": 0,
-    "on_call_tickets": 0,
     "trend": [
       {
         "date": "23-Mar",
@@ -60,7 +57,7 @@
       {
         "date": "29-Mar",
         "is_today": true,
-        "currently_open": 0,
+        "currently_open": 382,
         "opened": 0,
         "closed": 0,
         "on_call": 0
@@ -79,6 +76,7 @@
       {
         "day": "Mon",
         "date": "23",
+        "start_date": "2026-03-23",
         "name": "Olowu, Tolani",
         "level": "L1",
         "is_today": false
@@ -86,6 +84,7 @@
       {
         "day": "Mon",
         "date": "30",
+        "start_date": "2026-03-30",
         "name": "Patoc, Jr",
         "level": "L1",
         "is_today": false
@@ -93,6 +92,7 @@
       {
         "day": "Mon",
         "date": "6",
+        "start_date": "2026-04-06",
         "name": "Manders, Sam",
         "level": "L1",
         "is_today": false
