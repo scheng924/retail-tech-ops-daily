@@ -50,10 +50,10 @@ jobs:
               return json.loads(r.read()).get('count', 0)
 
           def jira_count_date(jql):
-            # POST to /rest/api/3/search/jql with fields:[] — supports date filters, returns accurate total
-            url     = f"{JIRA_BASE}/rest/api/3/search/jql"
-            payload = json.dumps({"jql": jql, "maxResults": 0, "fields": []}).encode()
-            req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
+            # GET /search/jql with maxResults=0 — returns total count for date-filtered queries
+            encoded = urllib.parse.quote(jql)
+            url = f"{JIRA_BASE}/rest/api/3/search/jql?maxResults=0&fields=id&jql={encoded}"
+            req = urllib.request.Request(url, headers=jira_headers)
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read()).get('total', 0)
 
