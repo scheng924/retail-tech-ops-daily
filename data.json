@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-03-29T20:49:11Z",
+  "fetched_at": "2026-03-29T20:57:33Z",
   "jira": {
     "currently_open": 391,
     "p1": 4,
@@ -71,7 +71,20 @@
       "level": "L1 Primary",
       "since": "2026-03-29T00:00:00Z"
     },
-    "escalation": null,
+    "escalation_levels": [
+      {
+        "level": 1,
+        "name": "Olowu, Tolani"
+      },
+      {
+        "level": 2,
+        "name": "Cheng, Simon"
+      },
+      {
+        "level": 3,
+        "name": "Cheng, Simon"
+      }
+    ],
     "week_schedule": [
       {
         "day": "Mon",
