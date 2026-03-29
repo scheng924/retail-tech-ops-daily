@@ -943,7 +943,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        <div class="oncall-level" style="margin-top:4px">↑ ${(esc&&esc.name||"")} · ${(esc&&esc.level||"")}</div>
+        ${esc && esc.name ? `<div class="oncall-level" style="margin-top:4px">↑ · ${esc.name} · ${esc.level}</div>` : ""}
       </div>
     </div>
     <div class="week-schedule">
