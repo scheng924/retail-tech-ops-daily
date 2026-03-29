@@ -429,7 +429,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.6);
   z-index: 100;
   align-items: center;
   justify-content: center;
@@ -867,7 +867,7 @@ function renderMetrics(jira) {
 
 function renderTrend(trend,_hist) {
   const _h=_hist||{},_mo={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Oct':'10','Nov':'11','Dec':'12'},_yr=new Date().getFullYear();const trend2=trend.map(function(d){var p=d.date.split('-'),k=_yr+'-'+(_mo[p[1]]||'01')+'-'+(p[0].length<2?'0'+p[0]:p[0]),s=_h[k]||{};return{date:d.date,is_today:d.is_today,currently_open:s.currently_open!=null?s.currently_open:d.currently_open,opened:s.opened!=null?s.opened:d.opened,closed:s.closed!=null?s.closed:d.closed,on_call:s.on_call_tickets!=null?s.on_call_tickets:d.on_call};});const maxOpen=Math.max(...trend2.map(d=>d.currently_open));
-  const rows = trend2.map(d => `
+  const rows = trend2.slice().reverse().map(d => `
     <tr class="${d.is_today ? 'today' : ''}">
       <td>${d.date}</td>
       <td>${d.currently_open}</td>
