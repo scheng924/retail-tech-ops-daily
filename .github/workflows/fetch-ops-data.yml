@@ -66,8 +66,8 @@ jobs:
           if now < today_7am:
             today_7am = today_7am - datetime.timedelta(days=1)
           yest_7am     = today_7am - datetime.timedelta(days=1)
-          window_start = yest_7am.strftime('%Y-%m-%d %H:%M')
-          window_end   = today_7am.strftime('%Y-%m-%d %H:%M')
+          window_start = yest_7am.strftime('%Y-%m-%d')
+          window_end   = today_7am.strftime('%Y-%m-%d')
 
           currently_open = jira_count('project = RTS AND status != Done')
           p1             = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
