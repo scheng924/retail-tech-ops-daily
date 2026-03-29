@@ -943,7 +943,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        ${(function(){var seen={};return(pd.escalation_levels||[]).filter(function(l){return l.level>1;}).filter(function(l){if(seen[l.name])return false;seen[l.name]=true;return true;}).map(function(l){return '<div class="oncall-level" style="margin-top:4px">↑ L'+l.level+' Escalation · '+l.name+'</div>';}).join('');})()}
+        ${(function(){var seen={};return(pd.escalation_levels||[]).filter(function(l){return l.level>1;}).filter(function(l){if(seen[l.name])return false;seen[l.name]=true;return true;}).map(function(l){return '<div class="oncall-level" style="margin-top:4px">↑ L'+l.level+' · '+l.name+'</div>';}).join('');})()}
       </div>
     </div>
     <div class="week-schedule">
