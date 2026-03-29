@@ -50,14 +50,14 @@ jobs:
               return json.loads(r.read()).get('count', 0)
 
           def jira_count_date(jql):
-            encoded = urllib.parse.quote(jql)
-            url = f"{JIRA_BASE}/rest/api/3/search/jql?maxResults=1&fields=id&jql={encoded}"
-            req = urllib.request.Request(url, headers=jira_headers)
+            # approximate-count is the only endpoint that returns a count field
+            url     = f"{JIRA_BASE}/rest/api/3/search/approximate-count"
+            payload = json.dumps({"jql": jql}).encode()
+            req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
             with urllib.request.urlopen(req) as r:
               data = json.loads(r.read())
-              total = data.get('total', 0)
-              print(f"DEBUG jira_count_date total={total} jql={jql[:80]}")
-              return total
+              print(f"DEBUG approx-count response: {data}")
+              return data.get('count', 0)
 
           # Fixed daily window: 07:00 yesterday -> 07:00 today (Vancouver PST = UTC-7)
           # Consistent for all viewers regardless of when they check the dashboard.
