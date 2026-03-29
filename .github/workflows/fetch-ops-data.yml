@@ -1,6 +1,6 @@
 name: Fetch Ops Data
 
-on: 
+on:
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -25,6 +25,7 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           PD_API_TOKEN: ${{ secrets.PD_API_TOKEN }}
           PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}
+          PD_ESCALATION_POLICY_ID: PUY50K9
         run: |
           python3 - <<'EOF'
           import json, os, urllib.request, urllib.parse, base64, datetime
@@ -34,6 +35,7 @@ jobs:
           JIRA_TOKEN = os.environ['JIRA_API_TOKEN']
           PD_TOKEN   = os.environ['PD_API_TOKEN']
           PD_SCHED   = os.environ['PD_SCHEDULE_ID']
+          PD_EP_ID   = os.environ['PD_ESCALATION_POLICY_ID']
 
           now   = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
           today = now.strftime('%Y-%m-%d')
@@ -42,37 +44,22 @@ jobs:
           jira_headers = {'Authorization': f'Basic {jira_creds}', 'Content-Type': 'application/json', 'Accept': 'application/json'}
 
           def jira_count(jql):
-            # approximate-count: fast, works for non-date queries only
             url     = f"{JIRA_BASE}/rest/api/3/search/approximate-count"
             payload = json.dumps({"jql": jql}).encode()
             req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read()).get('count', 0)
 
-          def jira_count_date(jql):
-            url     = f"{JIRA_BASE}/rest/api/3/search/approximate-count"
-            payload = json.dumps({"jql": jql}).encode()
-            req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
-            with urllib.request.urlopen(req) as r:
-              return json.loads(r.read()).get('count', 0)
-
-          # Fixed daily window: 07:00 yesterday -> 07:00 today (Vancouver PST = UTC-7)
-          # Consistent for all viewers regardless of when they check the dashboard.
-          # 07:00 PST = 14:00 UTC
-          today_7am = now.replace(hour=7, minute=0, second=0, microsecond=0)
-          if now < today_7am:
-            today_7am = today_7am - datetime.timedelta(days=1)
-          yest_7am     = today_7am - datetime.timedelta(days=1)
-          window_start = yest_7am.strftime('%Y-%m-%d')
-          window_end   = today_7am.strftime('%Y-%m-%d')
+          window_start = (now - datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+          window_end   = now.strftime('%Y-%m-%d')
 
           currently_open = jira_count('project = RTS AND status != Done')
           p1             = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
           p2             = jira_count('project = RTS AND priority = High AND status != Done')
           open_problems  = jira_count('project = RTS AND issuetype = Problem AND status != Done')
           on_call_tickets= jira_count('project = RTS AND status != Done AND labels = on-call')
-          opened_day     = jira_count_date(f'project = RTS AND created >= "{window_start}" AND created < "{window_end}"')
-          closed_day     = jira_count_date(f'project = RTS AND resolutiondate >= "{window_start}" AND resolutiondate < "{window_end}"')
+          opened_day     = jira_count(f'project = RTS AND created >= "{window_start}" AND created < "{window_end}"')
+          closed_day     = jira_count(f'project = RTS AND resolutiondate >= "{window_start}" AND resolutiondate < "{window_end}"')
 
           print(f"Window: {window_start} -> {window_end}")
           print(f"open={currently_open} opened={opened_day} closed={closed_day}")
@@ -96,71 +83,5 @@ jobs:
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read())
 
-          oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=1')
-          current_user = (oncall_resp.get('oncalls') or [{}])[0].get('user', {'name': 'Unknown'})
-
-          esc_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=2')
-          esc_user  = (esc_resp.get('oncalls') or [{}])[0].get('user', None)
-          if esc_user and esc_user.get('name') == current_user.get('name'):
-            esc_user = None
-
-          week_start    = now.strftime('%Y-%m-%dT00:00:00Z')
-          week_end      = (now + datetime.timedelta(days=13)).strftime('%Y-%m-%dT23:59:59Z')
-          week_sched    = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&since={week_start}&until={week_end}&include[]=users')
-          week_schedule = []
-          dates_added   = set()
-          for entry in week_sched.get('oncalls', []):
-            start    = datetime.datetime.strptime(entry['start'][:10], '%Y-%m-%d')
-            date_key = entry['start'][:10]
-            if date_key not in dates_added:
-              dates_added.add(date_key)
-              week_schedule.append({
-                'day': start.strftime('%a'), 'date': start.strftime('%-d'),
-                'start_date': date_key, 'name': entry['user']['name'],
-                'level': 'L1', 'is_today': start.date() == now.date()
-              })
-
-          def initials(name):
-            parts = name.split()
-            return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else name[:2].upper()
-
-          output = {
-            'fetched_at': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'jira': {'currently_open': currently_open, 'p1': p1, 'p2': p2, 'open_problems': open_problems, 'trend': trend},
-            'pagerduty': {
-              'current_oncall': {'name': current_user['name'], 'initials': initials(current_user['name']), 'level': 'L1 Primary', 'since': now.strftime('%Y-%m-%dT00:00:00Z')},
-              'escalation': {'name': esc_user['name'], 'initials': initials(esc_user['name']), 'level': 'L2 Escalation'} if esc_user else None,
-              'week_schedule': week_schedule
-            }
-          }
-          with open('data.json', 'w') as f:
-            json.dump(output, f, indent=2) 
-          print(f"data.json written: open={currently_open}")
-
-          # Always overwrite today's history entry so opened/closed stay current on every run
-          try:
-            with open('history.json', 'r') as f:
-              history = json.load(f)
-          except (FileNotFoundError, json.JSONDecodeError):
-            history = {}
-
-          history[today] = {
-            'currently_open': currently_open, 'p1': p1, 'p2': p2,
-            'open_problems': open_problems, 'opened': opened_day,
-            'closed': closed_day, 'on_call_tickets': on_call_tickets,
-            'oncall_name': current_user['name'],
-            'snapshot_time': now.strftime('%H:%M UTC'),
-            'window': f"{window_start[:10]} 07:00 -> {window_end[:10]} 07:00 PST"
-          }
-          with open('history.json', 'w') as f:
-            json.dump(history, f, indent=2)
-          print(f"history.json: {today} opened={opened_day} closed={closed_day}")
-
-          EOF
-
-      - name: Commit data files
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data.json history.json
-          git diff --cached --quiet && echo "No changes" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
+          # Current on-call L1 from the schedule
+          oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalatio
