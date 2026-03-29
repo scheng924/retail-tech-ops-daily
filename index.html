@@ -28,7 +28,10 @@
   --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
 }
 @media (prefers-color-scheme: dark) {
-  .modal { background: #1e1e1e !important; background-color: #1e1e1e !important; }
+  .modal {     background: #f5f0eb !important;
+  background-color: #f5f0eb !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25) !important;
+}
   :root {
     --bg: #0f0f0e;
     --surface: #1a1a18;
@@ -437,17 +440,23 @@ body {
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
+  
+  
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 24px;
   width: 340px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  
   position: relative;
   z-index: 101;
+  background: #f5f0eb !important;
+  background-color: #f5f0eb !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25) !important;
 }
-[data-theme="dark"] .modal { background-color: #1e1e1e; }
+[data-theme="dark"] .modal {    background: #f5f0eb !important;
+  background-color: #f5f0eb !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25) !important;
+}
 .modal-title { font-family: var(--sans); font-size: 14px; font-weight: 700; margin-bottom: 16px; }
 .modal-system { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
 .rag-options { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -948,7 +957,7 @@ function renderOncall(pd) {
           ${oc.level}
           <span class="oncall-active-badge">● Active</span>
         </div>
-        ${(function(){return(pd.escalation_levels||[]).filter(function(l){return l.level>1;}).map(function(l){return '<div class="oncall-level" style="margin-top:4px">↑ L'+l.level+' · '+l.name+'</div>';}).join('');})()}
+${(pd.escalation_levels||[]).filter(function(l){return l.level>1;}).map(function(l){return '<div class="oncall-level" style="margin-top:4px">&#8593; L'+l.level+' &middot; '+l.name+'</div>';}).join('')}
       </div>
     </div>
     <div class="week-schedule">
