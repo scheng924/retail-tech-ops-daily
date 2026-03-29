@@ -134,7 +134,7 @@ jobs:
             }
           }
           with open('data.json', 'w') as f:
-            json.dump(output, f, indent=2)
+            json.dump(output, f, indent=2) 
           print(f"data.json written: open={currently_open}")
 
           # Always overwrite today's history entry so opened/closed stay current on every run
