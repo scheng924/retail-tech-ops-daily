@@ -855,7 +855,7 @@ function renderMetrics(jira) {
     { label: 'P1 · Blocker / ASAP', value: jira.p1, cls: jira.p1 > 0 ? 'alert' : '' },
     { label: 'P2 · High', value: jira.p2, cls: jira.p2 > 0 ? 'warn' : '' },
     { label: 'Open Problems', value: jira.open_problems, cls: jira.open_problems > 15 ? 'warn' : '' },
-    { label: 'On-Call Tickets', value: today.on_call, cls: today.on_call > 0 ? 'warn' : '' },
+    
   ];
   document.getElementById('metricsGrid').innerHTML = cells.map(c => `
     <div class="metric-cell">
@@ -873,7 +873,7 @@ function renderTrend(trend,_hist) {
       <td>${d.currently_open}</td>
       <td>${d.opened}</td>
       <td>${d.closed}</td>
-      <td>${d.on_call}</td>
+      
     </tr>
   `).join('');
 
@@ -886,7 +886,7 @@ function renderTrend(trend,_hist) {
           <th>Open</th>
           <th>Opened</th>
           <th>Closed</th>
-          <th>On-Call</th>
+          
         </tr>
       </thead>
       <tbody>${rows}</tbody>
