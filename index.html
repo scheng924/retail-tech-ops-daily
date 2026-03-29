@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Retail Tech Ops · Daily</title>
 <style>
 :root {
@@ -27,8 +27,7 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.07);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
 }
-@media (prefers-color-scheme: dark) {
-  .modal { background: #1c1c1e !important; }
+
   .modal {
   background: #f5f0eb !important;
   border: 1px solid var(--border);
@@ -537,9 +536,8 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
 #themeBtn{font-size:13px;padding:4px 9px;}
 #trendChart{border-radius:4px;} #chartWrap{position:relative;height:130px;overflow:hidden;}
 
-  /* ── Mobile responsive ─────────────────────────────────── */
-  @media (max-width: 768px) {
-    body { padding: 0; }
+  
+  
     .topbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
     .topbar-right { flex-wrap: wrap; gap: 6px; }
     .main-grid {
@@ -560,11 +558,119 @@ body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c
     .order-grid { grid-template-columns: 1fr !important; }
     .modal { width: 95vw !important; padding: 18px !important; }
   }
-  @media (max-width: 480px) {
-    .stat-box { flex: 1 1 100% !important; }
+  
     .topbar h1 { font-size: 14px !important; }
   }
 
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Tablet (≤1024px): 2 columns
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+  /* JSM card spans full width */
+  .grid > .card:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤768px): 1 column, stacked
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Layout */
+  body { padding: 0; }
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+  .grid > .card { grid-column: 1 / -1 !important; }
+
+  /* Topbar */
+  .topbar {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .topbar h1 { font-size: 13px; }
+  .topbar-right { flex-wrap: wrap; gap: 6px; }
+  .date-badge { font-size: 11px; padding: 4px 8px; }
+
+  /* Cards */
+  .card { padding: 14px !important; }
+
+  /* Stat row — 2 per row on mobile */
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px !important;
+  }
+  .stat-box {
+    flex: 1 1 calc(50% - 8px) !important;
+    min-width: 0 !important;
+  }
+
+  /* Trend table — scrollable */
+  .trend-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trend-table { font-size: 11px !important; min-width: 320px; }
+  .trend-table th, .trend-table td { padding: 5px 8px !important; }
+
+  /* Chart */
+  .chart-wrap { height: 100px !important; }
+  #chartWrap { height: 100px !important; }
+
+  /* On-call card */
+  .oncall-card { flex-wrap: wrap !important; }
+  .oncall-avatar { width: 40px !important; height: 40px !important; font-size: 14px !important; }
+
+  /* Systems status rows */
+  .system-row { flex-wrap: wrap !important; gap: 6px !important; }
+  .system-status-badges { flex-wrap: wrap; gap: 4px; }
+
+  /* Order messages */
+  .order-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Modal */
+  .modal-overlay { align-items: flex-end !important; }
+  .modal {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-radius: 16px 16px 0 0 !important;
+    padding: 20px 16px !important;
+    max-height: 85vh !important;
+  }
+
+  /* Rotation rows */
+  .rotation-row { font-size: 12px !important; }
+
+  /* Section headers */
+  .card-header { font-size: 10px !important; letter-spacing: 0.08em !important; }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Small mobile (≤480px)
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .stat-box { flex: 1 1 100% !important; }
+  .topbar h1 { font-size: 12px; }
+  .card { padding: 12px !important; }
+  .trend-table th, .trend-table td { padding: 4px 6px !important; }
+}
+
+/* ═══════════════════════════════════════════════════
+   DARK MODE — Modal
+   ═══════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  .modal { background: #1c1c1e !important; }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
