@@ -27,7 +27,7 @@ jobs:
           PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}
         run: |
           python3 - <<'EOF'
-          import json, os, urllib.request, urllib.parse, base64, datetime
+          import json, os, urllib.request, base64, datetime
 
           JIRA_BASE  = os.environ['JIRA_BASE_URL']
           JIRA_EMAIL = os.environ['JIRA_EMAIL']
@@ -38,19 +38,11 @@ jobs:
           now   = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
           today = now.strftime('%Y-%m-%d')
 
-          today_date   = now.date()
-          window_end   = datetime.datetime.combine(today_date, datetime.time(14, 0))
-          window_start = window_end - datetime.timedelta(days=1)
-          if now < window_end:
-            window_end   -= datetime.timedelta(days=1)
-            window_start -= datetime.timedelta(days=1)
-          window_start_str = window_start.strftime('%Y-%m-%dT%H:%M:%SZ')
-          window_end_str   = window_end.strftime('%Y-%m-%dT%H:%M:%SZ')
-
           jira_creds   = base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()
           jira_headers = {'Authorization': f'Basic {jira_creds}', 'Content-Type': 'application/json', 'Accept': 'application/json'}
 
           def jira_count(jql):
+            # approximate-count: fast, works for non-date queries only
             url     = f"{JIRA_BASE}/rest/api/3/search/approximate-count"
             payload = json.dumps({"jql": jql}).encode()
             req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
@@ -58,21 +50,32 @@ jobs:
               return json.loads(r.read()).get('count', 0)
 
           def jira_count_date(jql):
-            url = f"{JIRA_BASE}/rest/api/3/search?maxResults=0&jql=" + urllib.parse.quote(jql)
-            req = urllib.request.Request(url, headers=jira_headers)
+            # POST to /rest/api/3/search with maxResults=0 - supports date filters, returns total
+            url     = f"{JIRA_BASE}/rest/api/3/search"
+            payload = json.dumps({"jql": jql, "maxResults": 0}).encode()
+            req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read()).get('total', 0)
+
+          # Fixed daily window: 07:00 yesterday to 07:00 today (Vancouver/PST = UTC-7)
+          # Everyone sees the same count regardless of when they check the dashboard
+          today_7am = now.replace(hour=14, minute=0, second=0, microsecond=0)
+          if now < today_7am:
+            today_7am = today_7am - datetime.timedelta(days=1)
+          yest_7am     = today_7am - datetime.timedelta(days=1)
+          window_start = yest_7am.strftime('%Y-%m-%dT%H:%M:%SZ')
+          window_end   = today_7am.strftime('%Y-%m-%dT%H:%M:%SZ')
 
           currently_open = jira_count('project = RTS AND status != Done')
           p1             = jira_count('project = RTS AND priority in (Blocker, ASAP) AND status != Done')
           p2             = jira_count('project = RTS AND priority = High AND status != Done')
           open_problems  = jira_count('project = RTS AND issuetype = Problem AND status != Done')
           on_call_tickets= jira_count('project = RTS AND status != Done AND labels = on-call')
+          opened_day     = jira_count_date(f'project = RTS AND created >= "{window_start}" AND created < "{window_end}"')
+          closed_day     = jira_count_date(f'project = RTS AND resolutiondate >= "{window_start}" AND resolutiondate < "{window_end}"')
 
-          opened_window  = jira_count_date(f'project = RTS AND created >= "{window_start_str}" AND created <= "{window_end_str}"')
-          closed_window  = jira_count_date(f'project = RTS AND resolutiondate >= "{window_start_str}" AND resolutiondate <= "{window_end_str}"')
-
-          print(f"Window: {window_start_str} -> {window_end_str} opened={opened_window} closed={closed_window}")
+          print(f"Window: {window_start} -> {window_end}")
+          print(f"open={currently_open} opened={opened_day} closed={closed_day}")
 
           trend = []
           for i in range(6, -1, -1):
@@ -81,8 +84,8 @@ jobs:
             trend.append({
               'date': day_start.strftime('%-d-%b'), 'is_today': is_today,
               'currently_open': currently_open if is_today else 0,
-              'opened':         opened_window  if is_today else 0,
-              'closed':         closed_window  if is_today else 0,
+              'opened':         opened_day     if is_today else 0,
+              'closed':         closed_day     if is_today else 0,
               'on_call':        on_call_tickets if is_today else 0,
             })
 
@@ -95,14 +98,15 @@ jobs:
 
           oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=1')
           current_user = (oncall_resp.get('oncalls') or [{}])[0].get('user', {'name': 'Unknown'})
-          esc_resp     = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=2')
-          esc_user     = (esc_resp.get('oncalls') or [{}])[0].get('user', None)
+
+          esc_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=2')
+          esc_user  = (esc_resp.get('oncalls') or [{}])[0].get('user', None)
           if esc_user and esc_user.get('name') == current_user.get('name'):
             esc_user = None
 
-          week_start  = now.strftime('%Y-%m-%dT00:00:00Z')
-          week_end2   = (now + datetime.timedelta(days=13)).strftime('%Y-%m-%dT23:59:59Z')
-          week_sched  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&since={week_start}&until={week_end2}&include[]=users')
+          week_start    = now.strftime('%Y-%m-%dT00:00:00Z')
+          week_end      = (now + datetime.timedelta(days=13)).strftime('%Y-%m-%dT23:59:59Z')
+          week_sched    = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&since={week_start}&until={week_end}&include[]=users')
           week_schedule = []
           dates_added   = set()
           for entry in week_sched.get('oncalls', []):
@@ -131,7 +135,6 @@ jobs:
           }
           with open('data.json', 'w') as f:
             json.dump(output, f, indent=2)
-          print(f"data.json: open={currently_open} opened={opened_window} closed={closed_window}")
 
           try:
             with open('history.json', 'r') as f:
@@ -139,19 +142,17 @@ jobs:
           except (FileNotFoundError, json.JSONDecodeError):
             history = {}
 
-          snap = history.get(today, {})
-          snap.update({
+          history[today] = {
             'currently_open': currently_open, 'p1': p1, 'p2': p2,
-            'open_problems': open_problems, 'opened': opened_window,
-            'closed': closed_window, 'on_call_tickets': on_call_tickets,
+            'open_problems': open_problems, 'opened': opened_day,
+            'closed': closed_day, 'on_call_tickets': on_call_tickets,
             'oncall_name': current_user['name'],
-            'window': f"7am-7am PDT ({window_start_str[:10]})",
-            'snapshot_time': now.strftime('%H:%M UTC')
-          })
-          history[today] = snap
+            'snapshot_time': now.strftime('%H:%M UTC'),
+            'window': f"{window_start[:10]} 07:00 -> {window_end[:10]} 07:00 PST"
+          }
           with open('history.json', 'w') as f:
             json.dump(history, f, indent=2)
-          print(f"history.json: {today} opened={opened_window} closed={closed_window}")
+          print(f"history.json: {today} opened={opened_day} closed={closed_day}")
 
           EOF
 
