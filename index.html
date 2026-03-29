@@ -437,12 +437,16 @@ body {
 .modal-overlay.open { display: flex; }
 .modal {
   background: var(--surface);
+  background-color: #ffffff;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 24px;
   width: 340px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  position: relative;
+  z-index: 101;
 }
+[data-theme="dark"] .modal { background-color: #1e1e1e; }
 .modal-title { font-family: var(--sans); font-size: 14px; font-weight: 700; margin-bottom: 16px; }
 .modal-system { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
 .rag-options { display: flex; gap: 8px; margin-bottom: 16px; }
