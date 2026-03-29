@@ -84,4 +84,89 @@ jobs:
               return json.loads(r.read())
 
           # Current on-call L1 from the schedule
-          oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalatio
+          oncall_resp  = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&include[]=users&escalation_policy_step_number=1')
+          current_user = (oncall_resp.get('oncalls') or [{}])[0].get('user', {'name': 'Unknown'})
+
+          # All escalation levels dynamically from the escalation policy — no hardcoding
+          ep_resp    = pd_get(f'/oncalls?escalation_policy_ids[]={PD_EP_ID}&include[]=users')
+          ep_oncalls = ep_resp.get('oncalls', [])
+
+          # Group by escalation_level, first unique user per level, sorted
+          levels_seen = {}
+          for entry in sorted(ep_oncalls, key=lambda x: x.get('escalation_level', 99)):
+            lvl  = entry.get('escalation_level', 0)
+            user = entry.get('user', {})
+            if lvl not in levels_seen and user.get('name'):
+              levels_seen[lvl] = user['name']
+
+          escalation_levels = [
+            {'level': lvl, 'name': name}
+            for lvl, name in sorted(levels_seen.items())
+          ]
+          print(f"Escalation levels: {escalation_levels}")
+
+          # Rotation — next 2 weeks from L1 schedule
+          week_start    = now.strftime('%Y-%m-%dT00:00:00Z')
+          week_end      = (now + datetime.timedelta(days=13)).strftime('%Y-%m-%dT23:59:59Z')
+          week_sched    = pd_get(f'/oncalls?schedule_ids[]={PD_SCHED}&since={week_start}&until={week_end}&include[]=users')
+          week_schedule = []
+          dates_added   = set()
+          for entry in week_sched.get('oncalls', []):
+            start    = datetime.datetime.strptime(entry['start'][:10], '%Y-%m-%d')
+            date_key = entry['start'][:10]
+            if date_key not in dates_added:
+              dates_added.add(date_key)
+              week_schedule.append({
+                'day': start.strftime('%a'), 'date': start.strftime('%-d'),
+                'start_date': date_key, 'name': entry['user']['name'],
+                'level': 'L1', 'is_today': start.date() == now.date()
+              })
+
+          def initials(name):
+            parts = name.split()
+            return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else name[:2].upper()
+
+          output = {
+            'fetched_at': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'jira': {'currently_open': currently_open, 'p1': p1, 'p2': p2, 'open_problems': open_problems, 'trend': trend},
+            'pagerduty': {
+              'current_oncall': {
+                'name': current_user['name'],
+                'initials': initials(current_user['name']),
+                'level': 'L1 Primary',
+                'since': now.strftime('%Y-%m-%dT00:00:00Z')
+              },
+              'escalation_levels': escalation_levels,
+              'week_schedule': week_schedule
+            }
+          }
+          with open('data.json', 'w') as f:
+            json.dump(output, f, indent=2)
+          print(f"data.json written: open={currently_open}")
+
+          try:
+            with open('history.json', 'r') as f:
+              history = json.load(f)
+          except (FileNotFoundError, json.JSONDecodeError):
+            history = {}
+
+          history[today] = {
+            'currently_open': currently_open, 'p1': p1, 'p2': p2,
+            'open_problems': open_problems, 'opened': opened_day,
+            'closed': closed_day, 'on_call_tickets': on_call_tickets,
+            'oncall_name': current_user['name'],
+            'snapshot_time': now.strftime('%H:%M UTC'),
+            'window': f"{window_start} -> {window_end}"
+          }
+          with open('history.json', 'w') as f:
+            json.dump(history, f, indent=2)
+          print(f"history.json: {today} opened={opened_day} closed={closed_day}")
+
+          EOF
+
+      - name: Commit data files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data.json history.json
+          git diff --cached --quiet && echo "No changes" || (git commit -m "chore: refresh ops data $(date -u +%H:%M)" && git push)
