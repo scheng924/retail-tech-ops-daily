@@ -27,7 +27,7 @@ jobs:
           PD_SCHEDULE_ID: ${{ secrets.PD_SCHEDULE_ID }}
         run: |
           python3 - <<'EOF'
-          import json, os, urllib.request, base64, datetime
+          import json, os, urllib.request, urllib.parse, base64, datetime
 
           JIRA_BASE  = os.environ['JIRA_BASE_URL']
           JIRA_EMAIL = os.environ['JIRA_EMAIL']
@@ -50,15 +50,16 @@ jobs:
               return json.loads(r.read()).get('count', 0)
 
           def jira_count_date(jql):
-            # POST to /rest/api/3/search with maxResults=0 - supports date filters, returns total
+            # POST to /rest/api/3/search with maxResults=0 — supports date filters, returns accurate total
             url     = f"{JIRA_BASE}/rest/api/3/search"
             payload = json.dumps({"jql": jql, "maxResults": 0}).encode()
             req     = urllib.request.Request(url, data=payload, headers=jira_headers, method='POST')
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read()).get('total', 0)
 
-          # Fixed daily window: 07:00 yesterday to 07:00 today (Vancouver/PST = UTC-7)
-          # Everyone sees the same count regardless of when they check the dashboard
+          # Fixed daily window: 07:00 yesterday -> 07:00 today (Vancouver PST = UTC-7)
+          # Consistent for all viewers regardless of when they check the dashboard.
+          # 07:00 PST = 14:00 UTC
           today_7am = now.replace(hour=14, minute=0, second=0, microsecond=0)
           if now < today_7am:
             today_7am = today_7am - datetime.timedelta(days=1)
@@ -135,7 +136,9 @@ jobs:
           }
           with open('data.json', 'w') as f:
             json.dump(output, f, indent=2)
+          print(f"data.json written: open={currently_open}")
 
+          # Always overwrite today's history entry so opened/closed stay current on every run
           try:
             with open('history.json', 'r') as f:
               history = json.load(f)
