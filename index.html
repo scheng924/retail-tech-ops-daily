@@ -1,1252 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Retail Tech Ops · Daily</title>
-<style>
-:root {
-  --bg: #f4f3ef;
-  --surface: #ffffff
-  --surface2: #eeede7;
-  --border: #dddcd4; 
-  --text-primary: #1a1917;
-  --text-secondary: #6b6960;
-  --text-muted: #a09e96;
-  --green: #2a7a42;
-  --green-bg: #e6f4ec;
-  --green-dot: #34a85a;
-  --amber: #b87008;
-  --amber-bg: #fef3d8;
-  --amber-dot: #e8920a;
-  --red: #b83224;
-  --red-bg: #fdecea;
-  --red-dot: #e03e2e;
-  --mono: 'Helvetica Neue', HelveticaNeue, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
-  --sans: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
-  --shadow: 0 1px 3px rgba(0,0,0,0.07);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
-}
-
-  .modal {
-  background: #f5f0eb !important;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 28px;
-  width: min(520px, 92vw);
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  z-index: 200;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.22);
-}
-  :root {
-    --bg: #0f0f0e;
-    --surface: #1a1a18;
-    --surface2: #222220;
-    --border: #2c2c29;
-    --text-primary: #eeede7;
-    --text-secondary: #908e86;
-    --text-muted: #504e48;
-    --green: #4ade80;
-    --green-bg: #0a2018;
-    --green-dot: #34a85a;
-    --amber: #fbbf24;
-    --amber-bg: #211800;
-    --amber-dot: #e8920a;
-    --red: #f87171;
-    --red-bg: #200a0a;
-    --red-dot: #e03e2e;
-    --shadow: 0 1px 3px rgba(0,0,0,0.4);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
-  }
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: var(--mono);
-  background: var(--bg);
-  color: var(--text-primary);
-  min-height: 100vh;
-  padding: 20px 24px 48px;
-  font-size: 13px;
-}
-
-/* HEADER */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.header-left { display: flex; align-items: center; gap: 14px; }
-.wordmark {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
-}
-.wordmark span { color: var(--text-muted); font-weight: 400; }
-.date-badge {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.02em;
-}
-.header-right { display: flex; align-items: center; gap: 12px; }
-.refresh-info {
-  font-size: 11px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.refresh-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green-dot);
-  animation: pulse 2.5s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-.refresh-btn {
-  font-family: var(--mono);
-  font-size: 11px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 4px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.refresh-btn:hover { background: var(--surface2); color: var(--text-primary); }
-
-/* GRID LAYOUT */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 14px;
-}
-
-/* CARDS */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px 10px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-.card-title {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-}
-.card-meta {
-  font-size: 10px;
-  color: var(--text-muted);
-}
-.card-body { padding: 14px 16px; }
-
-/* SPAN HELPERS */
-.span-2 { grid-column: span 2; }
-.span-3 { grid-column: span 3; }
-
-/* INCIDENT METRICS */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 14px;
-}
-.metric-cell {
-  background: var(--surface);
-  padding: 12px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.metric-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.metric-value {
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--text-primary);
-  line-height: 1;
-}
-.metric-value.alert { color: var(--red); }
-.metric-value.warn { color: var(--amber); }
-
-/* TREND TABLE */
-.trend-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-}
-.trend-table th {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-weight: 400;
-  text-align: right;
-  padding: 0 6px 6px;
-  white-space: nowrap;
-}
-.trend-table th:first-child { text-align: left; }
-.trend-table td {
-  text-align: right;
-  padding: 5px 6px;
-  border-top: 1px solid var(--border);
-  color: var(--text-secondary);
-  font-size: 11px;
-}
-.trend-table td:first-child {
-  text-align: left;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-.trend-table tr.today td {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-.trend-table tr.today td:first-child::after {
-  content: ' ←';
-  color: var(--text-muted);
-  font-weight: 300;
-}
-
-/* SPARKLINE */
-.spark-row { display: flex; align-items: center; gap: 8px; }
-.spark-label { font-size: 10px; color: var(--text-muted); width: 80px; flex-shrink: 0; }
-.spark { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
-.spark-bar {
-  width: 14px;
-  background: var(--border);
-  border-radius: 2px;
-  transition: background 0.2s;
-  cursor: default;
-}
-.spark-bar.today { background: var(--text-primary); opacity: 0.7; }
-.spark-value { font-size: 11px; color: var(--text-primary); font-weight: 500; margin-left: 4px; }
-
-/* RAG STATUS */
-.rag-list { display: flex; flex-direction: column; gap: 0; }
-.rag-row {
-  display: grid;
-  grid-template-columns: 130px 90px 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
-}
-.rag-row:last-child { border-bottom: none; }
-.rag-system {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-.rag-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-  border: none;
-  font-family: var(--mono);
-}
-.rag-pill.green { background: var(--green-bg); color: var(--green); }
-.rag-pill.amber { background: var(--amber-bg); color: var(--amber); }
-.rag-pill.red { background: var(--red-bg); color: var(--red); }
-.rag-pill .dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.rag-pill.green .dot { background: var(--green-dot); }
-.rag-pill.amber .dot { background: var(--amber-dot); }
-.rag-pill.red .dot { background: var(--red-dot); }
-.rag-note-input {
-  font-family: var(--mono);
-  font-size: 11px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px dashed var(--border);
-  color: var(--text-secondary);
-  width: 100%;
-  padding: 2px 4px;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.rag-note-input:focus { border-color: var(--text-muted); color: var(--text-primary); }
-.rag-note-input::placeholder { color: var(--text-muted); }
-.rag-timestamp {
-  font-size: 10px;
-  color: var(--text-muted);
-  white-space: nowrap;
-  text-align: right;
-}
-
-/* ON-CALL */
-.oncall-primary {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 0 14px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 12px;
-}
-.oncall-avatar {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--text-secondary);
-  flex-shrink: 0;
-}
-.oncall-info { flex: 1; }
-.oncall-name { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--text-primary); }
-.oncall-level {
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.oncall-active-badge {
-  background: var(--green-bg);
-  color: var(--green);
-  padding: 1px 8px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 500;
-}
-
-.week-schedule { display: flex; flex-direction: column; gap: 4px; }
-.week-schedule-title { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
-.week-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  transition: background 0.1s;
-}
-.week-row.is-today { background: var(--surface2); }
-.week-day { font-size: 11px; color: var(--text-muted); width: 28px; flex-shrink: 0; }
-.week-day.today { color: var(--text-primary); font-weight: 500; }
-.week-person { font-size: 12px; color: var(--text-primary); flex: 1; }
-.week-level { font-size: 10px; color: var(--text-muted); }
-
-/* ORDER MESSAGES */
-.order-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.order-card {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.order-label { font-size: 10px; color: var(--text-muted); }
-.order-value { font-size: 26px; font-weight: 300; color: var(--text-primary); line-height: 1; }
-.order-delta {
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-.delta-up { color: var(--red); }
-.delta-down { color: var(--green); }
-.delta-neutral { color: var(--text-muted); }
-
-/* LOADING STATE */
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  color: var(--text-muted);
-  font-size: 11px;
-  gap: 8px;
-}
-.spinner {
-  width: 14px; height: 14px;
-  border: 2px solid var(--border);
-  border-top-color: var(--text-muted);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* FOOTER */
-.footer {
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-/* MODAL */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  
-  
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-  width: 340px;
-  
-  position: relative;
-  z-index: 101;
-  background: #f5f0eb !important;
-  background-color: #f5f0eb !important;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.25) !important;
-}
-[data-theme="dark"] .modal {    background: #f5f0eb !important;
-  background-color: #f5f0eb !important;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.25) !important;
-}
-.modal-title { font-family: var(--sans); font-size: 14px; font-weight: 700; margin-bottom: 16px; }
-.modal-system { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
-.rag-options { display: flex; gap: 8px; margin-bottom: 16px; }
-.rag-opt-btn {
-  flex: 1;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.15s;
-}
-.rag-opt-btn.green { background: var(--green-bg); color: var(--green); }
-.rag-opt-btn.amber { background: var(--amber-bg); color: var(--amber); }
-.rag-opt-btn.red { background: var(--red-bg); color: var(--red); }
-.rag-opt-btn.selected.green { border-color: var(--green); }
-.rag-opt-btn.selected.amber { border-color: var(--amber); }
-.rag-opt-btn.selected.red { border-color: var(--red); }
-.modal-note-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
-.modal-note {
-  width: 100%;
-  font-family: var(--mono);
-  font-size: 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 8px 10px;
-  color: var(--text-primary);
-  resize: none;
-  height: 64px;
-  outline: none;
-  margin-bottom: 4px;
-}
-.modal-note:focus { border-color: var(--text-muted); }
-.modal-updater-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
-.modal-updater {
-  width: 100%;
-  font-family: var(--mono);
-  font-size: 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 6px 10px;
-  color: var(--text-primary);
-  outline: none;
-  margin-bottom: 16px;
-}
-.modal-updater:focus { border-color: var(--text-muted); }
-.modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
-.btn-cancel {
-  font-family: var(--mono); font-size: 11px;
-  background: none; border: 1px solid var(--border);
-  color: var(--text-secondary); padding: 7px 16px;
-  border-radius: 4px; cursor: pointer;
-}
-.btn-save {
-  font-family: var(--mono); font-size: 11px;
-  background: var(--text-primary); border: 1px solid var(--text-primary);
-  color: var(--bg); padding: 7px 16px;
-  border-radius: 4px; cursor: pointer;
-}
-/* THEME */
-body.force-light{--bg:#f4f3ef !important;--surface:#fff !important;--surface2:#eeede7 !important;--border:#dddcd4 !important;--text-primary:#1a1917 !important;--text-secondary:#6b6960 !important;--text-muted:#a09e96 !important;--green:#2a7a42 !important;--green-bg:#e6f4ec !important;--green-dot:#34a85a !important;--amber:#b87008 !important;--amber-bg:#fef3d8 !important;--amber-dot:#e8920a !important;--red:#b83224 !important;--red-bg:#fdecea !important;--red-dot:#e03e2e !important;--shadow:0 1px 3px rgba(0,0,0,.07) !important;--shadow-md:0 4px 16px rgba(0,0,0,.09) !important;}
-body.force-dark{--bg:#0f0f0e;--surface:#1a1a18;--surface2:#222220;--border:#2c2c29;--text-primary:#eeede7;--text-secondary:#908e86;--text-muted:#504e48;--green:#4ade80;--green-bg:#0a2018;--green-dot:#34a85a;--amber:#fbbf24;--amber-bg:#211800;--amber-dot:#e8920a;--red:#f87171;--red-bg:#200a0a;--red-dot:#e03e2e;--shadow:0 1px 3px rgba(0,0,0,.4);--shadow-md:0 4px 16px rgba(0,0,0,.5);}
-#themeBtn{font-size:13px;padding:4px 9px;}
-#trendChart{border-radius:4px;} #chartWrap{position:relative;height:130px;overflow:hidden;}
-
-  
-  
-    .topbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
-    .topbar-right { flex-wrap: wrap; gap: 6px; }
-    .main-grid {
-      grid-template-columns: 1fr !important;
-      grid-template-rows: auto !important;
-      padding: 10px !important;
-      gap: 10px !important;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Retail Tech Ops · Daily</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:#f4f3ef;--surface:#ffffff;--surface2:#eeede7;--border:#dddcd4;
+      --text-primary:#1a1917;--text-secondary:#6b6960;--text-muted:#a09e96;
+      --green:#2a7a42;--green-bg:#d4edda;--amber:#b45309;--amber-bg:#fff3cd;
+      --red:#b91c1c;--red-bg:#f8d7da;--shadow:0 1px 4px rgba(0,0,0,.07);
     }
-    .card { padding: 16px !important; }
-    .stat-row { gap: 8px !important; }
-    .stat-box { min-width: 0 !important; flex: 1 1 40% !important; }
-    .trend-table { font-size: 12px !important; }
-    .trend-table th, .trend-table td { padding: 6px 8px !important; }
-    .systems-grid { grid-template-columns: 1fr !important; }
-    .system-row { flex-wrap: wrap !important; gap: 6px !important; }
-    .oncall-card { flex-wrap: wrap !important; }
-    .chart-wrap { height: 100px !important; }
-    .order-grid { grid-template-columns: 1fr !important; }
-    .modal { width: 95vw !important; padding: 18px !important; }
-  }
-  
-    .topbar h1 { font-size: 14px !important; }
-  }
-
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE — Tablet (≤1024px): 2 columns
-   ═══════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 12px;
-  }
-  /* JSM card spans full width */
-  .grid > .card:first-child {
-    grid-column: 1 / -1;
-  }
-}
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE — Mobile (≤768px): 1 column, stacked
-   ═══════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  /* Layout */
-  body { padding: 0; }
-  .grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    padding: 10px !important;
-  }
-  .grid > .card { grid-column: 1 / -1 !important; }
-
-  /* Topbar */
-  .topbar {
-    padding: 10px 14px;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .topbar h1 { font-size: 13px; }
-  .topbar-right { flex-wrap: wrap; gap: 6px; }
-  .date-badge { font-size: 11px; padding: 4px 8px; }
-
-  /* Cards */
-  .card { padding: 14px !important; }
-
-  /* Stat row — 2 per row on mobile */
-  .stat-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px !important;
-  }
-  .stat-box {
-    flex: 1 1 calc(50% - 8px) !important;
-    min-width: 0 !important;
-  }
-
-  /* Trend table — scrollable */
-  .trend-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .trend-table { font-size: 11px !important; min-width: 320px; }
-  .trend-table th, .trend-table td { padding: 5px 8px !important; }
-
-  /* Chart */
-  .chart-wrap { height: 100px !important; }
-  #chartWrap { height: 100px !important; }
-
-  /* On-call card */
-  .oncall-card { flex-wrap: wrap !important; }
-  .oncall-avatar { width: 40px !important; height: 40px !important; font-size: 14px !important; }
-
-  /* Systems status rows */
-  .system-row { flex-wrap: wrap !important; gap: 6px !important; }
-  .system-status-badges { flex-wrap: wrap; gap: 4px; }
-
-  /* Order messages */
-  .order-grid {
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  /* Modal */
-  .modal-overlay { align-items: flex-end !important; }
-  .modal {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    border-radius: 16px 16px 0 0 !important;
-    padding: 20px 16px !important;
-    max-height: 85vh !important;
-  }
-
-  /* Rotation rows */
-  .rotation-row { font-size: 12px !important; }
-
-  /* Section headers */
-  .card-header { font-size: 10px !important; letter-spacing: 0.08em !important; }
-}
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE — Small mobile (≤480px)
-   ═══════════════════════════════════════════════════ */
-@media (max-width: 480px) {
-  .stat-box { flex: 1 1 100% !important; }
-  .topbar h1 { font-size: 12px; }
-  .card { padding: 12px !important; }
-  .trend-table th, .trend-table td { padding: 4px 6px !important; }
-}
-
-/* ═══════════════════════════════════════════════════
-   DARK MODE — Modal
-   ═══════════════════════════════════════════════════ */
-@media (prefers-color-scheme: dark) {
-  .modal { background: #1c1c1e !important; }
-}
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    @media(prefers-color-scheme:dark){:root{
+      --bg:#0f0f0e;--surface:#1c1c1a;--surface2:#252523;--border:#333330;
+      --text-primary:#f0ede8;--text-secondary:#a09e96;--text-muted:#6b6960;
+      --green:#4ade80;--green-bg:#052e16;--amber:#fbbf24;--amber-bg:#451a03;
+      --red:#f87171;--red-bg:#450a0a;--shadow:0 1px 4px rgba(0,0,0,.3);
+    }}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;font-size:13px;line-height:1.5}
+    .topbar{display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;flex-wrap:wrap}
+    .topbar h1{font-size:15px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+    .topbar h1 span{font-weight:300;color:var(--text-muted)}
+    .topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}
+    .sync-time{font-size:11px;color:var(--text-muted)}
+    .date-badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px}
+    .topbar-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text-primary)}
+    .topbar-btn:hover{background:var(--border)}
+    .dp-panel{display:none;position:absolute;top:54px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:100}
+    .dp-panel input[type=date]{border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;background:var(--surface2);color:var(--text-primary)}
+    .dp-panel button{margin-left:8px;padding:5px 12px;border-radius:6px;border:none;background:var(--text-primary);color:var(--bg);font-size:12px;cursor:pointer}
+    .grid{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:auto auto;gap:14px;padding:14px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+    .card-header{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);padding:12px 16px 0;display:flex;align-items:center;justify-content:space-between}
+    .card-body{padding:12px 16px 16px}
+    .card-subheader{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px}
+    .card-subheader-left{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+    .card-subheader-right{font-size:10px;color:var(--text-muted)}
+    .stat-row{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px}
+    .stat-box{flex:1;padding:10px 14px;border-right:1px solid var(--border);min-width:0}
+    .stat-box:last-child{border-right:none}
+    .stat-label{font-size:10px;color:var(--text-muted);white-space:nowrap}
+    .stat-val{font-size:22px;font-weight:700;line-height:1.2}
+    .stat-val.p1{color:var(--red)}.stat-val.p2{color:var(--amber)}
+    .trend-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .trend-table{width:100%;border-collapse:collapse;font-size:11px;min-width:300px}
+    .trend-table th{text-align:left;color:var(--text-muted);font-weight:600;font-size:10px;padding:4px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+    .trend-table td{padding:5px 8px;border-bottom:1px solid var(--border)}
+    .trend-table tr:last-child td{border-bottom:none}
+    .trend-table tr.today td{font-weight:700}
+    .today-arrow{font-size:9px;color:var(--text-muted);margin-left:3px}
+    #chartWrap{position:relative;height:120px;margin-top:12px}
+    .oncall-primary{display:flex;align-items:flex-start;gap:12px}
+    .oncall-avatar{width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;color:var(--text-secondary)}
+    .oncall-name{font-size:16px;font-weight:700}
+    .oncall-level-badge{font-size:11px;color:var(--text-muted)}
+    .active-pill{background:var(--green-bg);color:var(--green);border-radius:10px;padding:1px 8px;font-size:10px;font-weight:700;margin-left:6px}
+    .oncall-esc{font-size:11px;color:var(--text-secondary);margin-top:3px}
+    .rotation-section{margin-top:14px}
+    .rotation-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+    .rotation-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px}
+    .rotation-row:last-child{border-bottom:none}
+    .rotation-date{font-size:11px;color:var(--text-muted);min-width:40px;line-height:1.2}
+    .rotation-name{flex:1;font-weight:500}
+    .rotation-lvl{font-size:10px;color:var(--text-muted)}
+    .status-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;white-space:nowrap}
+    .status-pill.healthy{background:var(--green-bg);color:var(--green)}
+    .status-pill.degraded{background:var(--amber-bg);color:var(--amber)}
+    .status-pill.outage{background:var(--red-bg);color:var(--red)}
+    .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+    .heatmap-row{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:4px}
+    .heatmap-cell{width:20px;height:20px;border-radius:3px;flex-shrink:0;cursor:default}
+    .heatmap-cell[data-s="healthy"]{background:var(--green);opacity:.85}
+    .heatmap-cell[data-s="degraded"]{background:var(--amber);opacity:.85}
+    .heatmap-cell[data-s="outage"]{background:var(--red);opacity:.85}
+    .heatmap-cell[data-s="none"]{background:var(--border)}
+    .heatmap-dates{display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)}
+    .expand-caret{font-size:10px;color:var(--text-muted);flex-shrink:0;margin-left:4px}
+    .hist-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+    .system-row{display:flex;align-items:center;gap:10px;padding:8px 16px;border-top:1px solid var(--border);cursor:pointer;transition:background .1s}
+    .system-row:hover{background:var(--surface2)}
+    .system-name{flex:1;font-size:13px;font-weight:500}
+    .system-notes{font-size:11px;color:var(--text-muted);flex:1}
+    .system-updated{font-size:10px;color:var(--text-muted);white-space:nowrap}
+    .system-expand{display:none;padding:10px 16px 14px;border-top:1px solid var(--border);background:var(--surface2)}
+    .expand-btn{margin-top:10px;padding:5px 14px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:11px;cursor:pointer;color:var(--text-primary);font-weight:600}
+    .expand-btn:hover{background:var(--border)}
+    .ops-task-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid var(--border);cursor:pointer;transition:background .1s}
+    .ops-task-row:hover{background:var(--surface2)}
+    .ops-task-name{flex:1;font-size:13px;font-weight:500}
+    .ops-task-cat{font-size:10px;background:var(--surface2);border:1px solid var(--border);padding:1px 7px;border-radius:10px;color:var(--text-muted);white-space:nowrap}
+    .ops-status-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;white-space:nowrap}
+    .ops-status-pill.complete{background:var(--green-bg);color:var(--green)}
+    .ops-status-pill.delayed{background:var(--amber-bg);color:var(--amber)}
+    .ops-status-pill.failed{background:var(--red-bg);color:var(--red)}
+    .ops-status-pill.pending{background:var(--surface2);color:var(--text-muted);border:1px solid var(--border)}
+    .ops-meta{font-size:10px;color:var(--text-muted);white-space:nowrap}
+    .ops-expand{display:none;padding:12px 16px 14px;border-top:1px solid var(--border);background:var(--surface2)}
+    .ops-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .ops-sel-btn{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;border:2px solid var(--border);cursor:pointer;background:var(--surface);color:var(--text-secondary);transition:all .15s}
+    .ops-sel-btn.ac{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+    .ops-sel-btn.ad{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
+    .ops-sel-btn.af{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+    .ops-sel-btn.ap{background:var(--surface2);color:var(--text-muted);border-color:var(--border)}
+    .ops-input{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--surface);color:var(--text-primary);margin-bottom:8px}
+    .ops-input:focus{outline:none;border-color:var(--text-secondary)}
+    .ops-save-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .ops-save-btn{padding:7px 18px;background:var(--text-primary);color:var(--bg);border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer}
+    .ops-save-btn:hover{opacity:.85}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center}
+    .modal-overlay.open{display:flex}
+    .modal{background:#f5f0eb!important;border:1px solid var(--border);border-radius:14px;padding:28px;width:min(520px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+    @media(prefers-color-scheme:dark){.modal{background:#1c1c1e!important}}
+    .modal h2{font-size:16px;font-weight:700;margin-bottom:6px}
+    .modal-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+    .modal-btns{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .modal-status-btn{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:700;border:2px solid var(--border);cursor:pointer;background:var(--surface2);color:var(--text-secondary);transition:all .15s;text-align:center}
+    .modal-status-btn.sel-healthy{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+    .modal-status-btn.sel-degraded{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
+    .modal-status-btn.sel-outage{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+    .modal-label{font-size:11px;color:var(--text-muted);margin-bottom:5px;font-weight:600}
+    .modal-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface);color:var(--text-primary);margin-bottom:12px}
+    .modal-input:focus{outline:none;border-color:var(--text-secondary)}
+    .modal-footer{display:flex;gap:10px;justify-content:flex-end;align-items:center}
+    .modal-cancel{padding:9px 18px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface2);cursor:pointer;color:var(--text-primary)}
+    .modal-save{padding:9px 22px;background:var(--text-primary);color:var(--bg);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+    .save-ind{font-size:11px;color:var(--text-muted);margin-right:auto}
+    .footer{padding:16px;font-size:10px;color:var(--text-muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+    @media(max-width:1024px){.grid{grid-template-columns:1fr 1fr}.grid .card:first-child{grid-column:1/-1}}
+    @media(max-width:768px){
+      .grid{grid-template-columns:1fr!important;padding:10px;gap:10px}
+      .grid .card{grid-column:1/-1!important}
+      .topbar{padding:10px 14px}
+      .stat-row{flex-wrap:wrap}
+      .stat-box{flex:1 1 calc(50% - 1px)}
+      #chartWrap{height:100px}
+      .modal{border-radius:16px 16px 0 0;width:100vw;max-width:100vw;padding:20px 16px}
+      .modal-overlay{align-items:flex-end}
+      .system-notes{display:none}
+    }
+    @media(max-width:480px){.stat-box{flex:1 1 100%}.ops-meta{display:none}}
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <div class="wordmark">RETAIL TECH OPS <span>/ DAILY</span></div>
-    <button class="date-badge" onclick="toggleDatePicker()" style="background:none;border:1px solid var(--border);padding:3px 10px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--text-muted);border-radius:20px;display:flex;align-items:center;gap:6px;"><span id="headerDate">—</span><span id="dateCaret" style="font-size:8px;opacity:.5;">▾</span></button>
-  </div>
-  <div class="header-right">
-    <div class="refresh-info">
-      <div class="refresh-dot"></div>
-      <span id="lastRefresh">Loading…</span>
+<header class="topbar">
+  <h1>RETAIL TECH OPS <span>/ DAILY</span></h1>
+  <div class="topbar-right">
+    <span class="sync-dot"></span>
+    <span class="sync-time" id="syncTime">Loading…</span>
+    <button class="date-badge" onclick="toggleDP()" id="dateBadge">— <span id="dateCaret">▾</span></button>
+    <div class="dp-panel" id="dpPanel">
+      <input type="date" id="dpInput">
+      <button onclick="applyDate()">Go</button>
     </div>
-    <button class="refresh-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">System Theme</button>
-    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    <button class="topbar-btn" id="themeBtn" onclick="toggleTheme()">System Theme</button>
+    <button class="topbar-btn" onclick="loadAll()">↺ Refresh</button>
+  </div>
+</header>
+
+<main class="grid">
+  <div class="card">
+    <div class="card-header">INCIDENT MANAGEMENT · JSM <span>via Jira Service Management</span></div>
+    <div class="card-body" id="jsmBody">Loading…</div>
+  </div>
+  <div class="card">
+    <div class="card-header">ON-CALL · PAGERDUTY <span id="pdLabel">Single rotation</span></div>
+    <div class="card-body" id="pdBody">Loading…</div>
+  </div>
+  <div class="card">
+    <div class="card-subheader">
+      <span class="card-subheader-left">SYSTEMS STATUS</span>
+      <span class="card-subheader-right">Manual · click row to expand</span>
+    </div>
+    <div id="sysBody">Loading…</div>
+  </div>
+  <div class="card">
+    <div class="card-subheader">
+      <span class="card-subheader-left">OPERATIONAL TASKS</span>
+      <span class="card-subheader-right">ITIL v4 · click to update</span>
+    </div>
+    <div id="opsBody">Loading…</div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <h2>Update System Status</h2>
+    <div class="modal-sub" id="modalSub"></div>
+    <div class="modal-btns">
+      <button class="modal-status-btn" onclick="selModalStatus('healthy',this)">● HEALTHY</button>
+      <button class="modal-status-btn" onclick="selModalStatus('degraded',this)">● DEGRADED</button>
+      <button class="modal-status-btn" onclick="selModalStatus('outage',this)">● OUTAGE</button>
+    </div>
+    <div class="modal-label">Notes</div>
+    <input class="modal-input" id="modalNote" placeholder="e.g. 3 stores impacted in EMEA, monitoring…">
+    <div class="modal-label">Updated by</div>
+    <input class="modal-input" id="modalBy" placeholder="Your name">
+    <div class="modal-footer">
+      <span class="save-ind" id="modalInd"></span>
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-save" onclick="saveModal()">Save</button>
+    </div>
   </div>
 </div>
 
-<div id="dpPanel" style="display:none;display:none;margin-bottom:20px;padding:12px 0;border-bottom:1px solid var(--border);align-items:center;gap:12px;flex-wrap:wrap;"><span style="font-size:11px;color:var(--text-muted);">Review date:</span><input type="date" id="historyDate" style="font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--border);padding:3px 8px;color:var(--text-primary);border-radius:4px;outline:none;" oninput="loadRagHistoryDate()"><span style="font-size:11px;color:var(--text-muted);">Select a past date to load historical snapshots</span></div>
-<div class="grid">
-
-  <!-- INCIDENT METRICS + TREND (spans 2 cols) -->
-  <div class="card span-2">
-    <div class="card-header">
-      <div class="card-title">Incident Management · JSM</div>
-      <div class="card-meta" id="jiraMeta">via Jira Service Management</div>
-    </div>
-    <div class="card-body">
-      <div class="metrics-grid" id="metricsGrid">
-        <div class="loading"><div class="spinner"></div> Loading Jira…</div>
-      </div>
-      <div id="trendSection"></div>
-      <div id="chartWrap" style="position:relative;height:130px;margin-top:14px;display:none;overflow:hidden;"><canvas id="trendChart" style="width:100%;height:100%;"></canvas></div>
-    </div>
-  </div>
-
-  <!-- ON-CALL -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">On-Call · PagerDuty</div>
-      <div class="card-meta">Single rotation</div>
-    </div>
-    <div class="card-body" id="oncallBody">
-      <div class="loading"><div class="spinner"></div> Loading PagerDuty…</div>
-    </div>
-  </div>
-
-  <!-- RAG STATUS (spans 2 cols) -->
-  <div class="card span-2">
-    <div class="card-header">
-      <div class="card-title">Systems Status</div>
-      <div style="display:flex;align-items:center;gap:8px;"><div class="card-meta">Manual · click to update</div><button class="refresh-btn" onclick="toggleRagHistory()" id="ragHistoryBtn" style="font-size:10px;padding:2px 8px;">History</button></div>
-    </div>
-    <div class="card-body" style="padding: 8px 16px;">
-      <div class="rag-list" id="ragList"></div>
-    </div>
-      <div id="ragHistoryPanel" style="display:none;padding:8px 0 4px;">
-        <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Status History</div>
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
-          <input type="date" id="ragHistoryDate" class="modal-updater" style="width:140px;margin-bottom:0;" oninput="loadRagHistoryDate()">
-          <div id="ragHistoryStatus" style="font-size:11px;color:var(--text-muted);"></div>
-        </div>
-        <div id="ragHistoryContent"></div>
-      </div>
-  </div>
-
-  <!-- ORDER MESSAGES -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">Order Messages</div>
-      <div class="card-meta" id="orderMeta">JSM · last 24h</div>
-    </div>
-    <div class="card-body" id="orderBody">
-      <div class="loading"><div class="spinner"></div></div>
-    </div>
-  </div>
-
-</div>
-
-<div class="footer">
+<footer class="footer">
   <span>Retail Technology Operations · Arc'teryx</span>
-  <span id="footerRefresh">Data refreshes every 15 min via GitHub Actions</span>
-</div>
-
-<!-- RAG MODAL -->
-<div class="modal-overlay" id="ragModal">
-  <div class="modal">
-    <div class="modal-title">Update System Status</div>
-    <div class="modal-system" id="modalSystemName">—</div>
-    <div class="rag-options">
-      <button class="rag-opt-btn green" onclick="selectRag('green')">● Healthy</button>
-      <button class="rag-opt-btn amber" onclick="selectRag('amber')">● Degraded</button>
-      <button class="rag-opt-btn red" onclick="selectRag('red')">● Outage</button>
-    </div>
-    <div class="modal-note-label">Notes</div>
-    <textarea class="modal-note" id="modalNote" placeholder="e.g. 3 stores impacted in EMEA, monitoring…"></textarea>
-    <div class="modal-updater-label">Updated by</div>
-    <input class="modal-updater" id="modalUpdater" placeholder="Your name" />
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="saveRag()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- ORDER MODAL -->
-<div class="modal-overlay" id="orderModal">
-  <div class="modal">
-    <div class="modal-title">Update Order Messages</div>
-    <div class="modal-system" id="orderModalLabel">—</div>
-    <div class="modal-note-label">Count</div>
-    <input class="modal-updater" id="orderModalValue" type="number" min="0" placeholder="e.g. 2530" style="margin-bottom:10px"/>
-    <div class="modal-updater-label">Updated by</div>
-    <input class="modal-updater" id="orderModalUpdater" placeholder="Your name" />
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeOrderModal()">Cancel</button>
-      <button class="btn-save" onclick="saveOrderField()">Save</button>
-    </div>
-  </div>
-</div>
+  <span>Data refreshes every 15 min via GitHub Actions</span>
+</footer>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-// In production these come from data.json written by GitHub Actions.
-// For demo, we use realistic mock data.
-// THEME
-function toggleTheme(){var b=document.body,btn=document.getElementById('themeBtn'),cur=localStorage.getItem('theme')||'auto',dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(cur==='auto'){if(dark){b.classList.add('force-light');localStorage.setItem('theme','light');btn.textContent='Dark Mode';}else{b.classList.add('force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}}else if(cur==='light'){b.classList.replace('force-light','force-dark');localStorage.setItem('theme','dark');btn.textContent='Light Mode';}else{b.classList.remove('force-dark','force-light');localStorage.setItem('theme','auto');btn.textContent='System Theme';}}
-function applyTheme(){var theme=localStorage.getItem('theme')||'auto',btn=document.getElementById('themeBtn'),dark=window.matchMedia('(prefers-color-scheme: dark)').matches;if(theme==='light'){document.body.classList.add('force-light');btn.textContent='Dark Mode';}else if(theme==='dark'){document.body.classList.add('force-dark');btn.textContent='Light Mode';}else{btn.textContent='System Theme';}}
-
-// CHART
-let trendChartInstance = null;
-function renderChart(trend) {
-  const canvas = document.getElementById('trendChart');
-  if (!canvas || typeof Chart === 'undefined') return;
-  var wrap=document.getElementById('chartWrap'); if(wrap){wrap.style.display='block';} else {canvas.style.display='block';} canvas.style.width='100%';canvas.style.height='100%';document.getElementById('chartWrap').style.display='block';
-  const labels = trend.map(d => d.date);
-  const isDark = document.body.classList.contains('force-dark') || (!document.body.classList.contains('force-light') && window.matchMedia('(prefers-color-scheme:dark)').matches);
-  const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-  const txt = isDark ? '#504e48' : '#a09e96';
-  if (trendChartInstance) trendChartInstance.destroy();
-  trendChartInstance = new Chart(canvas, {
-    data: {
-      labels,
-      datasets: [
-        { type: 'bar', label: 'Opened', data: trend.map(d=>d.opened), backgroundColor: isDark?'rgba(251,191,36,0.5)':'rgba(184,112,8,0.4)', borderRadius: 2, yAxisID: 'y2' },
-        { type: 'bar', label: 'Closed', data: trend.map(d=>d.closed), backgroundColor: isDark?'rgba(74,222,128,0.5)':'rgba(42,122,66,0.4)', borderRadius: 2, yAxisID: 'y2' },
-        { type: 'line', label: 'Open', data: trend.map(d=>d.currently_open), borderColor: isDark?'#f87171':'#b83224', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, tension: 0.3, yAxisID: 'y1' },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: { legend: { labels: { color: txt, font: { size: 10, family: 'Helvetica Neue, Helvetica, Arial, sans-serif' }, boxWidth: 10, padding: 10 } } },
-      scales: {
-        x: { grid: { color: grid }, ticks: { color: txt, font: { size: 10 } } },
-        y1: { position: 'left', grid: { color: grid }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Open', color: txt, font: { size: 9 } } },
-        y2: { position: 'right', grid: { drawOnChartArea: false }, ticks: { color: txt, font: { size: 10 } }, title: { display: true, text: 'Daily', color: txt, font: { size: 9 } } },
-      }
-    }
-  });
-}
-
-
-// RAG HISTORY
-const GITHUB_REPO = 'scheng924/retail-tech-ops-daily';
-const RAG_HISTORY_FILE = 'rag-history.json';
-
-function toggleRagHistory() {
-  const panel = document.getElementById('ragHistoryPanel');
-  const btn = document.getElementById('ragHistoryBtn');
-  const open = panel.style.display === 'none';
-  panel.style.display = open ? 'block' : 'none';
-  btn.textContent = open ? 'Close' : 'History';
-  if (open) {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('ragHistoryDate').value = today;
-    loadRagHistoryDate();
-  }
-}
-
-async function loadRagHistoryDate() {
-  const date = document.getElementById('ragHistoryDate').value;
-  const status = document.getElementById('ragHistoryStatus');
-  const content = document.getElementById('ragHistoryContent');
-  if (!date) return;
-  status.textContent = 'Loading...';
-  try {
-    const resp = await fetch('https://raw.githubusercontent.com/' + GITHUB_REPO + '/main/' + RAG_HISTORY_FILE + '?t=' + Date.now());
-    if (!resp.ok) { status.textContent = 'No history yet'; content.innerHTML = ''; return; }
-    const all = await resp.json();
-    // Find entries for this date
-    const entries = (all[date] || []).slice().reverse();
-    if (!entries.length) { status.textContent = 'No entries for this date'; content.innerHTML = ''; return; }
-    status.textContent = entries.length + ' snapshot' + (entries.length > 1 ? 's' : '');
-    const labels = { green: 'Healthy', amber: 'Degraded', red: 'Outage' };
-    content.innerHTML = entries.map(snap => `
-      <div style="margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:6px;border:1px solid var(--border);">
-        <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">${snap.time}${snap.savedBy ? ' · ' + snap.savedBy : ''}</div>
-        ${snap.systems.map(s => `
-          <div style="display:grid;grid-template-columns:120px 80px 1fr;gap:6px;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px;">
-            <span style="color:var(--text-primary);font-weight:500;">${s.system}</span>
-            <span class="rag-pill ${s.status}" style="font-size:9px;padding:2px 8px;">${labels[s.status]||s.status}</span>
-            <span style="color:var(--text-secondary);">${s.note||''}</span>
-          </div>
-        `).join('')}
-      </div>
-    `).join('');
-  } catch(e) { status.textContent = 'Error loading history'; }
-}
-
-async function saveRagSnapshot(ragState, savedBy) {
-  const pat = localStorage.getItem('github_pat');
-  if (!pat) {
-    const p = prompt('Enter GitHub PAT to save RAG history (stored locally only):');
-    if (!p) return;
-    localStorage.setItem('github_pat', p);
-  }
-  const token = localStorage.getItem('github_pat');
-  const date = new Date().toISOString().split('T')[0];
-  const time = new Date().toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' });
-  const snap = {
-    time,
-    savedBy,
-    systems: Object.entries(ragState).map(([system, s]) => ({ system, status: s.status, note: s.note || '' }))
-  };
-  try {
-    // Get current file
-    const getResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + RAG_HISTORY_FILE, {
-      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }
-    });
-    let all = {}, sha = null;
-    if (getResp.ok) { const d = await getResp.json(); sha = d.sha; const s=atob(d.content.replace(/\n/g,'')); const b=new Uint8Array(s.length); for(let i=0;i<s.length;i++) b[i]=s.charCodeAt(i); all = JSON.parse(new TextDecoder('utf-8').decode(b)); }
-    if (!all[date]) all[date] = [];
-    all[date].push(snap);
-    const str = JSON.stringify(all, null, 2);
-    const outBytes = new TextEncoder().encode(str);
-    let bin = ''; for(let i=0;i<outBytes.length;i++) bin += String.fromCharCode(outBytes[i]);
-    const body = { message: 'chore: rag snapshot ' + date + ' ' + time, content: btoa(bin) };
-    if (sha) body.sha = sha;
-    const putResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + RAG_HISTORY_FILE, {
-      method: 'PUT', headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!putResp.ok) { const e = await putResp.json(); if(e.message && e.message.includes('Bad credentials')) { localStorage.removeItem('github_pat'); alert('PAT invalid, please try again.'); } }
-  } catch(e) { console.error('RAG history save error', e); }
-}
-
-const USE_MOCK = false; // set false when data.json is available
-const DATA_URL = './data.json';
-
-// ─── SYSTEMS ──────────────────────────────────────────────────────────────────
+const REPO    = 'scheng924/retail-tech-ops-daily';
+const RAW     = 'https://raw.githubusercontent.com/' + REPO + '/main/';
+const API     = 'https://api.github.com/repos/' + REPO + '/actions/workflows/write-data.yml/dispatches';
+const TRIGGER = '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';
 const SYSTEMS = ['Digital Displays','Music','Network','Traffic Counters','Payment Devices','VoIP','POS'];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let ragState = JSON.parse(localStorage.getItem('ragState') || '{}');
-let orderState = JSON.parse(localStorage.getItem('orderState') || '{"open":null,"opened_24h":null,"closed_24h":null,"updatedBy":"","updatedAt":null}');
-let modalTarget = null;
-let modalRagSelected = null;
-let orderModalKey = null;
+let _data=null,_hist=null,_sHist={},_opsCfg=null,_opsHist={};
+let _selDate=null,_modalSys=null,_modalStatus='healthy',_chart=null;
 
-// ─── MOCK DATA ────────────────────────────────────────────────────────────────
-function getMockData() {
-  const days = ['15-Mar','16-Mar','17-Mar','18-Mar','19-Mar','20-Mar','21-Mar'];
-  return {
-    fetched_at: new Date().toISOString(),
-    jira: {
-      currently_open: 213,
-      p1: 0,
-      p2: 2,
-      open_problems: 10,
-      trend: days.map((d, i) => ({
-        date: d,
-        is_today: i === days.length - 1,
-        opened: [21,56,39,31,47,29,18][i],
-        closed: [13,77,54,27,31,22,14][i],
-        on_call: [0,4,0,0,0,0,0][i],
-        currently_open: [218,215,212,212,213,211,213][i],
-      }))
-    },
-    order_messages: null,  // manual — loaded from localStorage
+document.addEventListener('DOMContentLoaded', loadAll);
 
-    pagerduty: {
-      current_oncall: { name: 'Wayne Chen', initials: 'WC', level: 'L1 Primary', since: '2025-03-21T08:00:00Z' },
-      escalation: { name: 'JR Santos', initials: 'JR', level: 'L2 Escalation' },
-      week_schedule: [
-        { day: 'Sat', date: '15', name: 'Erica Park', level: 'L1' },
-        { day: 'Sun', date: '16', name: 'Wayne Chen', level: 'L1' },
-        { day: 'Mon', date: '17', name: 'JR Santos', level: 'L1' },
-        { day: 'Tue', date: '18', name: 'Erica Park', level: 'L1' },
-        { day: 'Wed', date: '19', name: 'Wayne Chen', level: 'L1' },
-        { day: 'Thu', date: '20', name: 'JR Santos', level: 'L1' },
-        { day: 'Fri', date: '21', name: 'Wayne Chen', level: 'L1', is_today: true },
-      ]
-    }
-  };
+async function loadAll() {
+  try {
+    const [d,h,sh,oc,oh] = await Promise.all([
+      getJ('data.json'), getJ('history.json'),
+      getR('data/status-history.json'), getR('data/ops-tasks-config.json'), getR('data/ops-tasks-history.json')
+    ]);
+    _data=d; _hist=h; _sHist=sh||{}; _opsCfg=oc||{tasks:[]}; _opsHist=oh||{};
+    renderAll();
+  } catch(e) { document.getElementById('jsmBody').textContent = 'Error: ' + e.message; }
 }
 
-// ─── LOAD ─────────────────────────────────────────────────────────────────────
-async function loadData() {
-  let data;
-  if (USE_MOCK) {
-    data = getMockData();
-  } else {
-    try {
-      const res = await fetch(DATA_URL + '?t=' + Date.now());
-      data = await res.json();
-      try{const _hr=await fetch('./history.json?t='+Date.now());window._histData=_hr.ok?await _hr.json():{};}catch(e){window._histData={};}
-    } catch(e) {
-      data = getMockData();
-    }
-  }
-  renderAll(data);
+async function getJ(p) { const r = await fetch(p + '?t=' + Date.now()); return r.json(); }
+async function getR(p) { const r = await fetch(RAW + p + '?t=' + Date.now()); return r.ok ? r.json() : null; }
+
+async function writeData(path, content, msg) {
+  const str = JSON.stringify(content, null, 2);
+  const b64 = btoa(unescape(encodeURIComponent(str)));
+  const r = await fetch(API, {
+    method: 'POST',
+    headers: {'Authorization':'Bearer '+TRIGGER,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body: JSON.stringify({ref:'main', inputs:{file_path:path, content:b64, commit_message:msg}})
+  });
+  return r.ok;
 }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
-function renderAll(data) {
-  updateHeader(data.fetched_at);
-  renderMetrics(data.jira);
-  renderTrend(data.jira.trend,window._histData||{});
-  renderOrderMessages();
-  renderOncall(data.pagerduty);
-  renderRag();
+function renderAll() { renderTopbar(); renderJSM(); renderPD(); renderSystems(); renderOps(); }
+
+function renderTopbar() {
+  if (!_data) return;
+  const ts = new Date(_data.fetched_at);
+  document.getElementById('syncTime').textContent = 'Last synced ' + ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  const label = _selDate || new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
+  document.getElementById('dateBadge').innerHTML = label + ' <span id="dateCaret">▾</span>';
+}
+function toggleDP() { const p=document.getElementById('dpPanel'); p.style.display=p.style.display==='block'?'none':'block'; }
+function applyDate() {
+  const v = document.getElementById('dpInput').value;
+  if (v) { _selDate=new Date(v+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'}); document.getElementById('dpPanel').style.display='none'; renderTopbar(); }
+}
+function toggleTheme() {
+  const c = document.documentElement.style.colorScheme;
+  document.documentElement.style.colorScheme = c==='dark' ? 'light' : 'dark';
+  document.getElementById('themeBtn').textContent = c==='dark' ? 'Light Mode' : 'Dark Mode';
 }
 
-function updateHeader(fetched_at) {
-  const now = new Date();
-  document.getElementById('headerDate').textContent =
-    now.toLocaleDateString('en-CA', { weekday:'long', year:'numeric', month:'short', day:'numeric' });
-  const ft = new Date(fetched_at);
-  document.getElementById('lastRefresh').textContent =
-    'Last synced ' + ft.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' });
+function renderJSM() {
+  if (!_data || !_hist) return;
+  const j = _data.jira;
+  const trend = buildTrend();
+  const stat = `<div class="stat-row">
+    <div class="stat-box"><div class="stat-label">Open Tickets</div><div class="stat-val">${j.currently_open}</div></div>
+    <div class="stat-box"><div class="stat-label">P1 · Blocker / ASAP</div><div class="stat-val p1">${j.p1}</div></div>
+    <div class="stat-box"><div class="stat-label">P2 · High</div><div class="stat-val p2">${j.p2}</div></div>
+    <div class="stat-box"><div class="stat-label">Open Problems</div><div class="stat-val">${j.open_problems}</div></div>
+  </div>`;
+  const rows = trend.slice().reverse().map(d => `<tr class="${d.is_today?'today':''}">
+    <td>${d.date}${d.is_today?'<span class="today-arrow">←</span>':''}</td>
+    <td>${d.currently_open||'—'}</td><td>${d.opened!=null?d.opened:'—'}</td><td>${d.closed!=null?d.closed:'—'}</td>
+  </tr>`).join('');
+  document.getElementById('jsmBody').innerHTML = stat +
+    `<div class="trend-table-wrap"><table class="trend-table">
+      <thead><tr><th>Date</th><th>Open</th><th>Opened</th><th>Closed</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>
+    <div id="chartWrap"><canvas id="myChart"></canvas></div>`;
+  renderChart(trend);
 }
 
-function renderMetrics(jira) {
-  const today = jira.trend[jira.trend.length - 1];
-  const cells = [
-    { label: 'Open Tickets', value: jira.currently_open, cls: '' },
-    { label: 'P1 · Blocker / ASAP', value: jira.p1, cls: jira.p1 > 0 ? 'alert' : '' },
-    { label: 'P2 · High', value: jira.p2, cls: jira.p2 > 0 ? 'warn' : '' },
-    { label: 'Open Problems', value: jira.open_problems, cls: jira.open_problems > 15 ? 'warn' : '' },
-    
-  ];
-  document.getElementById('metricsGrid').innerHTML = cells.map(c => `
-    <div class="metric-cell">
-      <div class="metric-label">${c.label}</div>
-      <div class="metric-value ${c.cls}">${c.value}</div>
-    </div>
-  `).join('');
-}
-
-function renderTrend(trend,_hist) {
-  const _h=_hist||{},_mo={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Oct':'10','Nov':'11','Dec':'12'},_yr=new Date().getFullYear();const trend2=trend.map(function(d){var p=d.date.split('-'),k=_yr+'-'+(_mo[p[1]]||'01')+'-'+(p[0].length<2?'0'+p[0]:p[0]),s=_h[k]||{};return{date:d.date,is_today:d.is_today,currently_open:s.currently_open!=null?s.currently_open:d.currently_open,opened:s.opened!=null?s.opened:d.opened,closed:s.closed!=null?s.closed:d.closed,on_call:s.on_call_tickets!=null?s.on_call_tickets:d.on_call};});const maxOpen=Math.max(...trend2.map(d=>d.currently_open));
-  const rows = trend2.slice().reverse().map(d => `
-    <tr class="${d.is_today ? 'today' : ''}">
-      <td>${d.date}</td>
-      <td>${d.currently_open}</td>
-      <td>${d.opened}</td>
-      <td>${d.closed}</td>
-      
-    </tr>
-  `).join('');
-
-  renderChart(trend2);
-  document.getElementById('trendSection').innerHTML = `
-    <table class="trend-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Open</th>
-          <th>Opened</th>
-          <th>Closed</th>
-          
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
-}
-
-function renderOrderMessages() {
-  const om = orderState;
-
-  function editableNum(key, label) {
-    const val = om[key] !== null ? om[key].toLocaleString() : '—';
-    return `
-      <div class="order-card" onclick="openOrderModal('${key}', '${label}')" style="cursor:pointer">
-        <div class="order-label">${label} <span style="color:var(--text-muted);font-size:9px">✎</span></div>
-        <div class="order-value">${val}</div>
-      </div>
-    `;
-  }
-
-  const ts = om.updatedAt
-    ? new Date(om.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
-      (om.updatedBy ? ' · ' + om.updatedBy : '')
-    : 'Not yet updated';
-
-  document.getElementById('orderBody').innerHTML = `
-    <div class="order-grid">
-      ${editableNum('open', 'Total Open')}
-      ${editableNum('opened_24h', 'Opened 24h')}
-      ${editableNum('closed_24h', 'Closed 24h')}
-    </div>
-    <div style="font-size:10px;color:var(--text-muted);margin-top:8px;text-align:right">${ts}</div>
-  `;
-  document.getElementById('orderMeta').textContent = 'Manual · click to update';
-}
-
-function renderOncall(pd) {
-  const oc = pd.current_oncall;
-  const esc = pd.escalation;
-  const scheduleRows = pd.week_schedule.map((d,i) => `
-    <div class="week-row ${d.is_today ? 'is-today' : ''}">
-      <div class="week-day ${d.is_today ? 'today' : ''}">${(function(){if(d.start_date){var p=d.start_date.split('-');var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1];return m+' '+parseInt(p[2]);}return d.day+' '+d.date;}())}</div>
-      <div class="week-person">${d.name}</div>
-      <div class="week-level">${d.level}</div>
-    </div>
-  `).join('');
-
-  document.getElementById('oncallBody').innerHTML = `
-    <div class="oncall-primary">
-      <div class="oncall-avatar">${oc.initials}</div>
-      <div class="oncall-info">
-        <div class="oncall-name">${oc.name}</div>
-        <div class="oncall-level">
-          ${oc.level}
-          <span class="oncall-active-badge">● Active</span>
-        </div>
-${(pd.escalation_levels||[]).filter(function(l){return l.level>1;}).map(function(l){return '<div class="oncall-level" style="margin-top:4px">&#8593; L'+l.level+' &middot; '+l.name+'</div>';}).join('')}
-      </div>
-    </div>
-    <div class="week-schedule">
-      <div class="week-schedule-title">L1 ROTATION</div>
-      ${scheduleRows}
-    </div>
-  `;
-}
-
-function renderRag() {
-  document.getElementById('ragList').innerHTML = SYSTEMS.map(sys => {
-    const s = ragState[sys] || { status: 'green', note: '', updatedBy: '', updatedAt: null };
-    const ts = s.updatedAt
-      ? new Date(s.updatedAt).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) +
-        (s.updatedBy ? ' · ' + s.updatedBy : '')
-      : 'Not yet updated';
-
-    const labels = { green: 'Healthy', amber: 'Degraded', red: 'Outage' };
-    return `
-      <div class="rag-row" onclick="openModal('${sys}')">
-        <div class="rag-system">${sys}</div>
-        <button class="rag-pill ${s.status}">
-          <span class="dot"></span>${labels[s.status] || 'Healthy'}
-        </button>
-        <div style="overflow:hidden">
-          <div style="font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-            ${s.note || '<span style="color:var(--text-muted)">No notes</span>'}
-          </div>
-        </div>
-        <div class="rag-timestamp">${ts}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ─── MODAL ────────────────────────────────────────────────────────────────────
-function openModal(sys) {
-  modalTarget = sys;
-  const s = ragState[sys] || { status: 'green', note: '', updatedBy: '' };
-  modalRagSelected = s.status || 'green';
-  document.getElementById('modalSystemName').textContent = sys;
-  document.getElementById('modalNote').value = s.note || '';
-  document.getElementById('modalUpdater').value = s.updatedBy || '';
-  updateModalButtons();
-  document.getElementById('ragModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('ragModal').classList.remove('open');
-  modalTarget = null;
-}
-
-function selectRag(val) {
-  modalRagSelected = val;
-  updateModalButtons();
-}
-
-function updateModalButtons() {
-  ['green','amber','red'].forEach(c => {
-    const btn = document.querySelector(`.rag-opt-btn.${c}`);
-    btn.classList.toggle('selected', c === modalRagSelected);
+function buildTrend() {
+  return (_data.jira.trend||[]).map(t => {
+    const key = Object.keys(_hist||{}).find(k => { const d=new Date(k); return d.getDate()+'-'+d.toLocaleString('en-US',{month:'short'})===t.date; });
+    const h = key ? _hist[key] : null;
+    return {date:t.date, is_today:t.is_today, currently_open:t.is_today?t.currently_open:(h?h.currently_open:0), opened:t.is_today?t.opened:(h?h.opened:0), closed:t.is_today?t.closed:(h?h.closed:0)};
   });
 }
 
-function saveRag() {
-  if (!modalTarget) return;
-  ragState[modalTarget] = {
-    status: modalRagSelected,
-    note: document.getElementById('modalNote').value.trim(),
-    updatedBy: document.getElementById('modalUpdater').value.trim(),
-    updatedAt: new Date().toISOString()
-  };
-  localStorage.setItem('ragState', JSON.stringify(ragState));
-  saveRagSnapshot(ragState, document.getElementById('modalUpdater').value.trim());
-  closeModal();
-  renderRag();
+function renderChart(trend) {
+  const ctx = document.getElementById('myChart'); if (!ctx) return;
+  if (_chart) { _chart.destroy(); _chart=null; }
+  const muted = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim();
+  _chart = new Chart(ctx, {data:{labels:trend.map(t=>t.date), datasets:[
+    {type:'bar',label:'Opened',data:trend.map(t=>t.opened||0),backgroundColor:'rgba(180,83,9,.35)',borderRadius:3,yAxisID:'y2'},
+    {type:'bar',label:'Closed',data:trend.map(t=>t.closed||0),backgroundColor:'rgba(42,122,66,.35)',borderRadius:3,yAxisID:'y2'},
+    {type:'line',label:'Open',data:trend.map(t=>t.currently_open||0),borderColor:'#c0392b',pointBackgroundColor:'#c0392b',pointRadius:4,tension:.3,yAxisID:'y1',borderWidth:2,fill:false}
+  ]}, options:{responsive:true,maintainAspectRatio:false,animation:false,
+    plugins:{legend:{labels:{font:{size:10},color:muted,boxWidth:10,padding:8}}},
+    scales:{y1:{type:'linear',position:'left',ticks:{font:{size:9},color:muted,maxTicksLimit:4},grid:{color:'rgba(0,0,0,.05)'}},
+      y2:{type:'linear',position:'right',ticks:{font:{size:9},color:muted,maxTicksLimit:4},grid:{display:false}},
+      x:{ticks:{font:{size:9},color:muted}}}}});
 }
 
-// Close modal on overlay click
-document.getElementById('ragModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// ─── ORDER MODAL ──────────────────────────────────────────────────────────────
-function openOrderModal(key, label) {
-  orderModalKey = key;
-  document.getElementById('orderModalLabel').textContent = label;
-  document.getElementById('orderModalValue').value = orderState[key] !== null ? orderState[key] : '';
-  document.getElementById('orderModalUpdater').value = orderState.updatedBy || '';
-  document.getElementById('orderModal').classList.add('open');
+function renderPD() {
+  if (!_data || !_data.pagerduty) return;
+  const pd = _data.pagerduty; const oc = pd.current_oncall;
+  const seen = new Set([oc.name]);
+  const esc = (pd.escalation_levels||[]).filter(l => l.level>1 && !seen.has(l.name) && !seen.add(l.name))
+    .map(l => `<div class="oncall-esc">↑ L${l.level} · ${l.name}</div>`).join('');
+  const rot = (pd.week_schedule||[]).map(w => {
+    const p = w.start_date ? w.start_date.split('-') : null;
+    const label = p ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]+' '+parseInt(p[2]) : w.day+' '+w.date;
+    const pts = label.split(' ');
+    return `<div class="rotation-row"><div class="rotation-date">${pts[0]}<br>${pts[1]||''}</div><div class="rotation-name">${w.name}</div><div class="rotation-lvl">${w.level}</div></div>`;
+  }).join('');
+  document.getElementById('pdBody').innerHTML = `
+    <div class="oncall-primary">
+      <div class="oncall-avatar">${oc.initials}</div>
+      <div><div class="oncall-name">${oc.name}</div>
+        <div class="oncall-level-badge">${oc.level} <span class="active-pill">Active</span></div>
+        ${esc}</div>
+    </div>
+    <div class="rotation-section"><div class="rotation-label">L1 Rotation</div>${rot}</div>`;
 }
-function closeOrderModal() {
-  document.getElementById('orderModal').classList.remove('open');
-  orderModalKey = null;
+
+function renderSystems() { document.getElementById('sysBody').innerHTML = SYSTEMS.map(buildSysRow).join(''); }
+function buildSysRow(name) {
+  const safe = name.replace(/[^a-zA-Z0-9]/g,'-');
+  const today = new Date().toISOString().split('T')[0];
+  const e = (_sHist[name]||{})[today];
+  const status = e ? e.status : 'healthy';
+  const note = e ? e.note : 'No notes';
+  const updated = e ? (e.by ? e.by+' · '+today : today) : 'Not yet updated';
+  const pl = {healthy:'HEALTHY',degraded:'DEGRADED',outage:'OUTAGE'}[status]||'HEALTHY';
+  return `
+  <div class="system-row" onclick="toggleSys('${safe}')">
+    <div class="system-name">${name}</div>
+    <span class="status-pill ${status}"><span class="status-dot"></span>${pl}</span>
+    <div class="system-notes">${note}</div>
+    <div class="system-updated">${updated}</div>
+    <div class="expand-caret" id="sc-${safe}">▾</div>
+  </div>
+  <div class="system-expand" id="se-${safe}">
+    <div class="hist-label">14-Day History</div>
+    ${buildHeatmap(name,_sHist)}
+    <button class="expand-btn" onclick="event.stopPropagation();openModal('${name}')">Update Status</button>
+  </div>`;
 }
-function saveOrderField() {
-  if (!orderModalKey) return;
-  const val = document.getElementById('orderModalValue').value;
-  orderState[orderModalKey] = val !== '' ? parseInt(val, 10) : null;
-  orderState.updatedBy = document.getElementById('orderModalUpdater').value.trim();
-  orderState.updatedAt = new Date().toISOString();
-  localStorage.setItem('orderState', JSON.stringify(orderState));
-  closeOrderModal();
-  renderOrderMessages();
+function buildHeatmap(name, hd) {
+  const h = (hd[name]||{}); const today = new Date(); let cells='',d0='',d1='';
+  for (let i=13;i>=0;i--) {
+    const d = new Date(today); d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0]; const e = h[key]; const s = e ? e.status : 'none';
+    const tip = e ? `${key}: ${e.status}${e.note?' — '+e.note:''}${e.by?' ('+e.by+')':''}` : key+': no data';
+    cells += `<div class="heatmap-cell" data-s="${s}" title="${tip.replace(/"/g,'&quot;')}"></div>`;
+    if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  }
+  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>`;
 }
-document.getElementById('orderModal').addEventListener('click', function(e) {
-  if (e.target === this) closeOrderModal();
-});
+function toggleSys(safe) {
+  const el=document.getElementById('se-'+safe), c=document.getElementById('sc-'+safe);
+  if (!el) return; const open = !el.style.display || el.style.display==='none';
+  el.style.display = open ? 'block' : 'none'; if (c) c.textContent = open ? '▴' : '▾';
+}
 
-// ─── AUTO-REFRESH ─────────────────────────────────────────────────────────────
-applyTheme();
-loadData();
-setInterval(loadData, 15 * 60 * 1000); // 15 min
+function openModal(name) {
+  _modalSys=name; _modalStatus='healthy';
+  document.getElementById('modalSub').textContent = name;
+  document.getElementById('modalNote').value = ''; document.getElementById('modalBy').value = '';
+  document.getElementById('modalInd').textContent = '';
+  document.querySelectorAll('.modal-status-btn').forEach(b => b.className='modal-status-btn');
+  document.querySelector('.modal-status-btn').classList.add('sel-healthy');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function closeModalOutside(e) { if (e.target===document.getElementById('modalOverlay')) closeModal(); }
+function selModalStatus(s, btn) {
+  _modalStatus = s;
+  document.querySelectorAll('.modal-status-btn').forEach(b => b.className='modal-status-btn');
+  btn.classList.add('sel-'+s);
+}
+async function saveModal() {
+  const note = document.getElementById('modalNote').value.trim();
+  const by   = document.getElementById('modalBy').value.trim();
+  const today = new Date().toISOString().split('T')[0];
+  if (!_sHist[_modalSys]) _sHist[_modalSys] = {};
+  _sHist[_modalSys][today] = {status:_modalStatus, note, by};
+  renderSystems();
+  document.getElementById('modalInd').textContent = 'Saving…';
+  const ok = await writeData('data/status-history.json', _sHist, 'chore: update status '+_modalSys);
+  document.getElementById('modalInd').textContent = ok ? 'Saved ✓' : 'Error saving';
+  if (ok) setTimeout(closeModal, 1000);
+}
 
-// ── THEME (final override) ────────────────────────────────────────────────────
-(function(){
-  var KEYS   = ['auto','light','dark'];
-  var LABELS = ['System Theme','Light Mode','Dark Mode'];
-  window._ti = (function(){ var t=localStorage.getItem('theme')||'auto'; return t==='light'?1:t==='dark'?2:0; })();
-
-  window.applyTheme = function(){
-    var btn=document.getElementById('themeBtn');
-    var sysDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-    document.body.classList.remove('force-light','force-dark');
-    if(KEYS[window._ti]==='light') document.body.classList.add('force-light');
-    else if(KEYS[window._ti]==='dark') document.body.classList.add('force-dark');
-    else if(sysDark) document.body.classList.add('force-dark');
-    if(btn) btn.textContent=LABELS[window._ti];
-  };
-  window.toggleTheme = function(){
-    window._ti=(window._ti+1)%3;
-    localStorage.setItem('theme',KEYS[window._ti]);
-    window.applyTheme();
-  };
-  window.applyStoredTheme = window.applyTheme;
-  window.toggleDatePicker = function(){
-    var p=document.getElementById('dpPanel');
-    var c=document.getElementById('dateCaret');
-    var isOpen=p.style.display==='flex';
-    p.style.display=isOpen?'none':'flex';
-    if(c) c.textContent=isOpen?'▾':'▴';
-  };
-  window.applyTheme();
-})();
-// ─────────────────────────────────────────────────────────────────────────────
+function renderOps() {
+  if (!_opsCfg || !_opsCfg.tasks || !_opsCfg.tasks.length) {
+    document.getElementById('opsBody').innerHTML = '<div style="padding:16px;color:var(--text-muted)">No tasks configured</div>'; return;
+  }
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('opsBody').innerHTML = _opsCfg.tasks.map(t => buildOpsRow(t, today)).join('');
+}
+function buildOpsRow(task, today) {
+  const safe = task.id; const e = (_opsHist[task.id]||{})[today];
+  const status = e ? e.status : 'pending';
+  const labels = {complete:'✓ Complete', delayed:'⚠ Delayed', failed:'✕ Failed', pending:'— Pending'};
+  const meta = e ? (e.time||'')+(e.by?' · '+e.by:'') : 'Not yet updated';
+  const bc = s => `ops-sel-btn${status===s?' a'+s[0]:''}`;
+  return `
+  <div class="ops-task-row" onclick="toggleOps('${safe}')">
+    <div class="ops-task-name">${task.name}</div>
+    <span class="ops-task-cat">${task.category}</span>
+    <span class="ops-status-pill ${status}">${labels[status]}</span>
+    <div class="ops-meta">${meta}</div>
+    <div class="expand-caret" id="oc-${safe}">▾</div>
+  </div>
+  <div class="ops-expand" id="oe-${safe}">
+    <div class="ops-btn-row">
+      <button class="${bc('complete')}" onclick="opsSel('${safe}','complete',event)">✓ Complete</button>
+      <button class="${bc('delayed')}"  onclick="opsSel('${safe}','delayed',event)">⚠ Delayed</button>
+      <button class="${bc('failed')}"   onclick="opsSel('${safe}','failed',event)">✕ Failed</button>
+      <button class="${bc('pending')}"  onclick="opsSel('${safe}','pending',event)">— Pending</button>
+    </div>
+    <input class="ops-input" id="on-${safe}" placeholder="Add note…" value="${e&&e.note||''}" onclick="event.stopPropagation()">
+    <div class="ops-save-row">
+      <input class="ops-input" id="ob-${safe}" placeholder="Your name" value="${e&&e.by||''}" style="flex:1;margin-bottom:0" onclick="event.stopPropagation()">
+      <span class="save-ind" id="oi-${safe}"></span>
+      <button class="ops-save-btn" onclick="saveOps('${safe}','${task.id}',event)">Save</button>
+    </div>
+    <div style="margin-top:12px">
+      <div class="hist-label">14-Day History</div>
+      ${buildOpsHeatmap(task.id)}
+    </div>
+  </div>`;
+}
+function buildOpsHeatmap(id) {
+  const h = (_opsHist[id]||{}); const today = new Date(); let cells='',d0='',d1='';
+  for (let i=13;i>=0;i--) {
+    const d = new Date(today); d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0]; const e = h[key]; const s = e ? e.status : 'none';
+    const tip = e ? `${key}: ${e.status}${e.note?' — '+e.note:''}${e.by?' ('+e.by+')':''}` : key+': no data';
+    cells += `<div class="heatmap-cell" data-s="${s}" title="${tip.replace(/"/g,'&quot;')}"></div>`;
+    if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  }
+  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>`;
+}
+function toggleOps(safe) {
+  const el=document.getElementById('oe-'+safe), c=document.getElementById('oc-'+safe);
+  if (!el) return; const open = !el.style.display || el.style.display==='none';
+  el.style.display = open ? 'block' : 'none'; if (c) c.textContent = open ? '▴' : '▾';
+}
+function opsSel(safe, status, e) {
+  e.stopPropagation();
+  const ex = document.getElementById('oe-'+safe); ex.dataset.sel = status;
+  const map = {complete:'✓ Complete', delayed:'⚠ Delayed', failed:'✕ Failed', pending:'— Pending'};
+  ex.querySelectorAll('.ops-sel-btn').forEach(b => { b.className='ops-sel-btn'; if (b.textContent.trim()===map[status]) b.classList.add('a'+status[0]); });
+}
+async function saveOps(safe, taskId, e) {
+  e.stopPropagation();
+  const ex = document.getElementById('oe-'+safe);
+  const status = ex.dataset.sel || 'pending';
+  const note = document.getElementById('on-'+safe).value.trim();
+  const by   = document.getElementById('ob-'+safe).value.trim();
+  const now = new Date(); const today = now.toISOString().split('T')[0];
+  const time = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
+  if (!_opsHist[taskId]) _opsHist[taskId] = {};
+  _opsHist[taskId][today] = {status, note, by, time};
+  renderOps();
+  const ind = document.getElementById('oi-'+safe);
+  if (ind) ind.textContent = 'Saving…';
+  const ok = await writeData('data/ops-tasks-history.json', _opsHist, 'chore: update ops '+taskId);
+  if (ind) ind.textContent = ok ? 'Saved ✓' : 'Error';
+  if (ok) setTimeout(() => toggleOps(safe), 1000);
+}
 </script>
 </body>
 </html>
