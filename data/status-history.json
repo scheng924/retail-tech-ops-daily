@@ -13,7 +13,7 @@
     "2026-03-18": { "status": "degraded", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "degraded", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "degraded", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "degraded", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "degraded", "note": "", "by": "Simon"}
   },
   "Music": {
     "2026-03-28": { "status": "degraded", "note": "", "by": "Simon"},
@@ -29,7 +29,7 @@
     "2026-03-18": { "status": "degraded", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "degraded", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "degraded", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "degraded", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "degraded", "note": "", "by": "Simon"}
   },
   "Network": {
     "2026-03-28": { "status": "healthy", "note": "", "by": "Simon"},
@@ -45,7 +45,7 @@
     "2026-03-18": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "healthy", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"}
   },
   "Traffic Counters": {
     "2026-03-28": { "status": "healthy", "note": "", "by": "Simon"},
@@ -61,7 +61,7 @@
     "2026-03-18": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "healthy", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"}
   },
   "Payment Devices": {
     "2026-03-28": { "status": "healthy", "note": "", "by": "Simon"},
@@ -77,7 +77,7 @@
     "2026-03-18": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "healthy", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"}
   },
   "VoIP": {
     "2026-03-28": { "status": "healthy", "note": "", "by": "Simon"},
@@ -93,7 +93,7 @@
     "2026-03-18": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "degraded", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "healthy", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"}
   },
   "POS": {
     "2026-03-28": { "status": "healthy", "note": "", "by": "Simon"},
@@ -109,6 +109,6 @@
     "2026-03-18": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-17": { "status": "healthy", "note": "", "by": "Simon"},
     "2026-03-16": { "status": "healthy", "note": "", "by": "Simon"},
-    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"},
+    "2026-03-15": { "status": "healthy", "note": "", "by": "Simon"}
   }
 }
