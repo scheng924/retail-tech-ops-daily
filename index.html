@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Retail Tech Ops · Daily</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-feat: Operational Tasks + System Status 14-day heatmap  <style>
+  <style>
     :root {
       --bg:#f4f3ef;--surface:#ffffff;--surface2:#eeede7;--border:#dddcd4;
       --text-primary:#1a1917;--text-secondary:#6b6960;--text-muted:#a09e96;
@@ -163,24 +163,24 @@ feat: Operational Tasks + System Status 14-day heatmap  <style>
 
 <main class="grid">
   <div class="card">
-    <div class="card-header">INCIDENT MANAGEMENT · JSM <span>via Jira Service Management</span></div>
+    <div class="card-header">INCIDENT MANAGEMENT <span>via Jira Service Management</span></div>
     <div class="card-body" id="jsmBody">Loading…</div>
   </div>
   <div class="card">
-    <div class="card-header">ON-CALL · PAGERDUTY <span id="pdLabel">Single rotation</span></div>
+    <div class="card-header">ON-CALL <span>via PagerDuty</span></div>
     <div class="card-body" id="pdBody">Loading…</div>
   </div>
   <div class="card">
     <div class="card-subheader">
       <span class="card-subheader-left">SYSTEMS STATUS</span>
-      <span class="card-subheader-right">Manual · click row to expand</span>
+      <span class="card-subheader-right">Last business day · click row to expand</span>
     </div>
     <div id="sysBody">Loading…</div>
   </div>
   <div class="card">
     <div class="card-subheader">
       <span class="card-subheader-left">OPERATIONAL TASKS</span>
-      <span class="card-subheader-right">ITIL v4 · click to update</span>
+      <span class="card-subheader-right">Last business day · click to update</span>
     </div>
     <div id="opsBody">Loading…</div>
   </div>
@@ -223,6 +223,12 @@ let _data=null,_hist=null,_sHist={},_opsCfg=null,_opsHist={};
 let _selDate=null,_modalSys=null,_modalStatus='healthy',_chart=null;
 
 document.addEventListener('DOMContentLoaded', loadAll);
+
+// PST today — Vancouver is UTC-7 (PDT) / UTC-8 (PST)
+function todayPST() {
+  const pst = new Date(Date.now() - 7 * 60 * 60 * 1000);
+  return pst.toISOString().split('T')[0];
+}
 
 async function loadAll() {
   try {
@@ -317,8 +323,7 @@ function renderChart(trend) {
 function renderPD() {
   if (!_data || !_data.pagerduty) return;
   const pd = _data.pagerduty; const oc = pd.current_oncall;
-  const seen = new Set([oc.name]);
-  const esc = (pd.escalation_levels||[]).filter(l => l.level>1 && !seen.has(l.name) && !seen.add(l.name))
+  const esc = (pd.escalation_levels||[]).filter(l => l.level > 1)
     .map(l => `<div class="oncall-esc">↑ L${l.level} · ${l.name}</div>`).join('');
   const rot = (pd.week_schedule||[]).map(w => {
     const p = w.start_date ? w.start_date.split('-') : null;
@@ -339,7 +344,7 @@ function renderPD() {
 function renderSystems() { document.getElementById('sysBody').innerHTML = SYSTEMS.map(buildSysRow).join(''); }
 function buildSysRow(name) {
   const safe = name.replace(/[^a-zA-Z0-9]/g,'-');
-  const today = new Date().toISOString().split('T')[0];
+  const today = todayPST();
   const e = (_sHist[name]||{})[today];
   const status = e ? e.status : 'healthy';
   const note = e ? e.note : 'No notes';
@@ -396,7 +401,7 @@ function selModalStatus(s, btn) {
 async function saveModal() {
   const note = document.getElementById('modalNote').value.trim();
   const by   = document.getElementById('modalBy').value.trim();
-  const today = new Date().toISOString().split('T')[0];
+  const today = todayPST();
   if (!_sHist[_modalSys]) _sHist[_modalSys] = {};
   _sHist[_modalSys][today] = {status:_modalStatus, note, by};
   renderSystems();
@@ -410,7 +415,7 @@ function renderOps() {
   if (!_opsCfg || !_opsCfg.tasks || !_opsCfg.tasks.length) {
     document.getElementById('opsBody').innerHTML = '<div style="padding:16px;color:var(--text-muted)">No tasks configured</div>'; return;
   }
-  const today = new Date().toISOString().split('T')[0];
+  const today = todayPST();
   document.getElementById('opsBody').innerHTML = _opsCfg.tasks.map(t => buildOpsRow(t, today)).join('');
 }
 function buildOpsRow(task, today) {
@@ -475,7 +480,7 @@ async function saveOps(safe, taskId, e) {
   const status = ex.dataset.sel || 'pending';
   const note = document.getElementById('on-'+safe).value.trim();
   const by   = document.getElementById('ob-'+safe).value.trim();
-  const now = new Date(); const today = now.toISOString().split('T')[0];
+  const now = new Date(); const today = todayPST();
   const time = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
   if (!_opsHist[taskId]) _opsHist[taskId] = {};
   _opsHist[taskId][today] = {status, note, by, time};
