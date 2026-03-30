@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-03-30T14:34:29Z",
+  "fetched_at": "2026-03-30T15:09:00Z",
   "jira": {
-    "currently_open": 405,
-    "p1": 4,
-    "p2": 23,
+    "currently_open": 408,
+    "p1": 5,
+    "p2": 24,
     "open_problems": 11,
     "trend": [
       {
@@ -57,8 +57,8 @@
       {
         "date": "30-Mar",
         "is_today": true,
-        "currently_open": 405,
-        "opened": 20,
+        "currently_open": 408,
+        "opened": 21,
         "closed": 2,
         "on_call": 0
       }
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Olowu, Tolani",
-      "initials": "OT",
+      "name": "Patoc, Jr",
+      "initials": "PJ",
       "level": "L1 Primary",
       "since": "2026-03-30T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Olowu, Tolani"
+        "name": "Patoc, Jr"
       },
       {
         "level": 2,
