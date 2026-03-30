@@ -69,7 +69,7 @@ jobs:
             day_start = (now - datetime.timedelta(days=i)).replace(hour=0,minute=0,second=0)
             is_today  = (i == 0)
             trend.append({
-              'date': day_start.strftime('%-d-%b'), 'is_today': is_today,
+              'date': day_start.strftime('%-d-%b'), 'is_today': is_today, 
               'currently_open': currently_open if is_today else 0,
               'opened':         opened_day     if is_today else 0,
               'closed':         closed_day     if is_today else 0,
