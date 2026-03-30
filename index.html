@@ -24,6 +24,8 @@
       --green:#4ade80;--green-bg:#052e16;--amber:#fbbf24;--amber-bg:#451a03;
       --red:#f87171;--red-bg:#450a0a;--shadow:0 1px 4px rgba(0,0,0,.3);
     }
+    [data-theme="dark"] .modal{background:#1c1c1e!important}
+    @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .modal{background:#1c1c1e!important}}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;font-size:13px;line-height:1.5}
     .topbar{display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;flex-wrap:wrap}
@@ -33,10 +35,8 @@
     .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}
     .sync-time{font-size:11px;color:var(--text-muted)}
     .sync-date{font-size:11px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
-    .date-badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px}
     .topbar-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text-primary)}
     .topbar-btn:hover{background:var(--border)}
-    
     .grid{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:auto auto;gap:14px;padding:14px}
     .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
     .card-header{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);padding:12px 16px 0;display:flex;align-items:center;justify-content:space-between}
@@ -77,17 +77,18 @@
     .status-pill.outage{background:var(--red-bg);color:var(--red)}
     .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
     .heatmap-row{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:4px}
-    .heatmap-cell{width:20px;height:20px;border-radius:3px;flex-shrink:0;cursor:default}
+    .heatmap-cell{width:20px;height:20px;border-radius:3px;flex-shrink:0;cursor:pointer}
     .heatmap-cell[data-s="healthy"]{background:var(--green);opacity:.85}
     .heatmap-cell[data-s="degraded"]{background:var(--amber);opacity:.85}
     .heatmap-cell[data-s="outage"]{background:var(--red);opacity:.85}
     .heatmap-cell[data-s="none"]{background:var(--border)}
+    .heatmap-cell:hover{opacity:1;transform:scale(1.2)}
     .heatmap-dates{display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)}
-    .heatmap-cell{cursor:pointer!important}
-    .heatmap-detail{margin-top:8px;padding:7px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-primary);display:none}
-    .heatmap-detail.visible{display:block}
-    .heatmap-detail-date{font-weight:700;margin-bottom:2px}
-    .heatmap-detail-status.healthy{color:var(--green)}.heatmap-detail-status.degraded{color:var(--amber)}.heatmap-detail-status.outage{color:var(--red)}.heatmap-detail-status.none{color:var(--text-muted)}
+    .heatmap-detail{margin-top:8px;padding:7px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:11px;display:none}
+    .heatmap-detail.show{display:block}
+    .hd-date{font-weight:700;margin-bottom:2px;color:var(--text-primary)}
+    .hd-status.healthy{color:var(--green)}.hd-status.degraded{color:var(--amber)}.hd-status.outage{color:var(--red)}.hd-status.none{color:var(--text-muted)}
+    .hd-meta{color:var(--text-muted);margin-top:2px}
     .expand-caret{font-size:10px;color:var(--text-muted);flex-shrink:0;margin-left:4px}
     .hist-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
     .system-row{display:flex;align-items:center;gap:10px;padding:8px 16px;border-top:1px solid var(--border);cursor:pointer;transition:background .1s}
@@ -123,10 +124,12 @@
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center}
     .modal-overlay.open{display:flex}
     .modal{background:#f5f0eb!important;border:1px solid var(--border);border-radius:14px;padding:28px;width:min(520px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)}
-    @media(prefers-color-scheme:dark){:not([data-theme="light"]) .modal{background:#1c1c1e!important}}
-    [data-theme="dark"] .modal{background:#1c1c1e!important}
     .modal h2{font-size:16px;font-weight:700;margin-bottom:6px}
-    .modal-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+    .modal-sub{font-size:12px;color:var(--text-muted);margin-bottom:12px}
+    .modal-date-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px}
+    .modal-date-label{font-size:11px;color:var(--text-muted);font-weight:600;white-space:nowrap}
+    .modal-date-input{flex:1;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--surface);color:var(--text-primary)}
+    .modal-date-input:focus{outline:none;border-color:var(--text-secondary)}
     .modal-btns{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
     .modal-status-btn{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:700;border:2px solid var(--border);cursor:pointer;background:var(--surface2);color:var(--text-secondary);transition:all .15s;text-align:center}
     .modal-status-btn.sel-healthy{background:var(--green-bg);color:var(--green);border-color:var(--green)}
@@ -162,7 +165,7 @@
   <div class="topbar-right">
     <span class="sync-dot"></span>
     <span class="sync-time" id="syncTime">Loading…</span>
-<span class="sync-date" id="syncDate"></span>
+    <span class="sync-date" id="syncDate"></span>
     <button class="topbar-btn" id="themeBtn" onclick="toggleTheme()">System Theme</button>
     <button class="topbar-btn" onclick="loadAll()">↺ Refresh</button>
   </div>
@@ -197,6 +200,10 @@
   <div class="modal">
     <h2>Update System Status</h2>
     <div class="modal-sub" id="modalSub"></div>
+    <div class="modal-date-row">
+      <span class="modal-date-label">Date</span>
+      <input class="modal-date-input" type="date" id="modalDate">
+    </div>
     <div class="modal-btns">
       <button class="modal-status-btn" onclick="selModalStatus('healthy',this)">● HEALTHY</button>
       <button class="modal-status-btn" onclick="selModalStatus('degraded',this)">● DEGRADED</button>
@@ -230,18 +237,15 @@ let _data=null,_hist=null,_sHist={},_opsCfg=null,_opsHist={};
 let _modalSys=null,_modalStatus='healthy',_chart=null;
 
 // Init theme from localStorage or system preference
-const _savedTheme = localStorage.getItem('theme');
-if (_savedTheme) {
-  document.documentElement.setAttribute('data-theme', _savedTheme);
-  document.getElementById('themeBtn').textContent = _savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.setAttribute('data-theme', 'dark');
-  document.getElementById('themeBtn').textContent = 'Light Mode';
-}
+(function(){
+  const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', t);
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.textContent = t === 'dark' ? 'Light Mode' : 'Dark Mode';
+})();
 
 document.addEventListener('DOMContentLoaded', loadAll);
 
-// PST today — Vancouver is UTC-7 (PDT) / UTC-8 (PST)
 function todayPST() {
   const pst = new Date(Date.now() - 7 * 60 * 60 * 1000);
   return pst.toISOString().split('T')[0];
@@ -272,19 +276,6 @@ async function writeData(path, content, msg) {
   return r.ok;
 }
 
-function showHeatmapDetail(detailId, key, status, note, by, dateLabel) {
-  const el = document.getElementById(detailId); if (!el) return;
-  el.classList.add('visible');
-  const statusLabels = {healthy:'● Healthy',degraded:'● Degraded',outage:'● Outage',none:'No data'};
-  el.querySelector('.heatmap-detail-date').textContent = dateLabel;
-  const sEl = el.querySelector('.heatmap-detail-status');
-  sEl.textContent = statusLabels[status]||'No data'; sEl.className='heatmap-detail-status '+status;
-  const parts = [];
-  if (note) parts.push(note);
-  if (by) parts.push('by ' + by);
-  el.querySelector('.heatmap-detail-note').textContent = parts.join(' · ');
-}
-
 function renderAll() { renderTopbar(); renderJSM(); renderPD(); renderSystems(); renderOps(); }
 
 function renderTopbar() {
@@ -292,16 +283,16 @@ function renderTopbar() {
   const ts = new Date(_data.fetched_at);
   document.getElementById('syncTime').textContent = 'Last synced ' + ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
   const pstNow = new Date(Date.now() - 7*60*60*1000);
-  const label = pstNow.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
   const el = document.getElementById('syncDate');
-  if (el) el.textContent = label;
+  if (el) el.textContent = pstNow.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
 }
 
 function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('themeBtn').textContent = isDark ? 'Dark Mode' : 'Light Mode';
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+  localStorage.setItem('theme', next);
 }
 
 function renderJSM() {
@@ -371,6 +362,7 @@ function renderPD() {
 }
 
 function renderSystems() { document.getElementById('sysBody').innerHTML = SYSTEMS.map(buildSysRow).join(''); }
+
 function buildSysRow(name) {
   const safe = name.replace(/[^a-zA-Z0-9]/g,'-');
   const today = todayPST();
@@ -393,19 +385,23 @@ function buildSysRow(name) {
     <button class="expand-btn" onclick="event.stopPropagation();openModal('${name}')">Update Status</button>
   </div>`;
 }
+
 function buildHeatmap(name, hd) {
-  const h = (hd[name]||{}); const today = new Date(); let cells='',d0='',d1='';
-  const safeId = name.replace(/[^a-zA-Z0-9]/g,'-');
+  const hist = (hd[name]||{}); const today = new Date(); let cells='',d0='',d1='';
+  const sid = 'shd-'+name.replace(/[^a-zA-Z0-9]/g,'-');
   for (let i=13;i>=0;i--) {
     const d = new Date(today); d.setDate(d.getDate()-i);
-    const key = d.toISOString().split('T')[0]; const e = h[key]; const s = e ? e.status : 'none';
-    const dateLabel = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    cells += `<div class="heatmap-cell" data-s="${s}" onclick="showHeatmapDetail('shd-${safeId}','${key}','${s}','${(e&&e.note||'').replace(/'/g,'&#39;')}','${(e&&e.by||'').replace(/'/g,'&#39;')}','${dateLabel}')"></div>`;
+    const key = d.toISOString().split('T')[0]; const e = hist[key]; const s = e ? e.status : 'none';
+    const dl = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const note = (e&&e.note||'').replace(/'/g,"&#39;"); const by = (e&&e.by||'').replace(/'/g,"&#39;");
+    cells += `<div class="heatmap-cell" data-s="${s}" onclick="showHD('${sid}','${dl}','${s}','${note}','${by}')"></div>`;
     if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   }
-  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div><div class="heatmap-detail" id="shd-${safeId}"><div class="heatmap-detail-date"></div><div class="heatmap-detail-status"></div><div class="heatmap-detail-note"></div></div>`;
+  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
+    <div class="heatmap-detail" id="${sid}"><div class="hd-date"></div><div class="hd-status"></div><div class="hd-meta"></div></div>`;
 }
+
 function toggleSys(safe) {
   const el=document.getElementById('se-'+safe), c=document.getElementById('sc-'+safe);
   if (!el) return; const open = !el.style.display || el.style.display==='none';
@@ -417,6 +413,7 @@ function openModal(name) {
   document.getElementById('modalSub').textContent = name;
   document.getElementById('modalNote').value = ''; document.getElementById('modalBy').value = '';
   document.getElementById('modalInd').textContent = '';
+  document.getElementById('modalDate').value = todayPST();
   document.querySelectorAll('.modal-status-btn').forEach(b => b.className='modal-status-btn');
   document.querySelector('.modal-status-btn').classList.add('sel-healthy');
   document.getElementById('modalOverlay').classList.add('open');
@@ -431,14 +428,27 @@ function selModalStatus(s, btn) {
 async function saveModal() {
   const note = document.getElementById('modalNote').value.trim();
   const by   = document.getElementById('modalBy').value.trim();
-  const today = todayPST();
+  const date = document.getElementById('modalDate').value || todayPST();
   if (!_sHist[_modalSys]) _sHist[_modalSys] = {};
-  _sHist[_modalSys][today] = {status:_modalStatus, note, by};
+  _sHist[_modalSys][date] = {status:_modalStatus, note, by};
   renderSystems();
   document.getElementById('modalInd').textContent = 'Saving…';
-  const ok = await writeData('data/status-history.json', _sHist, 'chore: update status '+_modalSys);
+  const ok = await writeData('data/status-history.json', _sHist, 'chore: update status '+_modalSys+' for '+date);
   document.getElementById('modalInd').textContent = ok ? 'Saved ✓' : 'Error saving';
   if (ok) setTimeout(closeModal, 1000);
+}
+
+function showHD(id, dateLabel, status, note, by) {
+  const el = document.getElementById(id); if (!el) return;
+  if (el.classList.contains('show') && el.querySelector('.hd-date').textContent === dateLabel) {
+    el.classList.remove('show'); return;
+  }
+  const labels = {healthy:'● Healthy', degraded:'● Degraded', outage:'● Outage', none:'No data recorded'};
+  el.querySelector('.hd-date').textContent = dateLabel;
+  const s = el.querySelector('.hd-status'); s.textContent = labels[status]||'No data'; s.className = 'hd-status '+status;
+  const parts = []; if (note) parts.push(note); if (by) parts.push('Updated by '+by);
+  el.querySelector('.hd-meta').textContent = parts.join(' · ');
+  el.classList.add('show');
 }
 
 function renderOps() {
@@ -448,6 +458,7 @@ function renderOps() {
   const today = todayPST();
   document.getElementById('opsBody').innerHTML = _opsCfg.tasks.map(t => buildOpsRow(t, today)).join('');
 }
+
 function buildOpsRow(task, today) {
   const safe = task.id; const e = (_opsHist[task.id]||{})[today];
   const status = e ? e.status : 'pending';
@@ -481,18 +492,23 @@ function buildOpsRow(task, today) {
     </div>
   </div>`;
 }
+
 function buildOpsHeatmap(id) {
-  const h = (_opsHist[id]||{}); const today = new Date(); let cells='',d0='',d1='';
+  const hist = (_opsHist[id]||{}); const today = new Date(); let cells='',d0='',d1='';
+  const oid = 'ohd-'+id;
   for (let i=13;i>=0;i--) {
     const d = new Date(today); d.setDate(d.getDate()-i);
-    const key = d.toISOString().split('T')[0]; const e = h[key]; const s = e ? e.status : 'none';
-    const dateLabel = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    cells += `<div class="heatmap-cell" data-s="${s}" onclick="showHeatmapDetail('ohd-${id}','${key}','${s}','${(e&&e.note||'').replace(/'/g,'&#39;')}','${(e&&e.by||'').replace(/'/g,'&#39;')}','${dateLabel}')"></div>`;
+    const key = d.toISOString().split('T')[0]; const e = hist[key]; const s = e ? e.status : 'none';
+    const dl = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const note = (e&&e.note||'').replace(/'/g,"&#39;"); const by = (e&&e.by||'').replace(/'/g,"&#39;");
+    cells += `<div class="heatmap-cell" data-s="${s}" onclick="showHD('${oid}','${dl}','${s}','${note}','${by}')"></div>`;
     if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   }
-  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div><div class="heatmap-detail" id="ohd-${id}"><div class="heatmap-detail-date"></div><div class="heatmap-detail-status"></div><div class="heatmap-detail-note"></div></div>`;
+  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
+    <div class="heatmap-detail" id="${oid}"><div class="hd-date"></div><div class="hd-status"></div><div class="hd-meta"></div></div>`;
 }
+
 function toggleOps(safe) {
   const el=document.getElementById('oe-'+safe), c=document.getElementById('oc-'+safe);
   if (!el) return; const open = !el.style.display || el.style.display==='none';
