@@ -55,8 +55,6 @@
     .trend-table th{text-align:left;color:var(--text-muted);font-weight:600;font-size:10px;padding:4px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
     .trend-table td{padding:5px 8px;border-bottom:1px solid var(--border)}
     .trend-table tr:last-child td{border-bottom:none}
-    .trend-table tr.today td{font-weight:700}
-    .today-arrow{font-size:9px;color:var(--text-muted);margin-left:3px}
     #chartWrap{position:relative;height:120px;margin-top:12px}
     .oncall-primary{display:flex;align-items:flex-start;gap:12px}
     .oncall-avatar{width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;color:var(--text-secondary)}
@@ -77,7 +75,7 @@
     .status-pill.outage{background:var(--red-bg);color:var(--red)}
     .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
     .heatmap-row{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:4px}
-    .heatmap-cell{width:20px;height:20px;border-radius:3px;flex-shrink:0;cursor:pointer}
+    .heatmap-cell{width:20px;height:20px;border-radius:3px;flex-shrink:0;cursor:pointer;transition:transform .1s,opacity .1s}
     .heatmap-cell[data-s="healthy"]{background:var(--green);opacity:.85}
     .heatmap-cell[data-s="degraded"]{background:var(--amber);opacity:.85}
     .heatmap-cell[data-s="outage"]{background:var(--red);opacity:.85}
@@ -236,7 +234,6 @@ const SYSTEMS = ['Digital Displays','Music','Network','Traffic Counters','Paymen
 let _data=null,_hist=null,_sHist={},_opsCfg=null,_opsHist={};
 let _modalSys=null,_modalStatus='healthy',_chart=null;
 
-// Init theme from localStorage or system preference
 (function(){
   const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', t);
@@ -247,8 +244,7 @@ let _modalSys=null,_modalStatus='healthy',_chart=null;
 document.addEventListener('DOMContentLoaded', loadAll);
 
 function todayPST() {
-  const pst = new Date(Date.now() - 7 * 60 * 60 * 1000);
-  return pst.toISOString().split('T')[0];
+  return new Date(Date.now() - 7*60*60*1000).toISOString().split('T')[0];
 }
 
 async function loadAll() {
@@ -266,8 +262,7 @@ async function getJ(p) { const r = await fetch(p + '?t=' + Date.now()); return r
 async function getR(p) { const r = await fetch(RAW + p + '?t=' + Date.now()); return r.ok ? r.json() : null; }
 
 async function writeData(path, content, msg) {
-  const str = JSON.stringify(content, null, 2);
-  const b64 = btoa(unescape(encodeURIComponent(str)));
+  const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
   const r = await fetch(API, {
     method: 'POST',
     headers: {'Authorization':'Bearer '+TRIGGER,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
@@ -282,9 +277,8 @@ function renderTopbar() {
   if (!_data) return;
   const ts = new Date(_data.fetched_at);
   document.getElementById('syncTime').textContent = 'Last synced ' + ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  const pstNow = new Date(Date.now() - 7*60*60*1000);
   const el = document.getElementById('syncDate');
-  if (el) el.textContent = pstNow.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
+  if (el) el.textContent = new Date(Date.now() - 7*60*60*1000).toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
 }
 
 function toggleTheme() {
@@ -298,20 +292,23 @@ function toggleTheme() {
 function renderJSM() {
   if (!_data || !_hist) return;
   const j = _data.jira;
-  const trend = buildTrend();
+  // Filter out today — stat boxes above already show live today numbers
+  const trend = buildTrend().filter(t => !t.is_today);
   const stat = `<div class="stat-row">
     <div class="stat-box"><div class="stat-label">Open Tickets</div><div class="stat-val">${j.currently_open}</div></div>
     <div class="stat-box"><div class="stat-label">P1 · Blocker / ASAP</div><div class="stat-val p1">${j.p1}</div></div>
     <div class="stat-box"><div class="stat-label">P2 · High</div><div class="stat-val p2">${j.p2}</div></div>
     <div class="stat-box"><div class="stat-label">Open Problems</div><div class="stat-val">${j.open_problems}</div></div>
   </div>`;
-  const rows = trend.slice().reverse().map(d => `<tr class="${d.is_today?'today':''}">
-    <td>${d.date}${d.is_today?'<span class="today-arrow">←</span>':''}</td>
-    <td>${d.currently_open||'—'}</td><td>${d.opened!=null?d.opened:'—'}</td><td>${d.closed!=null?d.closed:'—'}</td>
+  const rows = trend.slice().reverse().map(d => `<tr>
+    <td>${d.date}</td>
+    <td>${d.currently_open||'—'}</td>
+    <td>${d.opened!=null?d.opened:'—'}</td>
+    <td>${d.closed!=null?d.closed:'—'}</td>
   </tr>`).join('');
   document.getElementById('jsmBody').innerHTML = stat +
     `<div class="trend-table-wrap"><table class="trend-table">
-      <thead><tr><th>Date</th><th>Open</th><th>Opened</th><th>Closed</th></tr></thead>
+      <thead><tr><th>Date · last 7 days</th><th>Open</th><th>Opened</th><th>Closed</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     <div id="chartWrap"><canvas id="myChart"></canvas></div>`;
   renderChart(trend);
@@ -398,7 +395,8 @@ function buildHeatmap(name, hd) {
     if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   }
-  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
+  return `<div class="heatmap-row">${cells}</div>
+    <div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
     <div class="heatmap-detail" id="${sid}"><div class="hd-date"></div><div class="hd-status"></div><div class="hd-meta"></div></div>`;
 }
 
@@ -406,6 +404,19 @@ function toggleSys(safe) {
   const el=document.getElementById('se-'+safe), c=document.getElementById('sc-'+safe);
   if (!el) return; const open = !el.style.display || el.style.display==='none';
   el.style.display = open ? 'block' : 'none'; if (c) c.textContent = open ? '▴' : '▾';
+}
+
+function showHD(id, dateLabel, status, note, by) {
+  const el = document.getElementById(id); if (!el) return;
+  if (el.classList.contains('show') && el.querySelector('.hd-date').textContent === dateLabel) {
+    el.classList.remove('show'); return;
+  }
+  const labels = {healthy:'● Healthy', degraded:'● Degraded', outage:'● Outage', none:'No data recorded'};
+  el.querySelector('.hd-date').textContent = dateLabel;
+  const s = el.querySelector('.hd-status'); s.textContent = labels[status]||'No data'; s.className = 'hd-status '+status;
+  const parts = []; if (note) parts.push(note); if (by) parts.push('Updated by '+by);
+  el.querySelector('.hd-meta').textContent = parts.join(' · ');
+  el.classList.add('show');
 }
 
 function openModal(name) {
@@ -436,19 +447,6 @@ async function saveModal() {
   const ok = await writeData('data/status-history.json', _sHist, 'chore: update status '+_modalSys+' for '+date);
   document.getElementById('modalInd').textContent = ok ? 'Saved ✓' : 'Error saving';
   if (ok) setTimeout(closeModal, 1000);
-}
-
-function showHD(id, dateLabel, status, note, by) {
-  const el = document.getElementById(id); if (!el) return;
-  if (el.classList.contains('show') && el.querySelector('.hd-date').textContent === dateLabel) {
-    el.classList.remove('show'); return;
-  }
-  const labels = {healthy:'● Healthy', degraded:'● Degraded', outage:'● Outage', none:'No data recorded'};
-  el.querySelector('.hd-date').textContent = dateLabel;
-  const s = el.querySelector('.hd-status'); s.textContent = labels[status]||'No data'; s.className = 'hd-status '+status;
-  const parts = []; if (note) parts.push(note); if (by) parts.push('Updated by '+by);
-  el.querySelector('.hd-meta').textContent = parts.join(' · ');
-  el.classList.add('show');
 }
 
 function renderOps() {
@@ -505,7 +503,8 @@ function buildOpsHeatmap(id) {
     if (i===13) d0 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     if (i===0)  d1 = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   }
-  return `<div class="heatmap-row">${cells}</div><div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
+  return `<div class="heatmap-row">${cells}</div>
+    <div class="heatmap-dates"><span>${d0}</span><span>${d1}</span></div>
     <div class="heatmap-detail" id="${oid}"><div class="hd-date"></div><div class="hd-status"></div><div class="hd-meta"></div></div>`;
 }
 
