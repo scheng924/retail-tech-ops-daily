@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-03-30T23:49:06Z",
+  "fetched_at": "2026-03-31T00:29:45Z",
   "jira": {
-    "currently_open": 397,
+    "currently_open": 398,
     "p1": 4,
     "p2": 17,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "24-Mar",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "25-Mar",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "30-Mar",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "31-Mar",
         "is_today": true,
-        "currently_open": 397,
-        "opened": 19,
-        "closed": 2,
+        "currently_open": 398,
+        "opened": 24,
+        "closed": 24,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Patoc, Jr",
       "initials": "PJ",
       "level": "L1 Primary",
-      "since": "2026-03-30T00:00:00Z"
+      "since": "2026-03-31T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -88,25 +88,25 @@
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "23",
-        "start_date": "2026-03-23",
-        "name": "Olowu, Tolani",
-        "level": "L1",
-        "is_today": false
-      },
-      {
-        "day": "Mon",
         "date": "30",
         "start_date": "2026-03-30",
         "name": "Patoc, Jr",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "6",
         "start_date": "2026-04-06",
         "name": "Manders, Sam",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "13",
+        "start_date": "2026-04-13",
+        "name": "Gulyas, Dom",
         "level": "L1",
         "is_today": false
       }
