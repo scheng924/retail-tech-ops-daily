@@ -90,15 +90,15 @@
     "window": "2026-03-30 -> 2026-03-31"
   },
   "2026-03-31": {
-    "currently_open": 388,
+    "currently_open": 389,
     "p1": 6,
     "p2": 14,
     "open_problems": 11,
-    "opened": 26,
+    "opened": 27,
     "closed": 23,
     "on_call_tickets": 0,
     "oncall_name": "Patoc, Jr",
-    "snapshot_time": "03:15 UTC",
+    "snapshot_time": "04:31 UTC",
     "window": "2026-03-31 -> 2026-04-01"
   }
 }
