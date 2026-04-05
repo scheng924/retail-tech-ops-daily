@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-04T23:54:30Z",
+  "fetched_at": "2026-04-05T00:30:54Z",
   "jira": {
     "currently_open": 412,
     "p1": 13,
     "p2": 19,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "29-Mar",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "30-Mar",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "4-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "5-Apr",
         "is_today": true,
         "currently_open": 412,
-        "opened": 29,
-        "closed": 6,
+        "opened": 14,
+        "closed": 0,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Patoc, Jr",
       "initials": "PJ",
       "level": "L1 Primary",
-      "since": "2026-04-04T00:00:00Z"
+      "since": "2026-04-05T00:00:00Z"
     },
     "escalation_levels": [
       {
