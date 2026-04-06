@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-06T14:46:45Z",
+  "fetched_at": "2026-04-06T15:18:29Z",
   "jira": {
     "currently_open": 426,
     "p1": 16,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Patoc, Jr",
-      "initials": "PJ",
+      "name": "Manders, Sam",
+      "initials": "MS",
       "level": "L1 Primary",
       "since": "2026-04-06T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Patoc, Jr"
+        "name": "Manders, Sam"
       },
       {
         "level": 2,
