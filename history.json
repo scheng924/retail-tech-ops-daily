@@ -176,13 +176,13 @@
   "2026-04-07": {
     "currently_open": 443,
     "p1": 22,
-    "p2": 22,
+    "p2": 25,
     "open_problems": 11,
     "opened": 32,
     "closed": 45,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "16:28 UTC",
+    "snapshot_time": "16:53 UTC",
     "window": "2026-04-07 -> 2026-04-08"
   }
 }
