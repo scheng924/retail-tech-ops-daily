@@ -186,7 +186,7 @@
     "window": "2026-04-07 -> 2026-04-08"
   },
   "2026-04-08": {
-    "currently_open": 347,
+    "currently_open": 348,
     "p1": 11,
     "p2": 23,
     "open_problems": 11,
@@ -194,7 +194,7 @@
     "closed": 112,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "13:10 UTC",
+    "snapshot_time": "13:54 UTC",
     "window": "2026-04-08 -> 2026-04-09"
   }
 }
