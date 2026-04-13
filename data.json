@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-04-13T17:53:06Z",
+  "fetched_at": "2026-04-13T18:28:32Z",
   "jira": {
-    "currently_open": 300,
-    "p1": 5,
-    "p2": 21,
+    "currently_open": 299,
+    "p1": 4,
+    "p2": 20,
     "open_problems": 11,
     "trend": [
       {
@@ -57,7 +57,7 @@
       {
         "date": "13-Apr",
         "is_today": true,
-        "currently_open": 300,
+        "currently_open": 299,
         "opened": 8,
         "closed": 0,
         "on_call": 0
@@ -106,7 +106,7 @@
         "day": "Mon",
         "date": "20",
         "start_date": "2026-04-20",
-        "name": "Jacinto, Wayne",
+        "name": "Olowu, Tolani",
         "level": "L1",
         "is_today": false
       }
