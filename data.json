@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-12T23:48:01Z",
+  "fetched_at": "2026-04-13T00:33:32Z",
   "jira": {
     "currently_open": 316,
     "p1": 14,
     "p2": 20,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "6-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "7-Apr",
         "is_today": false,
@@ -56,9 +48,17 @@
       },
       {
         "date": "12-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "13-Apr",
         "is_today": true,
         "currently_open": 316,
-        "opened": 18,
+        "opened": 7,
         "closed": 0,
         "on_call": 0
       }
@@ -69,7 +69,7 @@
       "name": "Manders, Sam",
       "initials": "MS",
       "level": "L1 Primary",
-      "since": "2026-04-12T00:00:00Z"
+      "since": "2026-04-13T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -100,7 +100,7 @@
         "start_date": "2026-04-13",
         "name": "Gulyas, Dom",
         "level": "L1",
-        "is_today": false
+        "is_today": true
       },
       {
         "day": "Mon",
