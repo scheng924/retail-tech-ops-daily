@@ -258,15 +258,15 @@
     "window": "2026-04-13 -> 2026-04-14"
   },
   "2026-04-14": {
-    "currently_open": 311,
+    "currently_open": 315,
     "p1": 9,
-    "p2": 19,
+    "p2": 20,
     "open_problems": 11,
     "opened": 35,
-    "closed": 36,
+    "closed": 35,
     "on_call_tickets": 0,
-    "oncall_name": "Gulyas, Dom",
-    "snapshot_time": "17:08 UTC",
+    "oncall_name": "Eslampour, Arvand",
+    "snapshot_time": "17:39 UTC",
     "window": "2026-04-14 -> 2026-04-15"
   }
 }

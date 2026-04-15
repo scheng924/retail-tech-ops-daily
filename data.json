@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-04-15T17:08:49Z",
+  "fetched_at": "2026-04-15T17:39:04Z",
   "jira": {
-    "currently_open": 311,
+    "currently_open": 315,
     "p1": 9,
-    "p2": 19,
+    "p2": 20,
     "open_problems": 11,
     "trend": [
       {
@@ -57,24 +57,24 @@
       {
         "date": "15-Apr",
         "is_today": true,
-        "currently_open": 311,
+        "currently_open": 315,
         "opened": 35,
-        "closed": 36,
+        "closed": 35,
         "on_call": 0
       }
     ]
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Gulyas, Dom",
-      "initials": "GD",
+      "name": "Eslampour, Arvand",
+      "initials": "EA",
       "level": "L1 Primary",
       "since": "2026-04-15T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Gulyas, Dom"
+        "name": "Eslampour, Arvand"
       },
       {
         "level": 2,
@@ -93,6 +93,14 @@
         "name": "Gulyas, Dom",
         "level": "L1",
         "is_today": false
+      },
+      {
+        "day": "Wed",
+        "date": "15",
+        "start_date": "2026-04-15",
+        "name": "Eslampour, Arvand",
+        "level": "L1",
+        "is_today": true
       },
       {
         "day": "Mon",
