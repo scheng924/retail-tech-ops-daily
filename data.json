@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-14T23:46:06Z",
+  "fetched_at": "2026-04-15T00:36:17Z",
   "jira": {
     "currently_open": 297,
     "p1": 7,
     "p2": 19,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "8-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "9-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "14-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "15-Apr",
         "is_today": true,
         "currently_open": 297,
-        "opened": 36,
-        "closed": 53,
+        "opened": 34,
+        "closed": 37,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Gulyas, Dom",
       "initials": "GD",
       "level": "L1 Primary",
-      "since": "2026-04-14T00:00:00Z"
+      "since": "2026-04-15T00:00:00Z"
     },
     "escalation_levels": [
       {
