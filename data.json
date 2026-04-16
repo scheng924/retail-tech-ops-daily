@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-15T23:46:00Z",
+  "fetched_at": "2026-04-16T00:36:18Z",
   "jira": {
-    "currently_open": 331,
+    "currently_open": 333,
     "p1": 9,
     "p2": 22,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "9-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "10-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "15-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "16-Apr",
         "is_today": true,
-        "currently_open": 331,
-        "opened": 34,
-        "closed": 35,
+        "currently_open": 333,
+        "opened": 49,
+        "closed": 16,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Gulyas, Dom",
       "initials": "GD",
       "level": "L1 Primary",
-      "since": "2026-04-15T00:00:00Z"
+      "since": "2026-04-16T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -87,20 +87,12 @@
     ],
     "week_schedule": [
       {
-        "day": "Mon",
-        "date": "13",
-        "start_date": "2026-04-13",
-        "name": "Gulyas, Dom",
-        "level": "L1",
-        "is_today": false
-      },
-      {
         "day": "Wed",
         "date": "15",
         "start_date": "2026-04-15",
-        "name": "Eslampour, Arvand",
+        "name": "Gulyas, Dom",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
