@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-20T23:46:05Z",
+  "fetched_at": "2026-04-21T00:35:20Z",
   "jira": {
-    "currently_open": 256,
+    "currently_open": 252,
     "p1": 6,
     "p2": 21,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "14-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "15-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "20-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "21-Apr",
         "is_today": true,
-        "currently_open": 256,
-        "opened": 29,
-        "closed": 7,
+        "currently_open": 252,
+        "opened": 34,
+        "closed": 104,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Olowu, Tolani",
       "initials": "OT",
       "level": "L1 Primary",
-      "since": "2026-04-20T00:00:00Z"
+      "since": "2026-04-21T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -87,26 +87,26 @@
     ],
     "week_schedule": [
       {
-        "day": "Wed",
-        "date": "15",
-        "start_date": "2026-04-15",
-        "name": "Gulyas, Dom",
-        "level": "L1",
-        "is_today": false
-      },
-      {
         "day": "Mon",
         "date": "20",
         "start_date": "2026-04-20",
         "name": "Olowu, Tolani",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "27",
         "start_date": "2026-04-27",
         "name": "Eslampour, Arvand",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "4",
+        "start_date": "2026-05-04",
+        "name": "Jacinto, Wayne",
         "level": "L1",
         "is_today": false
       }
