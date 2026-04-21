@@ -330,15 +330,15 @@
     "window": "2026-04-19 -> 2026-04-20"
   },
   "2026-04-20": {
-    "currently_open": 253,
+    "currently_open": 254,
     "p1": 5,
-    "p2": 26,
+    "p2": 22,
     "open_problems": 10,
     "opened": 35,
     "closed": 103,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "19:55 UTC",
+    "snapshot_time": "20:22 UTC",
     "window": "2026-04-20 -> 2026-04-21"
   }
 }
