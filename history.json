@@ -358,11 +358,11 @@
     "p1": 5,
     "p2": 20,
     "open_problems": 10,
-    "opened": 22,
-    "closed": 36,
+    "opened": 23,
+    "closed": 37,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "03:09 UTC",
+    "snapshot_time": "04:19 UTC",
     "window": "2026-04-22 -> 2026-04-23"
   }
 }
