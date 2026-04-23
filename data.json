@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-04-23T16:18:59Z",
+  "fetched_at": "2026-04-23T17:01:13Z",
   "jira": {
-    "currently_open": 252,
+    "currently_open": 242,
     "p1": 5,
-    "p2": 20,
+    "p2": 18,
     "open_problems": 10,
     "trend": [
       {
@@ -57,9 +57,9 @@
       {
         "date": "23-Apr",
         "is_today": true,
-        "currently_open": 252,
+        "currently_open": 242,
         "opened": 23,
-        "closed": 36,
+        "closed": 35,
         "on_call": 0
       }
     ]
@@ -106,7 +106,7 @@
         "day": "Mon",
         "date": "4",
         "start_date": "2026-05-04",
-        "name": "Jacinto, Wayne",
+        "name": "Patoc, Jr",
         "level": "L1",
         "is_today": false
       }
