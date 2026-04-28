@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-27T23:33:44Z",
+  "fetched_at": "2026-04-28T00:03:40Z",
   "jira": {
-    "currently_open": 229,
+    "currently_open": 228,
     "p1": 7,
     "p2": 19,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "21-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "22-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "27-Apr",
-        "is_today": true,
-        "currently_open": 229,
-        "opened": 15,
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
         "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "28-Apr",
+        "is_today": true,
+        "currently_open": 228,
+        "opened": 18,
+        "closed": 63,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Eslampour, Arvand",
       "initials": "EA",
       "level": "L1 Primary",
-      "since": "2026-04-27T00:00:00Z"
+      "since": "2026-04-28T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -88,25 +88,25 @@
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "20",
-        "start_date": "2026-04-20",
-        "name": "Olowu, Tolani",
-        "level": "L1",
-        "is_today": false
-      },
-      {
-        "day": "Mon",
         "date": "27",
         "start_date": "2026-04-27",
         "name": "Eslampour, Arvand",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "4",
         "start_date": "2026-05-04",
         "name": "Patoc, Jr",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "11",
+        "start_date": "2026-05-11",
+        "name": "Jacinto, Wayne",
         "level": "L1",
         "is_today": false
       }
