@@ -1,7 +1,7 @@
 {
-  "fetched_at": "2026-05-01T21:33:43Z",
+  "fetched_at": "2026-05-01T22:03:03Z",
   "jira": {
-    "currently_open": 263,
+    "currently_open": 264,
     "p1": 3,
     "p2": 28,
     "open_problems": 10,
@@ -57,7 +57,7 @@
       {
         "date": "1-May",
         "is_today": true,
-        "currently_open": 263,
+        "currently_open": 264,
         "opened": 51,
         "closed": 27,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Jacinto, Wayne",
-      "initials": "JW",
+      "name": "Eslampour, Arvand",
+      "initials": "EA",
       "level": "L1 Primary",
       "since": "2026-05-01T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Jacinto, Wayne"
+        "name": "Eslampour, Arvand"
       },
       {
         "level": 2,

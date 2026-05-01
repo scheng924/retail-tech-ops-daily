@@ -450,15 +450,15 @@
     "window": "2026-04-29 -> 2026-04-30"
   },
   "2026-04-30": {
-    "currently_open": 263,
+    "currently_open": 264,
     "p1": 3,
     "p2": 28,
     "open_problems": 10,
     "opened": 51,
     "closed": 27,
     "on_call_tickets": 0,
-    "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "21:33 UTC",
+    "oncall_name": "Eslampour, Arvand",
+    "snapshot_time": "22:03 UTC",
     "window": "2026-04-30 -> 2026-05-01"
   }
 }
