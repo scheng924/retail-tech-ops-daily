@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-04-30T23:33:35Z",
+  "fetched_at": "2026-05-01T00:03:23Z",
   "jira": {
     "currently_open": 268,
     "p1": 5,
     "p2": 26,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "24-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "25-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "30-Apr",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "1-May",
         "is_today": true,
         "currently_open": 268,
-        "opened": 26,
-        "closed": 84,
+        "opened": 49,
+        "closed": 23,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Eslampour, Arvand",
       "initials": "EA",
       "level": "L1 Primary",
-      "since": "2026-04-30T00:00:00Z"
+      "since": "2026-05-01T00:00:00Z"
     },
     "escalation_levels": [
       {
