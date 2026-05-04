@@ -486,7 +486,7 @@
     "window": "2026-05-02 -> 2026-05-03"
   },
   "2026-05-03": {
-    "currently_open": 310,
+    "currently_open": 311,
     "p1": 8,
     "p2": 37,
     "open_problems": 10,
@@ -494,7 +494,7 @@
     "closed": 0,
     "on_call_tickets": 0,
     "oncall_name": "Eslampour, Arvand",
-    "snapshot_time": "12:51 UTC",
+    "snapshot_time": "13:37 UTC",
     "window": "2026-05-03 -> 2026-05-04"
   }
 }
