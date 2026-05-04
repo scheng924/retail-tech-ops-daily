@@ -486,15 +486,15 @@
     "window": "2026-05-02 -> 2026-05-03"
   },
   "2026-05-03": {
-    "currently_open": 311,
+    "currently_open": 312,
     "p1": 8,
     "p2": 37,
     "open_problems": 10,
     "opened": 15,
     "closed": 0,
     "on_call_tickets": 0,
-    "oncall_name": "Eslampour, Arvand",
-    "snapshot_time": "14:31 UTC",
+    "oncall_name": "Patoc, Jr",
+    "snapshot_time": "15:26 UTC",
     "window": "2026-05-03 -> 2026-05-04"
   }
 }

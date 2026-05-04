@@ -1,7 +1,7 @@
 {
-  "fetched_at": "2026-05-04T14:31:21Z",
+  "fetched_at": "2026-05-04T15:26:26Z",
   "jira": {
-    "currently_open": 311,
+    "currently_open": 312,
     "p1": 8,
     "p2": 37,
     "open_problems": 10,
@@ -57,7 +57,7 @@
       {
         "date": "4-May",
         "is_today": true,
-        "currently_open": 311,
+        "currently_open": 312,
         "opened": 15,
         "closed": 0,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Eslampour, Arvand",
-      "initials": "EA",
+      "name": "Patoc, Jr",
+      "initials": "PJ",
       "level": "L1 Primary",
       "since": "2026-05-04T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Eslampour, Arvand"
+        "name": "Patoc, Jr"
       },
       {
         "level": 2,
