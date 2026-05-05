@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-05-04T23:32:53Z",
+  "fetched_at": "2026-05-05T00:04:25Z",
   "jira": {
-    "currently_open": 282,
+    "currently_open": 274,
     "p1": 6,
     "p2": 27,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "28-Apr",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "29-Apr",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "4-May",
-        "is_today": true,
-        "currently_open": 282,
-        "opened": 14,
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
         "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "5-May",
+        "is_today": true,
+        "currently_open": 274,
+        "opened": 21,
+        "closed": 49,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Patoc, Jr",
       "initials": "PJ",
       "level": "L1 Primary",
-      "since": "2026-05-04T00:00:00Z"
+      "since": "2026-05-05T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -87,26 +87,26 @@
     ],
     "week_schedule": [
       {
-        "day": "Fri",
-        "date": "1",
-        "start_date": "2026-05-01",
-        "name": "Eslampour, Arvand",
-        "level": "L1",
-        "is_today": false
-      },
-      {
         "day": "Mon",
         "date": "4",
         "start_date": "2026-05-04",
         "name": "Patoc, Jr",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "11",
         "start_date": "2026-05-11",
         "name": "Jacinto, Wayne",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "18",
+        "start_date": "2026-05-18",
+        "name": "Manders, Sam",
         "level": "L1",
         "is_today": false
       }
