@@ -512,13 +512,13 @@
   "2026-05-05": {
     "currently_open": 252,
     "p1": 13,
-    "p2": 12,
+    "p2": 13,
     "open_problems": 10,
-    "opened": 45,
-    "closed": 64,
+    "opened": 46,
+    "closed": 65,
     "on_call_tickets": 0,
     "oncall_name": "Patoc, Jr",
-    "snapshot_time": "00:02 UTC",
+    "snapshot_time": "01:05 UTC",
     "window": "2026-05-05 -> 2026-05-06"
   }
 }
