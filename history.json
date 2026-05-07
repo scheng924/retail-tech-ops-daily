@@ -522,15 +522,15 @@
     "window": "2026-05-05 -> 2026-05-06"
   },
   "2026-05-06": {
-    "currently_open": 254,
+    "currently_open": 255,
     "p1": 2,
-    "p2": 14,
+    "p2": 16,
     "open_problems": 11,
     "opened": 34,
     "closed": 22,
     "on_call_tickets": 0,
     "oncall_name": "Patoc, Jr",
-    "snapshot_time": "20:10 UTC",
+    "snapshot_time": "20:42 UTC",
     "window": "2026-05-06 -> 2026-05-07"
   }
 }
