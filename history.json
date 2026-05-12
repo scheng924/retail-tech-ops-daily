@@ -583,14 +583,14 @@
   },
   "2026-05-11": {
     "currently_open": 304,
-    "p1": 2,
-    "p2": 22,
+    "p1": 1,
+    "p2": 20,
     "open_problems": 12,
     "opened": 34,
     "closed": 37,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "15:28 UTC",
+    "snapshot_time": "16:21 UTC",
     "window": "2026-05-11 -> 2026-05-12"
   }
 }
