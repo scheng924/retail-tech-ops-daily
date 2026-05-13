@@ -596,13 +596,13 @@
   "2026-05-12": {
     "currently_open": 295,
     "p1": 2,
-    "p2": 19,
+    "p2": 18,
     "open_problems": 11,
     "opened": 34,
     "closed": 45,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "01:13 UTC",
+    "snapshot_time": "02:01 UTC",
     "window": "2026-05-12 -> 2026-05-13"
   }
 }
