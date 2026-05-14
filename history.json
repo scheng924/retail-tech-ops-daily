@@ -606,15 +606,15 @@
     "window": "2026-05-12 -> 2026-05-13"
   },
   "2026-05-13": {
-    "currently_open": 303,
-    "p1": 3,
-    "p2": 16,
+    "currently_open": 300,
+    "p1": 2,
+    "p2": 11,
     "open_problems": 11,
     "opened": 44,
     "closed": 36,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "18:39 UTC",
+    "snapshot_time": "19:21 UTC",
     "window": "2026-05-13 -> 2026-05-14"
   }
 }
