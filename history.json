@@ -618,15 +618,15 @@
     "window": "2026-05-13 -> 2026-05-14"
   },
   "2026-05-14": {
-    "currently_open": 306,
+    "currently_open": 290,
     "p1": 3,
-    "p2": 13,
-    "open_problems": 11,
+    "p2": 10,
+    "open_problems": 10,
     "opened": 31,
     "closed": 28,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "17:35 UTC",
+    "snapshot_time": "18:14 UTC",
     "window": "2026-05-14 -> 2026-05-15"
   }
 }
