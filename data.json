@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-05-14T23:48:35Z",
+  "fetched_at": "2026-05-15T00:42:27Z",
   "jira": {
-    "currently_open": 308,
-    "p1": 3,
-    "p2": 15,
+    "currently_open": 307,
+    "p1": 2,
+    "p2": 12,
     "open_problems": 11,
     "trend": [
-      {
-        "date": "8-May",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "9-May",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "14-May",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "15-May",
         "is_today": true,
-        "currently_open": 308,
-        "opened": 44,
-        "closed": 36,
+        "currently_open": 307,
+        "opened": 29,
+        "closed": 27,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Jacinto, Wayne",
       "initials": "JW",
       "level": "L1 Primary",
-      "since": "2026-05-14T00:00:00Z"
+      "since": "2026-05-15T00:00:00Z"
     },
     "escalation_levels": [
       {
