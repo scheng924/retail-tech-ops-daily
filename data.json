@@ -1,8 +1,8 @@
 {
-  "fetched_at": "2026-05-18T14:03:33Z",
+  "fetched_at": "2026-05-18T15:25:08Z",
   "jira": {
-    "currently_open": 297,
-    "p1": 12,
+    "currently_open": 304,
+    "p1": 13,
     "p2": 14,
     "open_problems": 10,
     "trend": [
@@ -57,7 +57,7 @@
       {
         "date": "18-May",
         "is_today": true,
-        "currently_open": 297,
+        "currently_open": 304,
         "opened": 7,
         "closed": 0,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Jacinto, Wayne",
-      "initials": "JW",
+      "name": "Manders, Sam",
+      "initials": "MS",
       "level": "L1 Primary",
       "since": "2026-05-18T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Jacinto, Wayne"
+        "name": "Manders, Sam"
       },
       {
         "level": 2,

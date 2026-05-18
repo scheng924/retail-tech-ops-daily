@@ -654,15 +654,15 @@
     "window": "2026-05-16 -> 2026-05-17"
   },
   "2026-05-17": {
-    "currently_open": 297,
-    "p1": 12,
+    "currently_open": 304,
+    "p1": 13,
     "p2": 14,
     "open_problems": 10,
     "opened": 7,
     "closed": 0,
     "on_call_tickets": 0,
-    "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "14:03 UTC",
+    "oncall_name": "Manders, Sam",
+    "snapshot_time": "15:25 UTC",
     "window": "2026-05-17 -> 2026-05-18"
   }
 }
