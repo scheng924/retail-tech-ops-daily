@@ -654,15 +654,15 @@
     "window": "2026-05-16 -> 2026-05-17"
   },
   "2026-05-17": {
-    "currently_open": 315,
+    "currently_open": 317,
     "p1": 13,
-    "p2": 18,
+    "p2": 19,
     "open_problems": 10,
     "opened": 7,
     "closed": 0,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "22:09 UTC",
+    "snapshot_time": "22:34 UTC",
     "window": "2026-05-17 -> 2026-05-18"
   }
 }
