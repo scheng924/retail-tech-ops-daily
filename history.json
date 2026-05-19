@@ -666,15 +666,15 @@
     "window": "2026-05-17 -> 2026-05-18"
   },
   "2026-05-18": {
-    "currently_open": 323,
-    "p1": 10,
-    "p2": 11,
+    "currently_open": 321,
+    "p1": 11,
+    "p2": 13,
     "open_problems": 10,
     "opened": 22,
     "closed": 0,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "17:38 UTC",
+    "snapshot_time": "18:22 UTC",
     "window": "2026-05-18 -> 2026-05-19"
   }
 }
