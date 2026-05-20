@@ -676,5 +676,17 @@
     "oncall_name": "Manders, Sam",
     "snapshot_time": "23:52 UTC",
     "window": "2026-05-18 -> 2026-05-19"
+  },
+  "2026-05-19": {
+    "currently_open": 311,
+    "p1": 10,
+    "p2": 11,
+    "open_problems": 10,
+    "opened": 31,
+    "closed": 41,
+    "on_call_tickets": 0,
+    "oncall_name": "Manders, Sam",
+    "snapshot_time": "00:48 UTC",
+    "window": "2026-05-19 -> 2026-05-20"
   }
 }
