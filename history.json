@@ -678,15 +678,15 @@
     "window": "2026-05-18 -> 2026-05-19"
   },
   "2026-05-19": {
-    "currently_open": 300,
+    "currently_open": 302,
     "p1": 2,
-    "p2": 12,
+    "p2": 13,
     "open_problems": 10,
     "opened": 33,
     "closed": 40,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "18:05 UTC",
+    "snapshot_time": "19:04 UTC",
     "window": "2026-05-19 -> 2026-05-20"
   }
 }
