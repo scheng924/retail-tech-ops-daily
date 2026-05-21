@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-05-20T23:33:53Z",
+  "fetched_at": "2026-05-21T00:08:47Z",
   "jira": {
-    "currently_open": 307,
+    "currently_open": 309,
     "p1": 3,
     "p2": 13,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "14-May",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "15-May",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "20-May",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "21-May",
         "is_today": true,
-        "currently_open": 307,
-        "opened": 33,
-        "closed": 40,
+        "currently_open": 309,
+        "opened": 29,
+        "closed": 35,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Manders, Sam",
       "initials": "MS",
       "level": "L1 Primary",
-      "since": "2026-05-20T00:00:00Z"
+      "since": "2026-05-21T00:00:00Z"
     },
     "escalation_levels": [
       {
