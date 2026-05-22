@@ -703,14 +703,14 @@
   },
   "2026-05-21": {
     "currently_open": 313,
-    "p1": 11,
+    "p1": 10,
     "p2": 19,
     "open_problems": 10,
     "opened": 37,
     "closed": 47,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "20:56 UTC",
+    "snapshot_time": "21:32 UTC",
     "window": "2026-05-21 -> 2026-05-22"
   }
 }
