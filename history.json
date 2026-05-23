@@ -714,15 +714,15 @@
     "window": "2026-05-21 -> 2026-05-22"
   },
   "2026-05-22": {
-    "currently_open": 314,
+    "currently_open": 316,
     "p1": 9,
-    "p2": 21,
+    "p2": 22,
     "open_problems": 10,
     "opened": 26,
     "closed": 23,
     "on_call_tickets": 0,
     "oncall_name": "Manders, Sam",
-    "snapshot_time": "17:07 UTC",
+    "snapshot_time": "17:36 UTC",
     "window": "2026-05-22 -> 2026-05-23"
   }
 }
