@@ -738,15 +738,15 @@
     "window": "2026-05-23 -> 2026-05-24"
   },
   "2026-05-24": {
-    "currently_open": 384,
-    "p1": 21,
-    "p2": 32,
+    "currently_open": 381,
+    "p1": 18,
+    "p2": 29,
     "open_problems": 10,
-    "opened": 39,
+    "opened": 38,
     "closed": 0,
     "on_call_tickets": 0,
-    "oncall_name": "Manders, Sam",
-    "snapshot_time": "14:02 UTC",
+    "oncall_name": "Gulyas, Dom",
+    "snapshot_time": "15:22 UTC",
     "window": "2026-05-24 -> 2026-05-25"
   }
 }
