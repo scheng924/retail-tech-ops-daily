@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-05-25T23:39:00Z",
+  "fetched_at": "2026-05-26T00:08:29Z",
   "jira": {
-    "currently_open": 335,
-    "p1": 18,
+    "currently_open": 337,
+    "p1": 19,
     "p2": 24,
     "open_problems": 10,
     "trend": [
-      {
-        "date": "19-May",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "20-May",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "25-May",
-        "is_today": true,
-        "currently_open": 335,
-        "opened": 38,
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
         "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "26-May",
+        "is_today": true,
+        "currently_open": 337,
+        "opened": 29,
+        "closed": 69,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Gulyas, Dom",
       "initials": "GD",
       "level": "L1 Primary",
-      "since": "2026-05-25T00:00:00Z"
+      "since": "2026-05-26T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -88,25 +88,25 @@
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "18",
-        "start_date": "2026-05-18",
-        "name": "Manders, Sam",
-        "level": "L1",
-        "is_today": false
-      },
-      {
-        "day": "Mon",
         "date": "25",
         "start_date": "2026-05-25",
         "name": "Gulyas, Dom",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "1",
         "start_date": "2026-06-01",
         "name": "Jacinto, Wayne",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "8",
+        "start_date": "2026-06-08",
+        "name": "Olowu, Tolani",
         "level": "L1",
         "is_today": false
       }
