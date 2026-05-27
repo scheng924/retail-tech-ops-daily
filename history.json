@@ -763,14 +763,14 @@
   },
   "2026-05-26": {
     "currently_open": 329,
-    "p1": 24,
+    "p1": 25,
     "p2": 21,
     "open_problems": 11,
     "opened": 49,
     "closed": 58,
     "on_call_tickets": 0,
     "oncall_name": "Gulyas, Dom",
-    "snapshot_time": "18:32 UTC",
+    "snapshot_time": "19:32 UTC",
     "window": "2026-05-26 -> 2026-05-27"
   }
 }
