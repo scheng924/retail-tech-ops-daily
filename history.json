@@ -774,15 +774,15 @@
     "window": "2026-05-26 -> 2026-05-27"
   },
   "2026-05-27": {
-    "currently_open": 339,
+    "currently_open": 341,
     "p1": 30,
-    "p2": 22,
+    "p2": 23,
     "open_problems": 11,
     "opened": 46,
     "closed": 38,
     "on_call_tickets": 0,
     "oncall_name": "Gulyas, Dom",
-    "snapshot_time": "12:30 UTC",
+    "snapshot_time": "14:04 UTC",
     "window": "2026-05-27 -> 2026-05-28"
   }
 }
