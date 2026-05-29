@@ -787,14 +787,14 @@
   },
   "2026-05-28": {
     "currently_open": 355,
-    "p1": 32,
+    "p1": 33,
     "p2": 30,
     "open_problems": 11,
     "opened": 49,
     "closed": 35,
     "on_call_tickets": 0,
     "oncall_name": "Gulyas, Dom",
-    "snapshot_time": "13:37 UTC",
+    "snapshot_time": "14:42 UTC",
     "window": "2026-05-28 -> 2026-05-29"
   }
 }
