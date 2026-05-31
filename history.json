@@ -810,7 +810,7 @@
     "window": "2026-05-29 -> 2026-05-30"
   },
   "2026-05-30": {
-    "currently_open": 324,
+    "currently_open": 325,
     "p1": 22,
     "p2": 30,
     "open_problems": 12,
@@ -818,7 +818,7 @@
     "closed": 8,
     "on_call_tickets": 0,
     "oncall_name": "Gulyas, Dom",
-    "snapshot_time": "08:20 UTC",
+    "snapshot_time": "09:30 UTC",
     "window": "2026-05-30 -> 2026-05-31"
   }
 }
