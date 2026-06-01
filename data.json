@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-05-31T23:38:39Z",
+  "fetched_at": "2026-06-01T00:08:30Z",
   "jira": {
     "currently_open": 338,
     "p1": 25,
     "p2": 33,
     "open_problems": 12,
     "trend": [
-      {
-        "date": "25-May",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "26-May",
         "is_today": false,
@@ -56,10 +48,18 @@
       },
       {
         "date": "31-May",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "1-Jun",
         "is_today": true,
         "currently_open": 338,
-        "opened": 23,
-        "closed": 8,
+        "opened": 15,
+        "closed": 1,
         "on_call": 0
       }
     ]
@@ -69,7 +69,7 @@
       "name": "Gulyas, Dom",
       "initials": "GD",
       "level": "L1 Primary",
-      "since": "2026-05-31T00:00:00Z"
+      "since": "2026-06-01T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -100,7 +100,7 @@
         "start_date": "2026-06-01",
         "name": "Jacinto, Wayne",
         "level": "L1",
-        "is_today": false
+        "is_today": true
       },
       {
         "day": "Mon",
