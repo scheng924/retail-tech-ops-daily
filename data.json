@@ -1,7 +1,7 @@
 {
-  "fetched_at": "2026-06-01T13:21:52Z",
+  "fetched_at": "2026-06-01T15:36:47Z",
   "jira": {
-    "currently_open": 341,
+    "currently_open": 344,
     "p1": 25,
     "p2": 34,
     "open_problems": 12,
@@ -57,7 +57,7 @@
       {
         "date": "1-Jun",
         "is_today": true,
-        "currently_open": 341,
+        "currently_open": 344,
         "opened": 17,
         "closed": 2,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Gulyas, Dom",
-      "initials": "GD",
+      "name": "Jacinto, Wayne",
+      "initials": "JW",
       "level": "L1 Primary",
       "since": "2026-06-01T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Gulyas, Dom"
+        "name": "Jacinto, Wayne"
       },
       {
         "level": 2,
