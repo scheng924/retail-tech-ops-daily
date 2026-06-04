@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-06-04T13:47:50Z",
+  "fetched_at": "2026-06-04T15:04:35Z",
   "jira": {
-    "currently_open": 283,
+    "currently_open": 284,
     "p1": 6,
-    "p2": 28,
+    "p2": 26,
     "open_problems": 12,
     "trend": [
       {
@@ -57,7 +57,7 @@
       {
         "date": "4-Jun",
         "is_today": true,
-        "currently_open": 283,
+        "currently_open": 284,
         "opened": 37,
         "closed": 45,
         "on_call": 0
