@@ -882,15 +882,15 @@
     "window": "2026-06-04 -> 2026-06-05"
   },
   "2026-06-05": {
-    "currently_open": 296,
-    "p1": 9,
+    "currently_open": 298,
+    "p1": 10,
     "p2": 27,
     "open_problems": 12,
     "opened": 25,
     "closed": 30,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "22:24 UTC",
+    "snapshot_time": "22:49 UTC",
     "window": "2026-06-05 -> 2026-06-06"
   }
 }
