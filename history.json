@@ -906,15 +906,15 @@
     "window": "2026-06-06 -> 2026-06-07"
   },
   "2026-06-07": {
-    "currently_open": 318,
-    "p1": 11,
+    "currently_open": 319,
+    "p1": 12,
     "p2": 28,
     "open_problems": 12,
-    "opened": 16,
+    "opened": 17,
     "closed": 0,
     "on_call_tickets": 0,
-    "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "01:50 UTC",
+    "oncall_name": "Patoc, Jr",
+    "snapshot_time": "03:12 UTC",
     "window": "2026-06-07 -> 2026-06-08"
   }
 }
