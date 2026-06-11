@@ -944,13 +944,13 @@
   "2026-06-10": {
     "currently_open": 304,
     "p1": 3,
-    "p2": 35,
+    "p2": 33,
     "open_problems": 12,
     "opened": 34,
     "closed": 21,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "17:16 UTC",
+    "snapshot_time": "18:32 UTC",
     "window": "2026-06-10 -> 2026-06-11"
   }
 }
