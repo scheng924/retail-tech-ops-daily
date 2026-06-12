@@ -956,13 +956,13 @@
   "2026-06-11": {
     "currently_open": 290,
     "p1": 7,
-    "p2": 37,
+    "p2": 39,
     "open_problems": 12,
     "opened": 31,
     "closed": 54,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "18:49 UTC",
+    "snapshot_time": "19:40 UTC",
     "window": "2026-06-11 -> 2026-06-12"
   }
 }
