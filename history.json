@@ -966,15 +966,15 @@
     "window": "2026-06-11 -> 2026-06-12"
   },
   "2026-06-12": {
-    "currently_open": 287,
-    "p1": 3,
-    "p2": 36,
+    "currently_open": 289,
+    "p1": 4,
+    "p2": 37,
     "open_problems": 12,
-    "opened": 23,
+    "opened": 25,
     "closed": 22,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "01:45 UTC",
+    "snapshot_time": "03:09 UTC",
     "window": "2026-06-12 -> 2026-06-13"
   }
 }
