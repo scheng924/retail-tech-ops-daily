@@ -978,15 +978,15 @@
     "window": "2026-06-12 -> 2026-06-13"
   },
   "2026-06-13": {
-    "currently_open": 317,
+    "currently_open": 319,
     "p1": 8,
-    "p2": 42,
+    "p2": 43,
     "open_problems": 12,
     "opened": 23,
     "closed": 4,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "17:10 UTC",
+    "snapshot_time": "17:46 UTC",
     "window": "2026-06-13 -> 2026-06-14"
   }
 }
