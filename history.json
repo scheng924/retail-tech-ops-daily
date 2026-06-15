@@ -991,14 +991,14 @@
   },
   "2026-06-14": {
     "currently_open": 303,
-    "p1": 9,
-    "p2": 35,
+    "p1": 10,
+    "p2": 33,
     "open_problems": 13,
     "opened": 18,
     "closed": 1,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "18:35 UTC",
+    "snapshot_time": "19:57 UTC",
     "window": "2026-06-14 -> 2026-06-15"
   }
 }
