@@ -1,8 +1,8 @@
 {
-  "fetched_at": "2026-06-15T12:50:58Z",
+  "fetched_at": "2026-06-15T15:04:14Z",
   "jira": {
-    "currently_open": 328,
-    "p1": 9,
+    "currently_open": 325,
+    "p1": 7,
     "p2": 44,
     "open_problems": 12,
     "trend": [
@@ -57,7 +57,7 @@
       {
         "date": "15-Jun",
         "is_today": true,
-        "currently_open": 328,
+        "currently_open": 325,
         "opened": 18,
         "closed": 1,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Olowu, Tolani",
-      "initials": "OT",
+      "name": "Jacinto, Wayne",
+      "initials": "JW",
       "level": "L1 Primary",
       "since": "2026-06-15T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Olowu, Tolani"
+        "name": "Jacinto, Wayne"
       },
       {
         "level": 2,
