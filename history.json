@@ -1002,7 +1002,7 @@
     "window": "2026-06-14 -> 2026-06-15"
   },
   "2026-06-15": {
-    "currently_open": 286,
+    "currently_open": 282,
     "p1": 4,
     "p2": 37,
     "open_problems": 13,
@@ -1010,7 +1010,7 @@
     "closed": 62,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "19:01 UTC",
+    "snapshot_time": "20:18 UTC",
     "window": "2026-06-15 -> 2026-06-16"
   }
 }
