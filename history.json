@@ -1027,14 +1027,14 @@
   },
   "2026-06-17": {
     "currently_open": 270,
-    "p1": 5,
-    "p2": 34,
+    "p1": 4,
+    "p2": 33,
     "open_problems": 12,
     "opened": 30,
     "closed": 58,
     "on_call_tickets": 0,
     "oncall_name": "Jacinto, Wayne",
-    "snapshot_time": "19:06 UTC",
+    "snapshot_time": "19:58 UTC",
     "window": "2026-06-17 -> 2026-06-18"
   }
 }
