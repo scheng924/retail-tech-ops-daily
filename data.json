@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-06-19T16:22:26Z",
+  "fetched_at": "2026-06-19T17:16:58Z",
   "jira": {
-    "currently_open": 285,
+    "currently_open": 284,
     "p1": 5,
-    "p2": 37,
+    "p2": 38,
     "open_problems": 12,
     "trend": [
       {
@@ -57,7 +57,7 @@
       {
         "date": "19-Jun",
         "is_today": true,
-        "currently_open": 285,
+        "currently_open": 284,
         "opened": 38,
         "closed": 25,
         "on_call": 0
@@ -98,7 +98,7 @@
         "day": "Mon",
         "date": "22",
         "start_date": "2026-06-22",
-        "name": "Olowu, Tolani",
+        "name": "Patoc, Jr",
         "level": "L1",
         "is_today": false
       },
