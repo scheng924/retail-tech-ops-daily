@@ -1074,15 +1074,15 @@
     "window": "2026-06-20 -> 2026-06-21"
   },
   "2026-06-21": {
-    "currently_open": 304,
-    "p1": 14,
-    "p2": 40,
+    "currently_open": 294,
+    "p1": 10,
+    "p2": 38,
     "open_problems": 12,
-    "opened": 18,
+    "opened": 13,
     "closed": 0,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "15:06 UTC",
+    "snapshot_time": "16:54 UTC",
     "window": "2026-06-21 -> 2026-06-22"
   }
 }
