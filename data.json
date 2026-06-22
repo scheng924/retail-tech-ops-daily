@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-22T00:54:09Z",
+  "fetched_at": "2026-06-22T01:53:22Z",
   "jira": {
     "currently_open": 297,
     "p1": 14,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Jacinto, Wayne",
-      "initials": "JW",
+      "name": "Patoc, Jr",
+      "initials": "PJ",
       "level": "L1 Primary",
       "since": "2026-06-22T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Jacinto, Wayne"
+        "name": "Patoc, Jr"
       },
       {
         "level": 2,
