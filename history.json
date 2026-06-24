@@ -1099,14 +1099,14 @@
   },
   "2026-06-23": {
     "currently_open": 292,
-    "p1": 7,
+    "p1": 6,
     "p2": 37,
     "open_problems": 13,
     "opened": 49,
     "closed": 28,
     "on_call_tickets": 0,
     "oncall_name": "Olowu, Tolani",
-    "snapshot_time": "14:17 UTC",
+    "snapshot_time": "15:24 UTC",
     "window": "2026-06-23 -> 2026-06-24"
   }
 }
