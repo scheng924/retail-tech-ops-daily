@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-06-29T14:55:35Z",
+  "fetched_at": "2026-06-29T16:20:16Z",
   "jira": {
-    "currently_open": 303,
-    "p1": 8,
-    "p2": 43,
+    "currently_open": 296,
+    "p1": 7,
+    "p2": 41,
     "open_problems": 12,
     "trend": [
       {
@@ -57,7 +57,7 @@
       {
         "date": "29-Jun",
         "is_today": true,
-        "currently_open": 303,
+        "currently_open": 296,
         "opened": 11,
         "closed": 7,
         "on_call": 0
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Olowu, Tolani",
-      "initials": "OT",
+      "name": "Manders, Sam",
+      "initials": "MS",
       "level": "L1 Primary",
       "since": "2026-06-29T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Olowu, Tolani"
+        "name": "Manders, Sam"
       },
       {
         "level": 2,
