@@ -1204,5 +1204,17 @@
     "oncall_name": "Manders, Sam",
     "snapshot_time": "23:35 UTC",
     "window": "2026-07-01 -> 2026-07-02"
+  },
+  "2026-07-02": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "opened": 0,
+    "closed": 0,
+    "on_call_tickets": 0,
+    "oncall_name": "Manders, Sam",
+    "snapshot_time": "01:16 UTC",
+    "window": "2026-07-02 -> 2026-07-03"
   }
 }
