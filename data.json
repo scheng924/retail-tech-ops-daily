@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-13T13:48:40Z",
+  "fetched_at": "2026-07-13T16:30:00Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Gulyas, Dom",
-      "initials": "GD",
+      "name": "Patoc, Jr",
+      "initials": "PJ",
       "level": "L1 Primary",
       "since": "2026-07-13T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Gulyas, Dom"
+        "name": "Patoc, Jr"
       },
       {
         "level": 2,
