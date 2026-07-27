@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-27T12:19:36Z",
+  "fetched_at": "2026-07-27T15:22:25Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Eslampour, Arvand",
-      "initials": "EA",
+      "name": "Jacinto, Wayne",
+      "initials": "JW",
       "level": "L1 Primary",
       "since": "2026-07-27T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Eslampour, Arvand"
+        "name": "Jacinto, Wayne"
       },
       {
         "level": 2,
