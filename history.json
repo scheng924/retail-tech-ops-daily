@@ -1516,5 +1516,17 @@
     "oncall_name": "Jacinto, Wayne",
     "snapshot_time": "23:56 UTC",
     "window": "2026-07-27 -> 2026-07-28"
+  },
+  "2026-07-28": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "opened": 0,
+    "closed": 0,
+    "on_call_tickets": 0,
+    "oncall_name": "Jacinto, Wayne",
+    "snapshot_time": "02:38 UTC",
+    "window": "2026-07-28 -> 2026-07-29"
   }
 }
