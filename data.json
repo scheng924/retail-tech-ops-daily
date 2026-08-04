@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-04T18:40:07Z",
+  "fetched_at": "2026-08-04T20:11:42Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -91,6 +91,14 @@
         "date": "3",
         "start_date": "2026-08-03",
         "name": "Eslampour, Arvand",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Sat",
+        "date": "8",
+        "start_date": "2026-08-08",
+        "name": "Olowu, Tolani",
         "level": "L1",
         "is_today": false
       },
