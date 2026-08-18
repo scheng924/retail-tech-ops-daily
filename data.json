@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-08-17T23:48:47Z",
+  "fetched_at": "2026-08-18T01:03:18Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
     "p2": 0,
     "open_problems": 0,
     "trend": [
-      {
-        "date": "11-Aug",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "12-Aug",
         "is_today": false,
@@ -56,6 +48,14 @@
       },
       {
         "date": "17-Aug",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "18-Aug",
         "is_today": true,
         "currently_open": 0,
         "opened": 0,
@@ -69,7 +69,7 @@
       "name": "Gulyas, Dom",
       "initials": "GD",
       "level": "L1 Primary",
-      "since": "2026-08-17T00:00:00Z"
+      "since": "2026-08-18T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -88,19 +88,19 @@
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "10",
-        "start_date": "2026-08-10",
-        "name": "Manders, Sam",
+        "date": "17",
+        "start_date": "2026-08-17",
+        "name": "Gulyas, Dom",
         "level": "L1",
         "is_today": false
       },
       {
         "day": "Mon",
-        "date": "17",
-        "start_date": "2026-08-17",
-        "name": "Gulyas, Dom",
+        "date": "31",
+        "start_date": "2026-08-31",
+        "name": "Eslampour, Arvand",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       }
     ]
   }
