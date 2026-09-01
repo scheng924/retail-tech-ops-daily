@@ -1924,5 +1924,17 @@
     "oncall_name": "Eslampour, Arvand",
     "snapshot_time": "22:02 UTC",
     "window": "2026-08-30 -> 2026-08-31"
+  },
+  "2026-08-31": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "opened": 0,
+    "closed": 0,
+    "on_call_tickets": 0,
+    "oncall_name": "Eslampour, Arvand",
+    "snapshot_time": "01:17 UTC",
+    "window": "2026-08-31 -> 2026-09-01"
   }
 }
