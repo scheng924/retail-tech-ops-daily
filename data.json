@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-14T10:22:14Z",
+  "fetched_at": "2026-09-14T16:26:46Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Patoc, Jr",
-      "initials": "PJ",
+      "name": "Olowu, Tolani",
+      "initials": "OT",
       "level": "L1 Primary",
       "since": "2026-09-14T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Patoc, Jr"
+        "name": "Olowu, Tolani"
       },
       {
         "level": 2,
