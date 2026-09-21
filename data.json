@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T12:09:00Z",
+  "fetched_at": "2026-09-21T18:12:01Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Olowu, Tolani",
-      "initials": "OT",
+      "name": "Manders, Sam",
+      "initials": "MS",
       "level": "L1 Primary",
       "since": "2026-09-21T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Olowu, Tolani"
+        "name": "Manders, Sam"
       },
       {
         "level": 2,
