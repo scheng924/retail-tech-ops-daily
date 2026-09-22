@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-09-21T21:59:06Z",
+  "fetched_at": "2026-09-22T00:41:47Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
     "p2": 0,
     "open_problems": 0,
     "trend": [
-      {
-        "date": "15-Sep",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "16-Sep",
         "is_today": false,
@@ -56,6 +48,14 @@
       },
       {
         "date": "21-Sep",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "22-Sep",
         "is_today": true,
         "currently_open": 0,
         "opened": 0,
@@ -69,7 +69,7 @@
       "name": "Manders, Sam",
       "initials": "MS",
       "level": "L1 Primary",
-      "since": "2026-09-21T00:00:00Z"
+      "since": "2026-09-22T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -88,25 +88,25 @@
     "week_schedule": [
       {
         "day": "Mon",
-        "date": "14",
-        "start_date": "2026-09-14",
-        "name": "Olowu, Tolani",
-        "level": "L1",
-        "is_today": false
-      },
-      {
-        "day": "Mon",
         "date": "21",
         "start_date": "2026-09-21",
         "name": "Manders, Sam",
         "level": "L1",
-        "is_today": true
+        "is_today": false
       },
       {
         "day": "Mon",
         "date": "28",
         "start_date": "2026-09-28",
         "name": "Jacinto, Wayne",
+        "level": "L1",
+        "is_today": false
+      },
+      {
+        "day": "Mon",
+        "date": "5",
+        "start_date": "2026-10-05",
+        "name": "Gulyas, Dom",
         "level": "L1",
         "is_today": false
       }
