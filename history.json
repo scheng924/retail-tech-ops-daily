@@ -2344,5 +2344,17 @@
     "oncall_name": "Gulyas, Dom",
     "snapshot_time": "21:37 UTC",
     "window": "2026-10-04 -> 2026-10-05"
+  },
+  "2026-10-05": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "opened": 0,
+    "closed": 0,
+    "on_call_tickets": 0,
+    "oncall_name": "Gulyas, Dom",
+    "snapshot_time": "01:54 UTC",
+    "window": "2026-10-05 -> 2026-10-06"
   }
 }
