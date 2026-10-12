@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-12T06:32:32Z",
+  "fetched_at": "2026-10-12T16:07:41Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,15 +66,15 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Gulyas, Dom",
-      "initials": "GD",
+      "name": "Olowu, Tolani",
+      "initials": "OT",
       "level": "L1 Primary",
       "since": "2026-10-12T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Gulyas, Dom"
+        "name": "Olowu, Tolani"
       },
       {
         "level": 2,
