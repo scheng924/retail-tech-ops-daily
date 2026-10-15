@@ -2452,5 +2452,17 @@
     "oncall_name": "Olowu, Tolani",
     "snapshot_time": "23:39 UTC",
     "window": "2026-10-13 -> 2026-10-14"
+  },
+  "2026-10-14": {
+    "currently_open": 0,
+    "p1": 0,
+    "p2": 0,
+    "open_problems": 0,
+    "opened": 0,
+    "closed": 0,
+    "on_call_tickets": 0,
+    "oncall_name": "Olowu, Tolani",
+    "snapshot_time": "01:50 UTC",
+    "window": "2026-10-14 -> 2026-10-15"
   }
 }
