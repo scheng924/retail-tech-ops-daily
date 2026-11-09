@@ -1,19 +1,11 @@
 {
-  "fetched_at": "2026-11-08T22:02:26Z",
+  "fetched_at": "2026-11-09T01:43:23Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
     "p2": 0,
     "open_problems": 0,
     "trend": [
-      {
-        "date": "2-Nov",
-        "is_today": false,
-        "currently_open": 0,
-        "opened": 0,
-        "closed": 0,
-        "on_call": 0
-      },
       {
         "date": "3-Nov",
         "is_today": false,
@@ -56,6 +48,14 @@
       },
       {
         "date": "8-Nov",
+        "is_today": false,
+        "currently_open": 0,
+        "opened": 0,
+        "closed": 0,
+        "on_call": 0
+      },
+      {
+        "date": "9-Nov",
         "is_today": true,
         "currently_open": 0,
         "opened": 0,
@@ -69,7 +69,7 @@
       "name": "Manders, Sam",
       "initials": "MS",
       "level": "L1 Primary",
-      "since": "2026-11-08T00:00:00Z"
+      "since": "2026-11-09T00:00:00Z"
     },
     "escalation_levels": [
       {
@@ -100,7 +100,7 @@
         "start_date": "2026-11-09",
         "name": "Olowu, Tolani",
         "level": "L1",
-        "is_today": false
+        "is_today": true
       },
       {
         "day": "Mon",
