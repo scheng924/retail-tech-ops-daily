@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-16T11:24:26Z",
+  "fetched_at": "2026-11-16T21:09:17Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,19 +66,19 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Olowu, Tolani",
-      "initials": "OT",
+      "name": "Patoc, Jr",
+      "initials": "PJ",
       "level": "L1 Primary",
       "since": "2026-11-16T00:00:00Z"
     },
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Olowu, Tolani"
+        "name": "Patoc, Jr"
       },
       {
         "level": 2,
-        "name": "Cheng, Simon"
+        "name": "Samantha Yapa"
       },
       {
         "level": 3,
@@ -106,7 +106,7 @@
         "day": "Mon",
         "date": "23",
         "start_date": "2026-11-23",
-        "name": "Olowu, Tolani",
+        "name": "Eslampour, Arvand",
         "level": "L1",
         "is_today": false
       }
