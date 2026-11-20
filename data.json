@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-20T00:49:46Z",
+  "fetched_at": "2026-11-20T08:02:58Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -74,7 +74,7 @@
     "escalation_levels": [
       {
         "level": 1,
-        "name": "Patoc, Jr"
+        "name": "Eslampour, Arvand"
       },
       {
         "level": 2,
