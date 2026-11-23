@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-23T09:01:25Z",
+  "fetched_at": "2026-11-23T21:21:04Z",
   "jira": {
     "currently_open": 0,
     "p1": 0,
@@ -66,8 +66,8 @@
   },
   "pagerduty": {
     "current_oncall": {
-      "name": "Patoc, Jr",
-      "initials": "PJ",
+      "name": "Eslampour, Arvand",
+      "initials": "EA",
       "level": "L1 Primary",
       "since": "2026-11-23T00:00:00Z"
     },
@@ -78,7 +78,7 @@
       },
       {
         "level": 2,
-        "name": "Samantha Yapa"
+        "name": "Farrell, Lee"
       },
       {
         "level": 3,
